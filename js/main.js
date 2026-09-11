@@ -56,16 +56,11 @@
   }
 
   /* ---------------------------------------------------------------
-     2. OMBRA SULL'HEADER QUANDO SI SCROLLA
+     2. RIFERIMENTO ALL'HEADER
      --------------------------------------------------------------- */
+  // L'ombra dell'header viene aggiornata dentro suScroll() (punto 5),
+  // insieme agli altri effetti di scorrimento: un solo listener in tutto.
   var header = document.getElementById('site-header');
-  if (header) {
-    var aggiornaHeader = function () {
-      header.classList.toggle('is-scrolled', window.scrollY > 12);
-    };
-    aggiornaHeader();
-    window.addEventListener('scroll', aggiornaHeader, { passive: true });
-  }
 
   /* ---------------------------------------------------------------
      3. APERTO ORA / CHIUSO ORA
@@ -141,30 +136,116 @@
   setInterval(aggiornaStato, 60000);
 
   /* ---------------------------------------------------------------
-     4. ANIMAZIONI DI COMPARSA
-     Se l'utente ha attivato "riduci animazioni" non aggiungiamo nulla.
+     4. COMPARSA DELLE SEZIONI
+     Le sezioni salgono di poco entrando in vista; card e foto entrano
+     una dopo l'altra con un ritardo crescente, non tutte insieme.
+     Se l'utente ha attivato "riduci animazioni" non tocchiamo nulla:
+     il CSS le lascia gia' visibili.
      --------------------------------------------------------------- */
   var pocoMoto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var puoOsservare = !pocoMoto && 'IntersectionObserver' in window;
 
-  if (!pocoMoto && 'IntersectionObserver' in window) {
-    var bersagli = document.querySelectorAll('[data-reveal]');
-    var osservatore = new IntersectionObserver(function (voci) {
+  if (puoOsservare) {
+    var mostra = new IntersectionObserver(function (voci) {
       voci.forEach(function (v) {
-        if (v.isIntersecting) {
-          v.target.classList.add('is-visible');
-          osservatore.unobserve(v.target);   // una volta comparso, basta
-        }
+        if (!v.isIntersecting) return;
+        v.target.classList.add('is-visible');
+        mostra.unobserve(v.target);      // una volta comparso, basta
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-    bersagli.forEach(function (el) {
-      el.classList.add('reveal');
-      osservatore.observe(el);
+    document.querySelectorAll('[data-reveal]').forEach(function (sezione) {
+      sezione.classList.add('reveal');
+      mostra.observe(sezione);
+
+      // Cascata sugli elementi ripetuti della sezione
+      var figli = sezione.querySelectorAll('.card, .galleria-box');
+      figli.forEach(function (el, i) {
+        el.classList.add('reveal-item');
+        // il ritardo si ferma a 320ms: oltre, l'ultima card arriva tardi
+        el.style.setProperty('--ritardo', Math.min(i * 55, 320) + 'ms');
+        mostra.observe(el);
+      });
+    });
+  } else {
+    // Nessun osservatore disponibile: le sezioni restano visibili,
+    // cosi' il filetto sotto i titoli viene comunque disegnato.
+    document.querySelectorAll('[data-reveal]').forEach(function (s) {
+      s.classList.add('is-visible');
     });
   }
 
   /* ---------------------------------------------------------------
-     5. ANNO NEL FOOTER
+     5. EFFETTI LEGATI ALLO SCORRIMENTO
+     Barra di avanzamento, voce di menu attiva e parallasse dell'emblema.
+     Tutto dentro un solo listener con requestAnimationFrame: il calcolo
+     viene fatto una volta per fotogramma, non a ogni evento di scroll
+     (altrimenti su telefono si vedrebbero gli scatti).
+     --------------------------------------------------------------- */
+  var barra    = document.getElementById('scroll-barra');
+  var emblema  = document.querySelector('.hero-emblema');
+  var inCoda   = false;
+
+  function suScroll() {
+    var y = window.scrollY;
+
+    // ombra sull'header
+    if (header) header.classList.toggle('is-scrolled', y > 12);
+
+    // avanzamento della lettura, da 0 a 100%
+    if (barra) {
+      var totale = document.documentElement.scrollHeight - window.innerHeight;
+      barra.style.width = (totale > 0 ? Math.min(y / totale, 1) * 100 : 0) + '%';
+    }
+
+    // l'emblema dell'hero scorre piu' lentamente della pagina
+    if (emblema && !pocoMoto) {
+      emblema.style.setProperty('--py', (y * 0.18) + 'px');
+    }
+
+    inCoda = false;
+  }
+
+  function programmaScroll() {
+    if (inCoda) return;
+    inCoda = true;
+    window.requestAnimationFrame(suScroll);
+  }
+
+  suScroll();
+  window.addEventListener('scroll', programmaScroll, { passive: true });
+  window.addEventListener('resize', programmaScroll, { passive: true });
+
+  /* ---------------------------------------------------------------
+     6. VOCE DI MENU DELLA SEZIONE CORRENTE
+     Un secondo osservatore, con una fascia stretta a un terzo dall'alto:
+     e' attiva la sezione che sta attraversando quella fascia.
+     --------------------------------------------------------------- */
+  if ('IntersectionObserver' in window) {
+    var voci = {};
+    document.querySelectorAll('.nav-list a[href^="#"]').forEach(function (a) {
+      voci[a.getAttribute('href').slice(1)] = a;
+    });
+
+    var spia = new IntersectionObserver(function (entrate) {
+      entrate.forEach(function (e) {
+        var voce = voci[e.target.id];
+        if (!voce) return;
+        if (e.isIntersecting) {
+          for (var k in voci) voci[k].classList.remove('is-attivo');
+          voce.classList.add('is-attivo');
+        }
+      });
+    }, { rootMargin: '-33% 0px -60% 0px' });
+
+    Object.keys(voci).forEach(function (id) {
+      var sez = document.getElementById(id);
+      if (sez) spia.observe(sez);
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     7. ANNO NEL FOOTER
      --------------------------------------------------------------- */
   var anno = document.getElementById('anno');
   if (anno) anno.textContent = new Date().getFullYear();
@@ -178,7 +259,7 @@
   }
 
   /* ---------------------------------------------------------------
-     6. LINK NON ANCORA COLLEGATI
+     8. LINK NON ANCORA COLLEGATI
      I bottoni con aria-disabled (Facebook, recensioni Google) hanno
      ancora href="#": senza questo blocco riporterebbero l'utente in
      cima alla pagina, sembrando rotti. Da togliere quando i link

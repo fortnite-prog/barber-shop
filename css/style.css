@@ -51,7 +51,7 @@
   --oro:         #c9a227;   /* accento */
   --oro-chiaro:  #e3c25c;
   --bianco:      #f5f5f4;
-  --grigio:      #a8a8a4;   /* testo secondario: contrasto ~7:1 sul nero */
+  --grigio:      #a9a8a2;   /* neutro leggermente caldo, tirato verso l'oro */
   --verde:       #4ea96b;   /* "Aperto ora" */
   --rosso:       #d9534f;   /* "Chiuso ora" */
 
@@ -60,9 +60,10 @@
 
   --max: 1120px;            /* larghezza massima del contenuto */
   --gutter: 20px;           /* margine laterale minimo su mobile */
-  --radius: 12px;
+  --radius: 14px;
   --demo-bar-h: 34px;       /* altezza barra demo, usata dallo scroll-offset */
   --header-h: 68px;
+  --molla: cubic-bezier(.22, .68, .28, 1);   /* curva unica del movimento */
 }
 
 /* ----------------------------- 3. RESET ---------------------------------- */
@@ -295,9 +296,12 @@ h1, h2, h3 {
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: transform .18s ease, background .18s ease, color .18s ease;
+  transition: transform .22s var(--molla), background .22s ease,
+              color .22s ease, box-shadow .28s ease, border-color .22s ease;
 }
 .btn:active { transform: scale(.97); }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(201, 162, 39, .3); }
+.btn-ghost:hover { transform: translateY(-2px); background: rgba(201, 162, 39, .07); }
 .btn-lg { min-height: 56px; font-size: 1.06rem; }
 
 .btn-gold  { background: var(--oro); color: #14100a; }
@@ -329,7 +333,9 @@ h1, h2, h3 {
   position: absolute;
   top: 50%;
   left: 50%;
-  translate: -50% -50%;
+  /* --py la scrive JS mentre scorri: l'emblema si muove piu' piano
+     della pagina (parallasse). Senza JS resta semplicemente a zero. */
+  translate: -50% calc(-50% + var(--py, 0px));
   width: min(112vw, 700px);
   aspect-ratio: 7 / 8;   /* proporzioni del file emblema-oro.png */
   background: url('../img/emblema-oro.png') center / contain no-repeat;
@@ -428,7 +434,13 @@ h1, h2, h3 {
   height: 3px;
   margin-top: 16px;
   background: var(--oro);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .7s var(--molla) .15s;
 }
+/* Il filetto si disegna da sinistra quando la sezione entra in vista */
+.is-visible .sezione-titolo::after,
+.sezione:not([data-reveal]) .sezione-titolo::after { transform: scaleX(1); }
 .sezione-intro {
   margin: 0 0 34px;
   max-width: 56ch;            /* riga leggibile, non troppo lunga */
@@ -462,17 +474,40 @@ h1, h2, h3 {
 }
 
 .servizio {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 24px 22px;
-  transition: border-color .2s ease, transform .2s ease;
+  padding: 26px 24px;
+  overflow: hidden;
+  transition: border-color .3s var(--molla), transform .3s var(--molla),
+              background .3s ease, box-shadow .3s ease;
 }
-.servizio:hover { border-color: var(--oro); transform: translateY(-3px); }
+/* Alone dorato che si accende dall'angolo in alto: sostituisce il classico
+   "card che si alza e basta" e resta leggero. */
+.servizio::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(90% 70% at 0% 0%, rgba(201, 162, 39, .16), transparent 70%);
+  transition: opacity .35s ease;
+}
+.servizio:hover {
+  border-color: rgba(201, 162, 39, .55);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+}
+.servizio:hover::before { opacity: 1; }
+.servizio:hover .servizio-ico { transform: scale(1.09) rotate(-4deg); background: rgba(201, 162, 39, .2); }
+.servizio > * { position: relative; }   /* il testo resta sopra l'alone */
 
 .servizio-ico {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 16px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(201, 162, 39, .25);
+  transition: transform .35s var(--molla), background .3s ease;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -522,10 +557,24 @@ h1, h2, h3 {
   margin-top: 4px;
 }
 .galleria-box {
+  position: relative;
   margin: 0;
   overflow: hidden;
   background: var(--carbone);
 }
+/* Velo che si schiarisce dal basso e cornice oro sottile: dà profondita'
+   alla griglia senza coprire la foto. */
+.galleria-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, .55), transparent 55%);
+  box-shadow: inset 0 0 0 2px rgba(201, 162, 39, .75);
+  transition: opacity .3s ease;
+}
+.galleria-box:hover::after { opacity: 1; }
 .galleria-box img {
   width: 100%;
   height: auto;
@@ -533,7 +582,7 @@ h1, h2, h3 {
   object-fit: cover;
   transition: transform .35s ease, opacity .25s ease;
 }
-.galleria-box:hover img { transform: scale(1.06); opacity: .82; }
+.galleria-box:hover img { transform: scale(1.07); }
 
 .galleria-cta { margin-top: 26px; text-align: center; }
 .galleria-cta .btn { width: 100%; max-width: 480px; }
@@ -572,6 +621,8 @@ h1, h2, h3 {
 /* Giorno di oggi: la classe la mette JS (js/main.js).
    Il colore da solo non basterebbe per chi non distingue i colori,
    per questo aggiungiamo anche la barra a sinistra e l'etichetta "Oggi". */
+.orari-tabella tbody tr { transition: background .2s ease; }
+.orari-tabella tbody tr:hover { background: rgba(255, 255, 255, .03); }
 .orari-tabella tr.is-oggi {
   background: rgba(201, 162, 39, .1);
   box-shadow: inset 3px 0 0 var(--oro);
@@ -612,10 +663,28 @@ h1, h2, h3 {
 }
 
 .recensione {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 24px 22px;
+  padding: 26px 24px;
+  overflow: hidden;
+  transition: border-color .3s var(--molla), transform .3s var(--molla);
 }
+.recensione:hover { border-color: rgba(201, 162, 39, .4); transform: translateY(-3px); }
+/* Virgolette in filigrana nell'angolo: segnale visivo che e' una citazione */
+.recensione::after {
+  content: '\201D';
+  position: absolute;
+  right: 14px;
+  bottom: -34px;
+  font-family: var(--titolo);
+  font-size: 9rem;
+  line-height: 1;
+  color: var(--oro);
+  opacity: .1;
+  pointer-events: none;
+}
+.recensione > * { position: relative; }
 
 /* Etichetta ben visibile: queste recensioni NON sono reali */
 .recensione-tag {
@@ -827,6 +896,95 @@ h1, h2, h3 {
 
 .btn-torna { min-height: 44px; padding: 10px 20px; font-size: .88rem; }
 
+/* ----------------------------- 20. SCORRIMENTO --------------------------- */
+
+/* Barra di avanzamento: dice a colpo d'occhio quanto manca alla fine */
+.scroll-progress {
+  position: fixed;
+  top: calc(var(--demo-bar-h) + var(--header-h) - 2px);
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 115;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  width: 0;                      /* la larghezza la scrive JS */
+  background: linear-gradient(90deg, var(--oro), var(--oro-chiaro));
+  box-shadow: 0 0 12px rgba(201, 162, 39, .6);
+}
+
+/* Grana finissima su tutto: toglie l'effetto "nero piatto" dei fondi pieni.
+   E' un SVG di rumore generato dal browser, non un'immagine da scaricare. */
+.grana {
+  position: fixed;
+  inset: 0;
+  z-index: 5;                    /* sopra le sezioni, sotto header e menu */
+  pointer-events: none;
+  opacity: .04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Voce di menu della sezione che stai guardando (classe messa da JS) */
+.nav-list a.is-attivo { color: var(--oro); }
+
+/* ----------------------------- 21. NASTRO -------------------------------- */
+.nastro {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 0;
+  border-top: 1px solid var(--bordo);
+  border-bottom: 1px solid var(--bordo);
+  background: rgba(201, 162, 39, .07);
+  /* sfuma ai due lati: le parole entrano ed escono senza tagli netti */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.nastro-pista {
+  display: flex;
+  width: max-content;
+  animation: scorri 34s linear infinite;
+}
+/* Due gruppi identici affiancati: quando il primo esce, il secondo e' gia'
+   al suo posto, quindi il giro si chiude senza salti. */
+.nastro-gruppo { display: flex; align-items: center; }
+.nastro-gruppo span {
+  font-family: var(--titolo);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--oro);
+  padding: 0 18px;
+  white-space: nowrap;
+}
+.nastro-sep { opacity: .45; font-size: .7rem !important; padding: 0 4px !important; }
+
+@keyframes scorri {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }   /* meta' pista = un gruppo intero */
+}
+
+/* ----------------------------- 22. ENTRATA HERO -------------------------- */
+/* Il titolo entra a cascata al caricamento: kicker, titolo, testo, bottoni. */
+@keyframes sali {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-kicker,
+.hero-title,
+.hero-sub,
+.hero-actions,
+.hero-status {
+  animation: sali .85s var(--molla) backwards;
+}
+.hero-title   { animation-delay: .08s; }
+.hero-sub     { animation-delay: .18s; }
+.hero-actions { animation-delay: .26s; }
+.hero-status  { animation-delay: .36s; }
+
 /* ----------------------------- 18. DESKTOP -------------------------------- */
 @media (min-width: 860px) {
   :root { --header-h: 82px; }
@@ -882,10 +1040,20 @@ h1, h2, h3 {
    aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .6s ease, transform .6s ease;
+  transform: translateY(28px);
+  transition: opacity .7s var(--molla), transform .7s var(--molla);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Gli elementi ripetuti (card, foto) entrano uno dopo l'altro invece che
+   tutti insieme: il ritardo lo calcola JS e lo scrive in --ritardo. */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(22px) scale(.985);
+  transition: opacity .6s var(--molla), transform .6s var(--molla);
+  transition-delay: var(--ritardo, 0ms);
+}
+.reveal-item.is-visible { opacity: 1; transform: none; }
 
 /* Rispetto della preferenza di sistema: niente movimento */
 @media (prefers-reduced-motion: reduce) {
@@ -894,5 +1062,8 @@ h1, h2, h3 {
     animation-duration: .001ms !important;
     transition-duration: .001ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .reveal, .reveal-item { opacity: 1; transform: none; }
+  .sezione-titolo::after { transform: scaleX(1); transition: none; }
+  .nastro-pista { animation: none; }
+  .hero-kicker, .hero-title, .hero-sub, .hero-actions, .hero-status { animation: none; }
 }
