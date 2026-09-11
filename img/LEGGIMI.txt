@@ -2,8 +2,8 @@ CARTELLA IMMAGINI
 =================
 
 lavori-1.svg ... lavori-6.svg   SEGNAPOSTO della galleria, da buttare.
-emblema-oro.png                 emblema usato come filigrana di sfondo
-                                (bianco reso trasparente + tinta oro)
+emblema-tricolore.png                 emblema usato come filigrana di sfondo
+                                (bianco trasparente, nero -> bianco, rosso e blu tenuti)
 emblema-originale.png           l'immagine di partenza, a colori
 
 

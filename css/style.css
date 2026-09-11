@@ -48,12 +48,25 @@
   --antracite:   #16161a;   /* sfondo sezioni alternate */
   --carbone:     #1f1f25;   /* card */
   --bordo:       #2e2e36;
-  --oro:         #c9a227;   /* accento */
-  --oro-chiaro:  #e3c25c;
-  --bianco:      #f5f5f4;
-  --grigio:      #a9a8a2;   /* neutro leggermente caldo, tirato verso l'oro */
-  --verde:       #4ea96b;   /* "Aperto ora" */
-  --rosso:       #d9534f;   /* "Chiuso ora" */
+  /* Palette presa dal palo del barbiere: rosso, bianco, blu su fondo scuro.
+     Ogni colore esiste in due versioni perche' su nero servono contrasti
+     diversi: la tinta piena regge il testo BIANCO sopra di se', quella
+     chiara e' leggibile come TESTO sul fondo nero.
+     Rapporti misurati (minimo richiesto dalle WCAG AA: 4.5:1):
+       rosso-chiaro su nero 7.1:1    blu-chiaro su nero 7.7:1
+       bianco su rosso      5.1:1    bianco su blu      7.9:1
+       grigio su nero       8.0:1    grigio su card     6.8:1 */
+  --rosso:        #d4261f;   /* tinta piena: fondi con testo bianco */
+  --rosso-vivo:   #e02e27;   /* stessa tinta, accesa: hover */
+  --rosso-chiaro: #ff6f68;   /* testo, icone e dettagli sul nero */
+  --blu:          #1e46bd;
+  --blu-chiaro:   #7ba0ff;
+  --bianco:       #f5f5f4;
+  --grigio:       #a6a6ad;   /* neutro appena freddo, verso il blu */
+
+  --stato-aperto: #43b06a;   /* pastiglia "Aperto ora" */
+  --stato-chiuso: #b0b0ba;   /* "Chiuso ora": neutro, non rosso, per non
+                                confonderlo con il rosso del marchio */
 
   --titolo: 'Oswald', 'Arial Narrow', Impact, system-ui, sans-serif;
   --testo:  'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -62,9 +75,15 @@
   --gutter: 20px;           /* margine laterale minimo su mobile */
   --radius: 14px;
   --demo-bar-h: 34px;       /* altezza barra demo, usata dallo scroll-offset */
+                            /* (si azzera da sola: vedi la regola qui sotto) */
   --header-h: 68px;
   --molla: cubic-bezier(.22, .68, .28, 1);   /* curva unica del movimento */
 }
+
+/* Barra demo rimossa dall'HTML => l'altezza riservata torna a zero e non
+   resta nessuna striscia vuota in cima. Va prima del RESET perche' il
+   valore serve subito a body e html. */
+html:not(:has(.demo-bar)) { --demo-bar-h: 0px; }
 
 /* ----------------------------- 3. RESET ---------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -101,7 +120,7 @@ h1, h2, h3 {
   margin: 0 0 .4em;
 }
 
-.gold { color: var(--oro); }
+.accento { color: var(--rosso-chiaro); }
 
 .wrap {
   width: 100%;
@@ -112,7 +131,7 @@ h1, h2, h3 {
 
 /* Focus sempre visibile: requisito di accessibilita' */
 :focus-visible {
-  outline: 3px solid var(--oro-chiaro);
+  outline: 3px solid var(--rosso-vivo);
   outline-offset: 3px;
 }
 
@@ -127,11 +146,11 @@ h1, h2, h3 {
 }
 
 .skip-link {
-  position: absolute;
+  position: fixed;
   left: -9999px;
   z-index: 200;
-  background: var(--oro);
-  color: #000;
+  background: var(--rosso);
+  color: #fff;
   padding: 12px 18px;
   font-weight: 600;
   border-radius: 0 0 var(--radius) 0;
@@ -145,8 +164,9 @@ h1, h2, h3 {
   inset: 0;
   z-index: -1;                 /* dietro a tutto, non intercetta i click */
   pointer-events: none;
-  background: url('../img/emblema-oro.png') center 46% / min(150vw, 900px) no-repeat;
-  opacity: .05;
+  background: url('../img/emblema-tricolore.png') center 46% / min(150vw, 900px) no-repeat;
+  opacity: .07;
+  filter: blur(7px);
 }
 
 /* ----------------------------- 4. BARRA DEMO -----------------------------
@@ -163,8 +183,8 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--oro);
-  color: #17130a;
+  background: var(--rosso);
+  color: #fff;
   font-size: .74rem;
   font-weight: 700;
   letter-spacing: .09em;
@@ -207,7 +227,7 @@ h1, h2, h3 {
   font-family: var(--titolo);
   font-weight: 600;
   font-size: 1.02rem;
-  line-height: .98;
+  line-height: 1.06;      /* .98 tagliava l'accento di CITTÀ */
   text-transform: uppercase;
   letter-spacing: .03em;
 }
@@ -217,7 +237,7 @@ h1, h2, h3 {
   font-size: .6rem;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--oro);
+  color: var(--rosso-chiaro);
 }
 
 /* --- Hamburger (solo mobile) --- */
@@ -264,6 +284,8 @@ h1, h2, h3 {
   display: none;
 }
 .nav.is-open { display: block; }
+/* Con il menu aperto blocchiamo lo scorrimento della pagina sotto */
+body.menu-aperto { overflow: hidden; }
 
 .nav-list a {
   display: block;
@@ -275,7 +297,7 @@ h1, h2, h3 {
   text-decoration: none;
   border-bottom: 1px solid var(--bordo);
 }
-.nav-list a:hover, .nav-list a:focus-visible { color: var(--oro); }
+.nav-list a:hover, .nav-list a:focus-visible { color: var(--rosso-chiaro); }
 
 .nav-cta { margin-top: 18px; width: 100%; }
 
@@ -300,17 +322,29 @@ h1, h2, h3 {
               color .22s ease, box-shadow .28s ease, border-color .22s ease;
 }
 .btn:active { transform: scale(.97); }
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(201, 162, 39, .3); }
-.btn-ghost:hover { transform: translateY(-2px); background: rgba(201, 162, 39, .07); }
+.btn-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212, 38, 31, .45); }
+.btn-ghost:hover { transform: translateY(-2px); background: rgba(255, 111, 104, .07); }
 .btn-lg { min-height: 56px; font-size: 1.06rem; }
 
-.btn-gold  { background: var(--oro); color: #14100a; }
-.btn-gold:hover, .btn-gold:focus-visible { background: var(--oro-chiaro); }
+.btn-cta  { background: var(--rosso); color: #fff; }
+.btn-cta:hover, .btn-cta:focus-visible { background: var(--rosso-vivo); }
 
 .btn-ghost { background: transparent; color: var(--bianco); border-color: var(--bordo); }
-.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--oro); color: var(--oro); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--rosso-chiaro); color: var(--rosso-chiaro); }
 
 .ico { width: 20px; height: 20px; fill: currentColor; flex: 0 0 auto; }
+
+/* Icone disegnate a tratto invece che piene (es. Instagram). Senza questa
+   regola il "fill: currentColor" qui sopra le riempirebbe, trasformando
+   il contorno in un quadrato pieno. */
+.ico-linea {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
 
 /* ----------------------------- 7. HERO ----------------------------------- */
 .hero {
@@ -323,7 +357,8 @@ h1, h2, h3 {
   /* Alone dorato dall'alto su fondo nero: niente righe diagonali, che
      davano un'aria vintage. Qui il taglio e' urban. */
   background:
-    radial-gradient(130% 85% at 50% -10%, rgba(201, 162, 39, .22), transparent 62%),
+    radial-gradient(120% 80% at 50% -12%, rgba(212, 38, 31, .3), transparent 60%),
+    radial-gradient(95% 70% at 88% 105%, rgba(30, 70, 189, .3), transparent 62%),
     linear-gradient(180deg, #141419 0%, var(--nero) 100%);
 }
 
@@ -337,9 +372,10 @@ h1, h2, h3 {
      della pagina (parallasse). Senza JS resta semplicemente a zero. */
   translate: -50% calc(-50% + var(--py, 0px));
   width: min(112vw, 700px);
-  aspect-ratio: 7 / 8;   /* proporzioni del file emblema-oro.png */
-  background: url('../img/emblema-oro.png') center / contain no-repeat;
-  opacity: .17;
+  aspect-ratio: 7 / 8;   /* proporzioni del file emblema-tricolore.png */
+  background: url('../img/emblema-tricolore.png') center / contain no-repeat;
+  opacity: .26;
+  filter: blur(5px);      /* niente scritte leggibili dietro al titolo */
   pointer-events: none;
   /* sfuma verso i bordi cosi' non si vede il quadrato dell'immagine */
   -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 72%);
@@ -354,7 +390,7 @@ h1, h2, h3 {
   font-weight: 600;
   letter-spacing: .26em;
   text-transform: uppercase;
-  color: var(--oro);
+  color: var(--rosso-chiaro);
 }
 .hero-title {
   font-size: clamp(3rem, 15vw, 6.4rem);   /* titoli grandi, look deciso */
@@ -405,8 +441,8 @@ h1, h2, h3 {
   border-radius: 50%;
   background: currentColor;
 }
-.pill-open   { color: var(--verde); }
-.pill-closed { color: var(--rosso); }
+.pill-open   { color: var(--stato-aperto); }
+.pill-closed { color: var(--stato-chiuso); }
 
 /* ----------------------------- 10. SEZIONI ------------------------------- */
 .sezione { position: relative; padding: 64px 0; }
@@ -419,21 +455,21 @@ h1, h2, h3 {
   font-weight: 600;
   letter-spacing: .24em;
   text-transform: uppercase;
-  color: var(--oro);
+  color: var(--rosso-chiaro);
 }
 .sezione-titolo {
   font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 600;
   margin-bottom: .35em;
 }
-/* Filetto oro sotto il titolo di sezione */
+/* Filetto sotto il titolo di sezione */
 .sezione-titolo::after {
   content: '';
   display: block;
   width: 54px;
   height: 3px;
   margin-top: 16px;
-  background: var(--oro);
+  background: var(--rosso-chiaro);
   transform-origin: left center;
   transform: scaleX(0);
   transition: transform .7s var(--molla) .15s;
@@ -452,8 +488,8 @@ h1, h2, h3 {
   font-size: .93rem;
   color: var(--grigio);
 }
-.link-oro {
-  color: var(--oro);
+.link-acc {
+  color: var(--rosso-chiaro);
   font-weight: 600;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
@@ -490,39 +526,51 @@ h1, h2, h3 {
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  background: radial-gradient(90% 70% at 0% 0%, rgba(201, 162, 39, .16), transparent 70%);
+  background: radial-gradient(90% 70% at 0% 0%, rgba(255, 111, 104, .16), transparent 70%);
   transition: opacity .35s ease;
 }
 .servizio:hover {
-  border-color: rgba(201, 162, 39, .55);
+  border-color: rgba(255, 111, 104, .55);
   transform: translateY(-4px);
   box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
 }
 .servizio:hover::before { opacity: 1; }
-.servizio:hover .servizio-ico { transform: scale(1.09) rotate(-4deg); background: rgba(201, 162, 39, .2); }
+.servizio:hover .servizio-ico { transform: scale(1.09) rotate(-4deg); background: rgba(255, 111, 104, .2); }
 .servizio > * { position: relative; }   /* il testo resta sopra l'alone */
 
 .servizio-ico {
   width: 50px;
   height: 50px;
   margin-bottom: 18px;
-  border: 1px solid rgba(201, 162, 39, .25);
+  border: 1px solid rgba(255, 111, 104, .25);
   transition: transform .35s var(--molla), background .3s ease;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(201, 162, 39, .12);
+  background: rgba(255, 111, 104, .12);
 }
-/* Icone disegnate a tratto: seguono il colore oro */
+/* Icone a tratto: si alternano rosso e blu, card dopo card */
 .servizio-ico svg {
   width: 26px;
   height: 26px;
   fill: none;
-  stroke: var(--oro);
+  stroke: var(--rosso-chiaro);
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* Card pari in blu: rosso e blu si alternano lungo la griglia */
+.servizio:nth-child(even) .servizio-ico {
+  background: rgba(123, 160, 255, .12);
+  border-color: rgba(123, 160, 255, .25);
+}
+.servizio:nth-child(even) .servizio-ico svg { stroke: var(--blu-chiaro); }
+.servizio:nth-child(even):hover { border-color: rgba(123, 160, 255, .55); }
+.servizio:nth-child(even)::before {
+  background: radial-gradient(90% 70% at 0% 0%, rgba(123, 160, 255, .16), transparent 70%);
+}
+.servizio:nth-child(even):hover .servizio-ico { background: rgba(123, 160, 255, .2); }
 
 .servizio h3 {
   font-size: 1.24rem;
@@ -536,7 +584,7 @@ h1, h2, h3 {
   font-size: .95rem;
 }
 /* margin-top:auto allinea il prezzo in fondo a tutte le card della riga */
-.prezzo {
+.servizio p.prezzo {
   margin-top: auto;
   padding-top: 16px;
   font-family: var(--titolo);
@@ -544,7 +592,7 @@ h1, h2, h3 {
   font-weight: 600;
   letter-spacing: .09em;
   text-transform: uppercase;
-  color: var(--oro) !important;
+  color: var(--rosso-chiaro);
 }
 
 /* ----------------------------- 12. GALLERIA ------------------------------ */
@@ -555,6 +603,8 @@ h1, h2, h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: 3px;
   margin-top: 4px;
+  max-width: 1400px;      /* oltre, le foto diventavano sproporzionate */
+  margin-inline: auto;
 }
 .galleria-box {
   position: relative;
@@ -562,7 +612,7 @@ h1, h2, h3 {
   overflow: hidden;
   background: var(--carbone);
 }
-/* Velo che si schiarisce dal basso e cornice oro sottile: dà profondita'
+/* Velo che si schiarisce dal basso e cornice rossa sottile: dà profondita'
    alla griglia senza coprire la foto. */
 .galleria-box::after {
   content: '';
@@ -571,7 +621,7 @@ h1, h2, h3 {
   opacity: 0;
   pointer-events: none;
   background: linear-gradient(to top, rgba(0, 0, 0, .55), transparent 55%);
-  box-shadow: inset 0 0 0 2px rgba(201, 162, 39, .75);
+  box-shadow: inset 0 0 0 2px rgba(255, 111, 104, .75);
   transition: opacity .3s ease;
 }
 .galleria-box:hover::after { opacity: 1; }
@@ -624,19 +674,19 @@ h1, h2, h3 {
 .orari-tabella tbody tr { transition: background .2s ease; }
 .orari-tabella tbody tr:hover { background: rgba(255, 255, 255, .03); }
 .orari-tabella tr.is-oggi {
-  background: rgba(201, 162, 39, .1);
-  box-shadow: inset 3px 0 0 var(--oro);
+  background: rgba(123, 160, 255, .1);
+  box-shadow: inset 3px 0 0 var(--blu-chiaro);
 }
 .orari-tabella tr.is-oggi th,
-.orari-tabella tr.is-oggi td { color: var(--oro); font-weight: 600; }
+.orari-tabella tr.is-oggi td { color: var(--blu-chiaro); font-weight: 600; }
 
 .oggi-tag {
   display: inline-block;
   margin-left: 9px;
   padding: 2px 8px;
   border-radius: 999px;
-  background: var(--oro);
-  color: #14100a;
+  background: var(--blu);
+  color: #fff;
   font-size: .62rem;
   font-weight: 700;
   letter-spacing: .12em;
@@ -670,7 +720,7 @@ h1, h2, h3 {
   overflow: hidden;
   transition: border-color .3s var(--molla), transform .3s var(--molla);
 }
-.recensione:hover { border-color: rgba(201, 162, 39, .4); transform: translateY(-3px); }
+.recensione:hover { border-color: rgba(255, 111, 104, .4); transform: translateY(-3px); }
 /* Virgolette in filigrana nell'angolo: segnale visivo che e' una citazione */
 .recensione::after {
   content: '\201D';
@@ -680,7 +730,7 @@ h1, h2, h3 {
   font-family: var(--titolo);
   font-size: 9rem;
   line-height: 1;
-  color: var(--oro);
+  color: var(--rosso-chiaro);
   opacity: .1;
   pointer-events: none;
 }
@@ -701,7 +751,7 @@ h1, h2, h3 {
 }
 
 .stelle { display: flex; gap: 3px; margin-bottom: 12px; }
-.stelle svg { width: 18px; height: 18px; fill: var(--oro); }
+.stelle svg { width: 18px; height: 18px; fill: var(--rosso-chiaro); }
 
 .recensione blockquote { margin: 0 0 18px; }
 .recensione blockquote p {
@@ -758,11 +808,11 @@ h1, h2, h3 {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(201, 162, 39, .12);
+  background: rgba(255, 111, 104, .12);
 }
 .contatto-ico svg {
   width: 21px; height: 21px;
-  fill: none; stroke: var(--oro);
+  fill: none; stroke: var(--rosso-chiaro);
   stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
 }
 
@@ -782,8 +832,9 @@ h1, h2, h3 {
   font-size: .92rem;
   transition: border-color .2s ease, color .2s ease;
 }
-.social-link:hover, .social-link:focus-visible { border-color: var(--oro); color: var(--oro); }
+.social-link:hover, .social-link:focus-visible { border-color: var(--rosso-chiaro); color: var(--rosso-chiaro); }
 .social-link svg { width: 20px; height: 20px; fill: currentColor; }
+.social-link svg.ico-linea { fill: none; stroke: currentColor; }
 
 /* Stato "manca ancora il link": spento e con bordo tratteggiato,
    cosi' si vede a colpo d'occhio cosa resta da completare. */
@@ -821,7 +872,7 @@ h1, h2, h3 {
   color: var(--grigio);
   line-height: 1.8;
 }
-.site-footer address a { color: var(--oro); }
+.site-footer address a { color: var(--rosso-chiaro); }
 
 .social-tondo {
   width: 44px;
@@ -832,8 +883,10 @@ h1, h2, h3 {
   border-radius: 50%;
   transition: border-color .2s ease, color .2s ease;
 }
-.social-tondo:hover, .social-tondo:focus-visible { border-color: var(--oro); color: var(--oro); }
+.social-tondo:hover, .social-tondo:focus-visible { border-color: var(--rosso-chiaro); color: var(--rosso-chiaro); }
+.social-tondo:not(.is-todo):last-child:hover { border-color: var(--blu-chiaro); color: var(--blu-chiaro); }
 .social-tondo svg { width: 20px; height: 20px; fill: currentColor; }
+.social-tondo svg.ico-linea { fill: none; stroke: currentColor; }
 
 .footer-piva { margin: 16px 0 6px; color: var(--grigio); }
 .footer-link {
@@ -841,7 +894,7 @@ h1, h2, h3 {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
-.footer-link:hover { color: var(--oro); }
+.footer-link:hover { color: var(--rosso-chiaro); }
 
 .footer-basso {
   margin-top: 30px;
@@ -851,7 +904,7 @@ h1, h2, h3 {
   font-size: .82rem;
 }
 .footer-basso p { margin: 0 0 4px; }
-.footer-demo { color: var(--oro); opacity: .85; }
+.footer-demo { color: var(--rosso-chiaro); opacity: .85; }
 
 /* --------------------- 17. PAGINA PRIVACY (testo lungo) ------------------ */
 .testo-lungo { max-width: 68ch; }   /* riga corta = piu' leggibile */
@@ -867,10 +920,10 @@ h1, h2, h3 {
 .avviso {
   margin: 26px 0 8px;
   padding: 20px 22px;
-  border: 1px solid var(--oro);
+  border: 1px solid var(--rosso-chiaro);
   border-left-width: 4px;
   border-radius: var(--radius);
-  background: rgba(201, 162, 39, .08);
+  background: rgba(255, 111, 104, .08);
 }
 .avviso p { margin: 0 0 10px; }
 .avviso p:last-child { margin-bottom: 0; }
@@ -883,7 +936,7 @@ h1, h2, h3 {
   color: var(--bianco);
   opacity: .88;
 }
-/* Pallino oro al posto del bullet di sistema */
+/* Pallino colorato al posto del bullet di sistema */
 .elenco li::before {
   content: '';
   position: absolute;
@@ -891,7 +944,7 @@ h1, h2, h3 {
   top: .68em;
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--oro);
+  background: var(--rosso-chiaro);
 }
 
 .btn-torna { min-height: 44px; padding: 10px 20px; font-size: .88rem; }
@@ -912,8 +965,8 @@ h1, h2, h3 {
   display: block;
   height: 100%;
   width: 0;                      /* la larghezza la scrive JS */
-  background: linear-gradient(90deg, var(--oro), var(--oro-chiaro));
-  box-shadow: 0 0 12px rgba(201, 162, 39, .6);
+  background: linear-gradient(90deg, var(--rosso), var(--rosso-chiaro) 45%, var(--blu-chiaro));
+  box-shadow: 0 0 12px rgba(255, 111, 104, .5);
 }
 
 /* Grana finissima su tutto: toglie l'effetto "nero piatto" dei fondi pieni.
@@ -928,16 +981,15 @@ h1, h2, h3 {
 }
 
 /* Voce di menu della sezione che stai guardando (classe messa da JS) */
-.nav-list a.is-attivo { color: var(--oro); }
+.nav-list a.is-attivo { color: var(--rosso-chiaro); border-bottom-color: var(--rosso-chiaro); }
 
 /* ----------------------------- 21. NASTRO -------------------------------- */
 .nastro {
   position: relative;
   overflow: hidden;
   padding: 15px 0;
-  border-top: 1px solid var(--bordo);
-  border-bottom: 1px solid var(--bordo);
-  background: rgba(201, 162, 39, .07);
+  border: 0;
+  background: rgba(255, 255, 255, .035);
   /* sfuma ai due lati: le parole entrano ed escono senza tagli netti */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
           mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
@@ -956,11 +1008,12 @@ h1, h2, h3 {
   font-weight: 500;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--oro);
+  color: var(--bianco);
   padding: 0 18px;
   white-space: nowrap;
 }
-.nastro-sep { opacity: .45; font-size: .7rem !important; padding: 0 4px !important; }
+.nastro-sep { color: var(--rosso-chiaro); font-size: .7rem !important; padding: 0 4px !important; }
+.nastro-gruppo span:nth-child(4n) { color: var(--blu-chiaro); }
 
 @keyframes scorri {
   from { transform: translateX(0); }
@@ -984,6 +1037,29 @@ h1, h2, h3 {
 .hero-sub     { animation-delay: .18s; }
 .hero-actions { animation-delay: .26s; }
 .hero-status  { animation-delay: .36s; }
+
+/* ----------------------------- 23. PALO DEL BARBIERE --------------------- */
+/* Le righe del palo, usate come divisorio sottile. E' l'unico punto in cui
+   i tre colori stanno insieme: ovunque altro sono separati, cosi' il
+   tricolore si legge come identita' e non come confusione. */
+.palo {
+  height: 6px;
+  background: repeating-linear-gradient(
+    115deg,
+    var(--rosso)   0px, var(--rosso)   13px,
+    var(--bianco) 13px, var(--bianco)  26px,
+    var(--blu)    26px, var(--blu)     39px,
+    var(--bianco) 39px, var(--bianco)  52px
+  );
+  background-size: 114px 100%;   /* una ripetizione intera: serve al moto */
+  animation: palo-gira 2.6s linear infinite;
+}
+/* Lo sfondo trasla di esattamente una ripetizione: il giro si chiude
+   senza scatti, come il palo vero che sembra salire all'infinito. */
+@keyframes palo-gira {
+  from { background-position: 0 0; }
+  to   { background-position: -114px 0; }
+}
 
 /* ----------------------------- 18. DESKTOP -------------------------------- */
 @media (min-width: 860px) {
@@ -1035,6 +1111,12 @@ h1, h2, h3 {
   .servizi-griglia { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* In stampa le comparse non hanno senso e lascerebbero pagine bianche */
+@media print {
+  .reveal, .reveal-item { opacity: 1 !important; transform: none !important; }
+  .demo-bar, .site-header, .scroll-progress, .grana, .palo { display: none; }
+}
+
 /* ----------------------------- 19. ANIMAZIONI ----------------------------- */
 /* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
    aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
@@ -1065,5 +1147,6 @@ h1, h2, h3 {
   .reveal, .reveal-item { opacity: 1; transform: none; }
   .sezione-titolo::after { transform: scaleX(1); transition: none; }
   .nastro-pista { animation: none; }
+  .palo { animation: none; }
   .hero-kicker, .hero-title, .hero-sub, .hero-actions, .hero-status { animation: none; }
 }

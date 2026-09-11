@@ -30,6 +30,7 @@
   function chiudiMenu() {
     if (!menu) return;
     menu.classList.remove('is-open');
+    document.body.classList.remove('menu-aperto');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Apri il menu');
   }
@@ -37,6 +38,7 @@
   if (toggle && menu) {
     toggle.addEventListener('click', function () {
       var aperto = menu.classList.toggle('is-open');
+      document.body.classList.toggle('menu-aperto', aperto);
       toggle.setAttribute('aria-expanded', aperto ? 'true' : 'false');
       toggle.setAttribute('aria-label', aperto ? 'Chiudi il menu' : 'Apri il menu');
     });
@@ -83,11 +85,13 @@
   }
 
   // Testo della prossima apertura/chiusura, in italiano corrente
-  function prossimoPassaggio(s) {
+  function prossimoPassaggio(s, adesso) {
     if (s.aperto) return 'Chiudiamo alle ' + hhmm(s.giorno.chiude);
     if (s.minuti < s.giorno.apre) return 'Apriamo alle ' + hhmm(s.giorno.apre);
-    // Dopo la chiusura guardo il giorno dopo (il 7 serve per tornare a domenica)
-    var domani = ORARI[(new Date().getDay() + 1) % 7];
+    // Dopo la chiusura guardo il giorno dopo (il modulo 7 torna a domenica).
+    // Uso la stessa ora passata da chi mi chiama, non una nuova: altrimenti
+    // a cavallo del minuto le due frasi potrebbero non coincidere.
+    var domani = ORARI[(adesso.getDay() + 1) % 7];
     return 'Riapriamo domani alle ' + hhmm(domani.apre);
   }
 
@@ -101,13 +105,13 @@
 
     // --- pastiglia nell'hero ---
     var box = document.getElementById('hero-status');
-    if (box) box.innerHTML = pastiglia(s.aperto) + prossimoPassaggio(s);
+    if (box) box.innerHTML = pastiglia(s.aperto) + prossimoPassaggio(s, adesso);
 
     // --- pastiglia sotto la tabella degli orari ---
     var stato = document.getElementById('orari-stato');
     if (stato) {
       stato.innerHTML = pastiglia(s.aperto) +
-        '<span>' + s.giorno.nome + ', ' + prossimoPassaggio(s).toLowerCase() + '</span>';
+        '<span>' + s.giorno.nome + ', ' + prossimoPassaggio(s, adesso).toLowerCase() + '</span>';
     }
 
     // --- evidenzia la riga del giorno corrente ---
