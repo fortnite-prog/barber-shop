@@ -1,0 +1,11 @@
+# Sito DIMOSTRATIVO non ufficiale.
+# Blocca tutti i motori di ricerca: la demo non deve finire su Google.
+#
+# NELLA VERSIONE UFFICIALE sostituire tutto il file con:
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://IL-TUO-DOMINIO.it/sitemap.xml
+# e togliere il meta robots noindex da index.html e privacy.html.
+
+User-agent: *
+Disallow: /

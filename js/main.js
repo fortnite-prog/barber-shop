@@ -169,4 +169,24 @@
   var anno = document.getElementById('anno');
   if (anno) anno.textContent = new Date().getFullYear();
 
+  // Data di "ultimo aggiornamento" sul segnaposto della privacy policy
+  var dataPagina = document.getElementById('data-pagina');
+  if (dataPagina) {
+    dataPagina.textContent = new Date().toLocaleDateString('it-IT', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     6. LINK NON ANCORA COLLEGATI
+     I bottoni con aria-disabled (Facebook, recensioni Google) hanno
+     ancora href="#": senza questo blocco riporterebbero l'utente in
+     cima alla pagina, sembrando rotti. Da togliere quando i link
+     veri saranno inseriti.
+     --------------------------------------------------------------- */
+  document.addEventListener('click', function (e) {
+    var todo = e.target.closest('[aria-disabled="true"]');
+    if (todo) e.preventDefault();
+  });
+
 })();

@@ -657,7 +657,177 @@ h1, h2, h3 {
 .recensioni-cta .btn { width: 100%; max-width: 420px; }
 .nota-todo { font-size: .82rem; font-style: italic; }
 
-/* ----------------------------- 15. DESKTOP -------------------------------- */
+/* ----------------------------- 15. CONTATTI ------------------------------ */
+.contatti-griglia {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 1fr;
+}
+
+.contatti-lista { display: grid; gap: 20px; }
+.contatti-lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.contatti-lista strong {
+  display: block;
+  font-family: var(--titolo);
+  font-size: .84rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--grigio);
+  margin-bottom: 2px;
+}
+.contatti-lista address { font-style: normal; }
+
+.contatto-ico {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, .12);
+}
+.contatto-ico svg {
+  width: 21px; height: 21px;
+  fill: none; stroke: var(--oro);
+  stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.contatti-azioni { display: grid; gap: 12px; }
+
+.social-riga { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 1px solid var(--bordo);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .92rem;
+  transition: border-color .2s ease, color .2s ease;
+}
+.social-link:hover, .social-link:focus-visible { border-color: var(--oro); color: var(--oro); }
+.social-link svg { width: 20px; height: 20px; fill: currentColor; }
+
+/* Stato "manca ancora il link": spento e con bordo tratteggiato,
+   cosi' si vede a colpo d'occhio cosa resta da completare. */
+.is-todo {
+  opacity: .55;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+.is-todo:hover { border-color: var(--bordo); color: inherit; }
+.todo-mini { font-size: .76rem; color: var(--grigio); }
+
+/* ----------------------------- 16. FOOTER -------------------------------- */
+.site-footer {
+  position: relative;
+  border-top: 1px solid var(--bordo);
+  background: rgba(9, 9, 11, .94);
+  padding: 44px 0 28px;
+  font-size: .92rem;
+}
+.footer-inner {
+  display: grid;
+  gap: 26px;
+  grid-template-columns: 1fr;
+}
+.footer-nome {
+  margin: 0 0 8px;
+  font-family: var(--titolo);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.site-footer address {
+  font-style: normal;
+  color: var(--grigio);
+  line-height: 1.8;
+}
+.site-footer address a { color: var(--oro); }
+
+.social-tondo {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--bordo);
+  border-radius: 50%;
+  transition: border-color .2s ease, color .2s ease;
+}
+.social-tondo:hover, .social-tondo:focus-visible { border-color: var(--oro); color: var(--oro); }
+.social-tondo svg { width: 20px; height: 20px; fill: currentColor; }
+
+.footer-piva { margin: 16px 0 6px; color: var(--grigio); }
+.footer-link {
+  color: var(--bianco);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.footer-link:hover { color: var(--oro); }
+
+.footer-basso {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--bordo);
+  color: var(--grigio);
+  font-size: .82rem;
+}
+.footer-basso p { margin: 0 0 4px; }
+.footer-demo { color: var(--oro); opacity: .85; }
+
+/* --------------------- 17. PAGINA PRIVACY (testo lungo) ------------------ */
+.testo-lungo { max-width: 68ch; }   /* riga corta = piu' leggibile */
+.testo-lungo h2 {
+  font-size: 1.5rem;
+  margin-top: 2em;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.testo-lungo p { color: var(--bianco); opacity: .88; }
+
+/* Riquadro d'avviso in cima all'informativa */
+.avviso {
+  margin: 26px 0 8px;
+  padding: 20px 22px;
+  border: 1px solid var(--oro);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  background: rgba(201, 162, 39, .08);
+}
+.avviso p { margin: 0 0 10px; }
+.avviso p:last-child { margin-bottom: 0; }
+
+.elenco { margin: 0 0 10px; padding-left: 0; }
+.elenco li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  color: var(--bianco);
+  opacity: .88;
+}
+/* Pallino oro al posto del bullet di sistema */
+.elenco li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: .68em;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--oro);
+}
+
+.btn-torna { min-height: 44px; padding: 10px 20px; font-size: .88rem; }
+
+/* ----------------------------- 18. DESKTOP -------------------------------- */
 @media (min-width: 860px) {
   :root { --header-h: 82px; }
 
@@ -692,6 +862,14 @@ h1, h2, h3 {
   .galleria-cta { margin-top: 34px; }
   .recensioni-griglia { grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .orari-tabella th, .orari-tabella td { padding: 16px 26px; font-size: 1.05rem; }
+  .contatti-griglia { grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: start; }
+  .contatti-azioni { justify-items: start; }
+  .contatti-azioni .btn { width: 100%; max-width: 340px; }
+  .footer-inner { grid-template-columns: 1fr auto; align-items: start; }
+  .footer-col:last-child { text-align: right; }
+  .footer-col:last-child .social-riga { justify-content: flex-end; }
+  .footer-basso { display: flex; justify-content: space-between; gap: 20px; }
+  .footer-basso p { margin: 0; }
 
 }
 
@@ -699,7 +877,7 @@ h1, h2, h3 {
   .servizi-griglia { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ----------------------------- 16. ANIMAZIONI ----------------------------- */
+/* ----------------------------- 19. ANIMAZIONI ----------------------------- */
 /* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
    aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
 .reveal {

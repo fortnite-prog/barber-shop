@@ -1,0 +1,54 @@
+==========================================================
+  PARRUCCHIERE DELLA CITTA' — Lecco
+  SITO DIMOSTRATIVO NON UFFICIALE
+==========================================================
+
+Demo preparata come proposta per il titolare dell'attivita'.
+Non e' il sito ufficiale e non deve essere presentato come tale.
+
+Tecnologia: HTML + CSS + JavaScript scritti a mano.
+Nessun framework, nessuna compilazione, nessuna dipendenza.
+
+
+COME METTERLO ONLINE (Netlify, gratis)
+--------------------------------------
+1. Vai su https://app.netlify.com/drop
+2. Trascina QUESTA cartella intera nel riquadro.
+3. In una ventina di secondi ti da' un indirizzo tipo
+   https://nome-a-caso-123.netlify.app
+4. Quell'indirizzo lo puoi mandare al titolare.
+
+Nota: la demo e' in "noindex" e robots.txt blocca tutto,
+quindi su Google non ci finisce. E' voluto.
+
+
+STRUTTURA DEI FILE
+------------------
+index.html        la pagina unica: hero, servizi, galleria,
+                  orari, recensioni, contatti, footer
+privacy.html      informativa segnaposto
+robots.txt        blocca i motori di ricerca
+css/style.css     tutto lo stile, diviso in sezioni numerate
+js/main.js        menu, aperto/chiuso, animazioni, anno
+fonts/            Oswald e Inter in locale (motivo: GDPR)
+img/              segnaposto galleria + emblema di sfondo
+img/LEGGIMI.txt   come sostituire le immagini
+
+
+DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
+-----------------------------------------
+[ ] Partita IVA          index.html e privacy.html, cerca "P.IVA"
+[ ] Link Facebook        cerca "TODO" - due punti: contatti e footer
+[ ] Link recensioni      cerca "TODO" nella sezione recensioni
+[ ] Recensioni vere      ora sono etichettate "di esempio": vanno
+                         sostituite con quelle reali di Google
+                         oppure va tolta l'intera sezione
+[ ] 6 foto vere          vedi img/LEGGIMI.txt
+[ ] Listino prezzi       ora c'e' scritto "Su richiesta"
+[ ] Emblema di sfondo    verificare di averne i diritti, oppure
+                         sostituirlo col logo vero (vedi img/LEGGIMI.txt)
+[ ] Privacy policy       generarla (es. iubenda) e sostituire
+                         il contenuto di privacy.html
+[ ] Togliere la demo     cancellare il div .demo-bar dalle due pagine
+[ ] Togliere il noindex  meta robots nelle due pagine + robots.txt
+[ ] Attivare il JSON-LD  in fondo a index.html, e' commentato
