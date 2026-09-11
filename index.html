@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- La demo NON deve essere indicizzata dai motori di ricerca.
+       Nella versione ufficiale: rimuovere questa riga e svuotare robots.txt. -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Parrucchiere della Città – Barbiere a Lecco | DEMO</title>
+  <meta name="description" content="Sito dimostrativo non ufficiale per Parrucchiere della Città, barbiere in Via Rivolta 1 a Lecco. Aperti tutti i giorni 9:00-21:00.">
+  <meta name="theme-color" content="#0d0d0f">
+
+  <!-- Favicon inline (SVG): nessun file esterno, nessuna richiesta in piu'.
+       Non e' il logo dell'attivita', solo la lettera iniziale sul colore oro. -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230d0d0f'/%3E%3Ctext x='32' y='45' font-family='sans-serif' font-size='38' font-weight='bold' fill='%23c9a227' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+
+  <!-- Precarico i due font serviti in locale: evita lo "sfarfallio" del testo -->
+  <link rel="preload" href="fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     BARRA DEMO
+     Per pubblicare il sito ufficiale: cancellare questo <div>
+     e la riga `body { padding-top: ... }` non serve piu' toccarla
+     (l'altezza e' gestita in automatico via CSS custom property).
+     ============================================================ -->
+<div class="demo-bar" id="demo-bar" role="note">
+  <span aria-hidden="true">&#9888;</span> Sito dimostrativo non ufficiale
+</div>
+
+<!-- Link di salto per chi naviga da tastiera / screen reader -->
+<a class="skip-link" href="#main">Salta al contenuto</a>
+
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+
+    <!-- Nessun logo dell'attivita': il nome e' scritto con il font dei titoli -->
+    <a class="brand" href="#hero">
+      <span class="brand-name">Parrucchiere<br>della Città</span>
+      <span class="brand-sub">Barber Shop · Lecco</span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Apri il menu">
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
+
+    <nav class="nav" id="nav-menu" aria-label="Menu principale">
+      <ul class="nav-list">
+        <li><a href="#servizi">Servizi</a></li>
+        <li><a href="#galleria">Galleria</a></li>
+        <li><a href="#orari">Orari</a></li>
+        <li><a href="#recensioni">Recensioni</a></li>
+        <li><a href="#contatti">Contatti</a></li>
+      </ul>
+      <a class="btn btn-gold nav-cta" href="tel:+393513022089">Chiama ora</a>
+    </nav>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="wrap hero-inner">
+      <p class="hero-kicker">Via Rivolta 1 &middot; Lecco</p>
+      <h1 class="hero-title">Il tuo barbiere<br><span class="gold">a Lecco</span></h1>
+      <p class="hero-sub">Aperti tutti i giorni dalle 9 alle 21</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-gold btn-lg" href="tel:+393513022089">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"/></svg>
+          Chiama ora
+        </a>
+        <a class="btn btn-ghost btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Rivolta+1+23900+Lecco" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+          Come arrivare
+        </a>
+      </div>
+
+      <!-- Lo stato aperto/chiuso viene riempito da JS (js/main.js) -->
+      <p class="hero-status" id="hero-status" aria-live="polite"></p>
+    </div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

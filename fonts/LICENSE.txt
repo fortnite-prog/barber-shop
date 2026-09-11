@@ -1,0 +1,15 @@
+FONT INCLUSI IN QUESTA DEMO
+===========================
+
+Oswald  - SIL Open Font License 1.1 - https://fonts.google.com/specimen/Oswald
+Inter   - SIL Open Font License 1.1 - https://fonts.google.com/specimen/Inter
+
+I file .woff2 contengono solo i sottoinsiemi "latin" e "latin-ext"
+(sono font variabili: un unico file copre tutti i pesi).
+
+Sono serviti dal sito stesso e NON da CDN Google, cosi' il browser del
+visitatore non contatta mai fonts.gstatic.com: nessun indirizzo IP viene
+trasmesso a terzi e non serve una base giuridica GDPR per i font.
+
+Il testo completo della licenza OFL 1.1 e' disponibile su:
+https://openfontlicense.org/

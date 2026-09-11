@@ -1,0 +1,421 @@
+/* ==========================================================================
+   Parrucchiere della Città — Lecco  |  SITO DIMOSTRATIVO
+   CSS unico, mobile-first. Nessun framework, nessun build.
+   ========================================================================== */
+
+/* ----------------------------- 1. FONT LOCALI -----------------------------
+   I font sono scaricati e serviti da questo stesso dominio (cartella fonts/).
+   Nessuna chiamata a fonts.googleapis.com / fonts.gstatic.com => nessun
+   trasferimento di IP a terzi, quindi nessun problema GDPR.
+   Sono font VARIABILI: un solo file copre tutti i pesi (font-weight: range).
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 200 700;   /* intervallo coperto dal font variabile */
+  font-display: swap;
+  src: url('../fonts/oswald-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url('../fonts/oswald-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ----------------------------- 2. VARIABILI ------------------------------ */
+:root {
+  --nero:        #0d0d0f;   /* sfondo principale */
+  --antracite:   #16161a;   /* sfondo sezioni alternate */
+  --carbone:     #1f1f25;   /* card */
+  --bordo:       #2e2e36;
+  --oro:         #c9a227;   /* accento */
+  --oro-chiaro:  #e3c25c;
+  --bianco:      #f5f5f4;
+  --grigio:      #a8a8a4;   /* testo secondario: contrasto ~7:1 sul nero */
+  --verde:       #4ea96b;   /* "Aperto ora" */
+  --rosso:       #d9534f;   /* "Chiuso ora" */
+
+  --titolo: 'Oswald', 'Arial Narrow', Impact, system-ui, sans-serif;
+  --testo:  'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --max: 1120px;            /* larghezza massima del contenuto */
+  --gutter: 20px;           /* margine laterale minimo su mobile */
+  --radius: 12px;
+  --demo-bar-h: 34px;       /* altezza barra demo, usata dallo scroll-offset */
+  --header-h: 68px;
+}
+
+/* ----------------------------- 3. RESET ---------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;             /* scroll fluido dal menu */
+  /* Lo scroll si ferma sotto barra demo + header fisso */
+  scroll-padding-top: calc(var(--demo-bar-h) + var(--header-h) + 8px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  /* lo spazio in alto serve per barra demo + header, entrambi fissi */
+  padding-top: calc(var(--demo-bar-h) + var(--header-h));
+  background: var(--nero);
+  color: var(--bianco);
+  font-family: var(--testo);
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+h1, h2, h3 {
+  font-family: var(--titolo);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  margin: 0 0 .4em;
+}
+
+.gold { color: var(--oro); }
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Focus sempre visibile: requisito di accessibilita' */
+:focus-visible {
+  outline: 3px solid var(--oro-chiaro);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 200;
+  background: var(--oro);
+  color: #000;
+  padding: 12px 18px;
+  font-weight: 600;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip-link:focus { left: 0; top: 0; }
+
+/* ----------------------------- 4. BARRA DEMO -----------------------------
+   Rimuovendo il <div class="demo-bar"> dall'HTML questo blocco resta
+   inerte: non serve toccare altro. Se vuoi ripulire anche il CSS,
+   cancella questa sezione e metti --demo-bar-h: 0px.
+   -------------------------------------------------------------------------- */
+.demo-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 120;
+  height: var(--demo-bar-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--oro);
+  color: #17130a;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  text-align: center;
+  padding-inline: 12px;
+}
+
+/* ----------------------------- 5. HEADER --------------------------------- */
+.site-header {
+  position: fixed;
+  top: var(--demo-bar-h);
+  left: 0;
+  right: 0;
+  z-index: 110;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: rgba(13, 13, 15, .92);
+  border-bottom: 1px solid var(--bordo);
+  backdrop-filter: blur(8px);
+  transition: box-shadow .25s ease, background .25s ease;
+}
+/* Classe aggiunta da JS quando si scrolla: dà profondità all'header */
+.site-header.is-scrolled {
+  background: rgba(13, 13, 15, .98);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .55);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand { text-decoration: none; display: block; }
+.brand-name {
+  display: block;
+  font-family: var(--titolo);
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: .98;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.brand-sub {
+  display: block;
+  margin-top: 3px;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+/* --- Hamburger (solo mobile) --- */
+.nav-toggle {
+  width: 46px;
+  height: 46px;                 /* area di tocco >= 44px */
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid var(--bordo);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+}
+/* Le tre righe: una vera + due pseudo-elementi */
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--bianco);
+  transition: transform .25s ease, opacity .2s ease;
+}
+.nav-toggle-bars::before { position: absolute; transform: translateY(-7px); }
+.nav-toggle-bars::after  { position: absolute; transform: translateY(7px); }
+.nav-toggle-bars { position: relative; }
+
+/* Stato "aperto": le righe diventano una X */
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars { background: transparent; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::before { transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::after  { transform: rotate(-45deg); }
+
+/* --- Menu: a tendina su mobile, in linea da 860px --- */
+.nav {
+  position: fixed;
+  top: calc(var(--demo-bar-h) + var(--header-h));
+  left: 0;
+  right: 0;
+  background: var(--antracite);
+  border-bottom: 1px solid var(--bordo);
+  padding: 8px var(--gutter) 22px;
+  display: none;
+}
+.nav.is-open { display: block; }
+
+.nav-list a {
+  display: block;
+  padding: 15px 4px;          /* voci alte: facili da colpire col pollice */
+  font-family: var(--titolo);
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--bordo);
+}
+.nav-list a:hover, .nav-list a:focus-visible { color: var(--oro); }
+
+.nav-cta { margin-top: 18px; width: 100%; }
+
+/* ----------------------------- 6. BOTTONI -------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 50px;             /* bottoni grandi su mobile */
+  padding: 13px 24px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--titolo);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+}
+.btn:active { transform: scale(.97); }
+.btn-lg { min-height: 56px; font-size: 1.06rem; }
+
+.btn-gold  { background: var(--oro); color: #14100a; }
+.btn-gold:hover, .btn-gold:focus-visible { background: var(--oro-chiaro); }
+
+.btn-ghost { background: transparent; color: var(--bianco); border-color: var(--bordo); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--oro); color: var(--oro); }
+
+.ico { width: 20px; height: 20px; fill: currentColor; flex: 0 0 auto; }
+
+/* ----------------------------- 7. HERO ----------------------------------- */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(76vh, 620px);
+  padding: 56px 0 64px;
+  overflow: hidden;
+  /* Sfondo generato in CSS: nessuna immagine da caricare.
+     Nella versione ufficiale si può sostituire con una foto del salone. */
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(201, 162, 39, .16), transparent 60%),
+    linear-gradient(180deg, #121216 0%, var(--nero) 100%);
+}
+/* Righe diagonali tenui: richiamo al "palo del barbiere" */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .25;
+  background: repeating-linear-gradient(135deg,
+    rgba(255, 255, 255, .05) 0 2px,
+    transparent 2px 14px);
+}
+.hero-inner { position: relative; z-index: 1; text-align: center; }
+
+.hero-kicker {
+  margin: 0 0 14px;
+  font-size: .74rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+.hero-title {
+  font-size: clamp(2.7rem, 13vw, 5.4rem);
+  font-weight: 700;
+  margin-bottom: .25em;
+}
+.hero-sub {
+  margin: 0 auto 30px;
+  max-width: 30ch;
+  font-size: 1.08rem;
+  color: var(--grigio);
+}
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 340px;
+  margin-inline: auto;
+}
+.hero-status {
+  margin: 26px 0 0;
+  font-size: .9rem;
+  color: var(--grigio);
+  min-height: 1.4em;             /* evita il salto quando JS scrive il testo */
+}
+.hero-status .pill { margin-right: 8px; }
+
+/* Pastiglia "Aperto ora" / "Chiuso ora" (riusata nella sezione Orari) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.pill::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pill-open   { color: var(--verde); }
+.pill-closed { color: var(--rosso); }
+
+/* ----------------------------- 8. DESKTOP -------------------------------- */
+@media (min-width: 860px) {
+  :root { --header-h: 82px; }
+
+  .nav-toggle { display: none; }
+
+  .nav {
+    position: static;
+    display: flex !important;    /* sempre visibile da desktop */
+    align-items: center;
+    gap: 26px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .nav-list { display: flex; gap: 26px; }
+  .nav-list a {
+    padding: 6px 0;
+    font-size: .93rem;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-cta { margin-top: 0; width: auto; min-height: 44px; padding: 10px 20px; font-size: .88rem; }
+
+  .brand-name { font-size: 1.32rem; }
+  .brand-name br { display: none; }   /* su desktop il nome sta su una riga */
+
+  .hero { text-align: center; padding: 90px 0 100px; }
+  .hero-actions { flex-direction: row; justify-content: center; max-width: none; }
+}
+
+/* ----------------------------- 9. ANIMAZIONI ----------------------------- */
+/* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
+   aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Rispetto della preferenza di sistema: niente movimento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
