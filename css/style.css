@@ -115,6 +115,16 @@ h1, h2, h3 {
   outline-offset: 3px;
 }
 
+/* Visibile solo agli screen reader (es. la didascalia della tabella) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -320,8 +330,8 @@ h1, h2, h3 {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  width: min(118vw, 760px);
-  aspect-ratio: 1 / 1;
+  width: min(112vw, 700px);
+  aspect-ratio: 7 / 8;   /* proporzioni del file emblema-oro.png */
   background: url('../img/emblema-oro.png') center / contain no-repeat;
   opacity: .17;
   pointer-events: none;
@@ -528,7 +538,126 @@ h1, h2, h3 {
 .galleria-cta { margin-top: 26px; text-align: center; }
 .galleria-cta .btn { width: 100%; max-width: 480px; }
 
-/* ----------------------------- 13. DESKTOP -------------------------------- */
+/* ----------------------------- 13. ORARI --------------------------------- */
+.orari-box {
+  max-width: 560px;
+  background: var(--carbone);
+  border: 1px solid var(--bordo);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.orari-tabella {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.orari-tabella th,
+.orari-tabella td {
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--bordo);
+}
+.orari-tabella th {
+  font-weight: 500;
+  color: var(--bianco);
+}
+.orari-tabella td {
+  text-align: right;
+  color: var(--grigio);
+  /* cifre a larghezza fissa: gli orari restano incolonnati */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Giorno di oggi: la classe la mette JS (js/main.js).
+   Il colore da solo non basterebbe per chi non distingue i colori,
+   per questo aggiungiamo anche la barra a sinistra e l'etichetta "Oggi". */
+.orari-tabella tr.is-oggi {
+  background: rgba(201, 162, 39, .1);
+  box-shadow: inset 3px 0 0 var(--oro);
+}
+.orari-tabella tr.is-oggi th,
+.orari-tabella tr.is-oggi td { color: var(--oro); font-weight: 600; }
+
+.oggi-tag {
+  display: inline-block;
+  margin-left: 9px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--oro);
+  color: #14100a;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+.orari-stato {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  background: rgba(0, 0, 0, .28);
+  font-size: .93rem;
+  color: var(--grigio);
+}
+
+/* ----------------------------- 14. RECENSIONI ---------------------------- */
+.recensioni-griglia {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+.recensione {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px;
+}
+
+/* Etichetta ben visibile: queste recensioni NON sono reali */
+.recensione-tag {
+  align-self: flex-start;
+  margin: 0 0 14px;
+  padding: 4px 10px;
+  border: 1px dashed var(--bordo);
+  border-radius: 999px;
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--grigio);
+}
+
+.stelle { display: flex; gap: 3px; margin-bottom: 12px; }
+.stelle svg { width: 18px; height: 18px; fill: var(--oro); }
+
+.recensione blockquote { margin: 0 0 18px; }
+.recensione blockquote p {
+  margin: 0;
+  color: var(--bianco);
+  opacity: .9;
+  font-size: 1rem;
+}
+/* margin-top:auto tiene il nome in fondo a tutte le card della riga */
+.recensione-autore {
+  margin: auto 0 0;
+  padding-top: 6px;
+  font-family: var(--titolo);
+  font-size: .92rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--grigio);
+}
+
+.recensioni-cta { margin-top: 28px; text-align: center; }
+.recensioni-cta .btn { width: 100%; max-width: 420px; }
+.nota-todo { font-size: .82rem; font-style: italic; }
+
+/* ----------------------------- 15. DESKTOP -------------------------------- */
 @media (min-width: 860px) {
   :root { --header-h: 82px; }
 
@@ -561,6 +690,8 @@ h1, h2, h3 {
   .servizi-griglia { grid-template-columns: repeat(4, 1fr); gap: 18px; }
   .galleria { gap: 6px; }
   .galleria-cta { margin-top: 34px; }
+  .recensioni-griglia { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .orari-tabella th, .orari-tabella td { padding: 16px 26px; font-size: 1.05rem; }
 
 }
 
@@ -568,7 +699,7 @@ h1, h2, h3 {
   .servizi-griglia { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ----------------------------- 14. ANIMAZIONI ----------------------------- */
+/* ----------------------------- 16. ANIMAZIONI ----------------------------- */
 /* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
    aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
 .reveal {

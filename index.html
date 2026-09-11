@@ -239,6 +239,124 @@
     </div>
   </section>
 
+  <!-- ===================== ORARI ===================== -->
+  <section class="sezione" id="orari" data-reveal>
+    <div class="wrap">
+      <p class="eyebrow">Orari</p>
+      <h2 class="sezione-titolo">Quando siamo aperti</h2>
+      <p class="sezione-intro">
+        Sette giorni su sette, festivi compresi. Nessuna chiusura infrasettimanale.
+      </p>
+
+      <div class="orari-box">
+        <!-- La tabella e' scritta nell'HTML, non generata da JS: resta
+             leggibile (e indicizzabile) anche senza JavaScript.
+             JS si limita a evidenziare il giorno di oggi. -->
+        <table class="orari-tabella">
+          <caption class="sr-only">Orari di apertura settimanali</caption>
+          <tbody>
+            <!-- data-giorno segue Date.getDay(): domenica = 0, lunedi' = 1 ... -->
+            <tr data-giorno="1"><th scope="row">Lunedì</th>   <td>09:00 – 21:00</td></tr>
+            <tr data-giorno="2"><th scope="row">Martedì</th>  <td>09:00 – 21:00</td></tr>
+            <tr data-giorno="3"><th scope="row">Mercoledì</th><td>09:00 – 21:00</td></tr>
+            <tr data-giorno="4"><th scope="row">Giovedì</th>  <td>09:00 – 21:00</td></tr>
+            <tr data-giorno="5"><th scope="row">Venerdì</th>  <td>09:00 – 21:00</td></tr>
+            <tr data-giorno="6"><th scope="row">Sabato</th>   <td>09:00 – 21:00</td></tr>
+            <tr data-giorno="0"><th scope="row">Domenica</th> <td>09:00 – 21:00</td></tr>
+          </tbody>
+        </table>
+
+        <!-- Riempito da JS: pastiglia aperto/chiuso + prossimo orario utile -->
+        <div class="orari-stato" id="orari-stato" aria-live="polite"></div>
+      </div>
+
+      <p class="nota">
+        Chiusure straordinarie o ferie? Le trovi sul nostro
+        <a class="link-oro" href="https://www.instagram.com/parrucchiere_della_citta/" target="_blank" rel="noopener">profilo Instagram</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== RECENSIONI ===================== -->
+  <section class="sezione sezione-alt" id="recensioni" data-reveal>
+    <div class="wrap">
+      <p class="eyebrow">Recensioni</p>
+      <h2 class="sezione-titolo">Dicono di noi</h2>
+      <p class="sezione-intro">
+        I testi qui sotto sono segnaposto: nella versione ufficiale vanno
+        sostituiti con recensioni reali, riportate parola per parola.
+      </p>
+
+      <!-- ======================= DA SOSTITUIRE =======================
+           Queste 3 recensioni sono INVENTATE e dichiarate tali.
+           Pubblicare recensioni finte senza etichetta e' una pratica
+           commerciale scorretta (Codice del Consumo, art. 21-23).
+           Nella versione ufficiale: copiare recensioni vere da Google,
+           con il nome dell'autore, oppure togliere del tutto la sezione.
+           ============================================================= -->
+      <ul class="recensioni-griglia">
+
+        <li class="card recensione">
+          <p class="recensione-tag">Recensione di esempio</p>
+          <div class="stelle" role="img" aria-label="Valutazione 5 stelle su 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+          </div>
+          <blockquote>
+            <p>Testo di esempio. Qui andrà la recensione di un cliente reale: com'è stato accolto, che taglio ha chiesto e come si è trovato.</p>
+          </blockquote>
+          <p class="recensione-autore">Nome del cliente</p>
+        </li>
+
+        <li class="card recensione">
+          <p class="recensione-tag">Recensione di esempio</p>
+          <div class="stelle" role="img" aria-label="Valutazione 5 stelle su 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+          </div>
+          <blockquote>
+            <p>Testo di esempio. Spazio per una recensione che parli del lavoro fatto: fade, barba, colore o disegno rasato.</p>
+          </blockquote>
+          <p class="recensione-autore">Nome del cliente</p>
+        </li>
+
+        <li class="card recensione">
+          <p class="recensione-tag">Recensione di esempio</p>
+          <div class="stelle" role="img" aria-label="Valutazione 5 stelle su 5">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+          </div>
+          <blockquote>
+            <p>Testo di esempio. Utile anche una recensione sull'orario comodo: aperti tutti i giorni fino alle 21.</p>
+          </blockquote>
+          <p class="recensione-autore">Nome del cliente</p>
+        </li>
+
+      </ul>
+
+      <div class="recensioni-cta">
+        <!-- TODO: sostituire href="#" con il link vero alle recensioni Google.
+             Come trovarlo: Google Maps > scheda dell'attivita' > Recensioni >
+             Condividi, oppure il link "Scrivi una recensione" del profilo
+             Google Business. Ricordarsi di togliere aria-disabled. -->
+        <a class="btn btn-ghost btn-lg" href="#" aria-disabled="true">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
+          Leggi le recensioni su Google
+        </a>
+        <p class="nota nota-todo">Link da collegare prima della pubblicazione.</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <script src="js/main.js"></script>

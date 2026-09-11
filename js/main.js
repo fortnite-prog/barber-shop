@@ -87,24 +87,57 @@
     return h + ':' + (m < 10 ? '0' + m : m);
   }
 
-  function aggiornaStato() {
-    var s = statoAttuale(new Date());
+  // Testo della prossima apertura/chiusura, in italiano corrente
+  function prossimoPassaggio(s) {
+    if (s.aperto) return 'Chiudiamo alle ' + hhmm(s.giorno.chiude);
+    if (s.minuti < s.giorno.apre) return 'Apriamo alle ' + hhmm(s.giorno.apre);
+    // Dopo la chiusura guardo il giorno dopo (il 7 serve per tornare a domenica)
+    var domani = ORARI[(new Date().getDay() + 1) % 7];
+    return 'Riapriamo domani alle ' + hhmm(domani.apre);
+  }
 
-    // Pastiglia nell'hero
+  function pastiglia(aperto) {
+    return '<span class="pill ' + (aperto ? 'pill-open">Aperto ora' : 'pill-closed">Chiuso ora') + '</span>';
+  }
+
+  function aggiornaStato() {
+    var adesso = new Date();
+    var s = statoAttuale(adesso);
+
+    // --- pastiglia nell'hero ---
     var box = document.getElementById('hero-status');
-    if (box) {
-      var testo = s.aperto
-        ? 'Chiudiamo alle ' + hhmm(s.giorno.chiude)
-        : (s.minuti < s.giorno.apre
-            ? 'Apriamo alle ' + hhmm(s.giorno.apre)
-            : 'Domani apriamo alle ' + hhmm(s.giorno.apre));
-      box.innerHTML = '<span class="pill ' + (s.aperto ? 'pill-open">Aperto ora' : 'pill-closed">Chiuso ora') +
-                      '</span>' + testo;
+    if (box) box.innerHTML = pastiglia(s.aperto) + prossimoPassaggio(s);
+
+    // --- pastiglia sotto la tabella degli orari ---
+    var stato = document.getElementById('orari-stato');
+    if (stato) {
+      stato.innerHTML = pastiglia(s.aperto) +
+        '<span>' + s.giorno.nome + ', ' + prossimoPassaggio(s).toLowerCase() + '</span>';
+    }
+
+    // --- evidenzia la riga del giorno corrente ---
+    var righe = document.querySelectorAll('.orari-tabella tr[data-giorno]');
+    for (var i = 0; i < righe.length; i++) {
+      var riga = righe[i];
+      var oggi = Number(riga.getAttribute('data-giorno')) === adesso.getDay();
+      riga.classList.toggle('is-oggi', oggi);
+
+      // L'etichetta "Oggi" si aggiunge una volta sola, non a ogni giro
+      var tag = riga.querySelector('.oggi-tag');
+      if (oggi && !tag) {
+        tag = document.createElement('span');
+        tag.className = 'oggi-tag';
+        tag.textContent = 'Oggi';
+        riga.querySelector('th').appendChild(tag);
+      } else if (!oggi && tag) {
+        tag.remove();
+      }
     }
   }
 
   aggiornaStato();
   // Ricontrollo ogni minuto: se la pagina resta aperta lo stato resta corretto
+  // (e a mezzanotte si sposta da solo sul giorno nuovo).
   setInterval(aggiornaStato, 60000);
 
   /* ---------------------------------------------------------------
