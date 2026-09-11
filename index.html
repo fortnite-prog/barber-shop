@@ -88,7 +88,10 @@
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"/></svg>
           Chiama ora
         </a>
-        <a class="btn btn-ghost btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Rivolta+1+23900+Lecco" target="_blank" rel="noopener">
+        <!-- Porta alla sezione Contatti, non direttamente a Google Maps:
+             chi tocca qui vuole prima capire dove siamo, e li' trova
+             indirizzo, orari, telefono e il bottone per la mappa. -->
+        <a class="btn btn-ghost btn-lg" href="#contatti">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
           Come arrivare
         </a>
@@ -367,8 +370,8 @@
       <p class="eyebrow">Contatti</p>
       <h2 class="sezione-titolo">Dove siamo</h2>
       <p class="sezione-intro">
-        In Via Rivolta, a due passi dal centro di Lecco. Passa quando vuoi
-        o chiamaci per sapere se c'è da aspettare.
+        Siamo in Via Rivolta 1, a Lecco. Passa in negozio quando vuoi,
+        oppure chiamaci per sapere se c'è da aspettare.
       </p>
 
       <div class="contatti-griglia">
@@ -382,6 +385,13 @@
               <strong>Indirizzo</strong>
               <!-- <address> e' l'elemento giusto per i recapiti di un'attivita' -->
               <address>Via Rivolta 1<br>23900 Lecco (LC)</address>
+              <!-- TODO: farsi dire dal titolare un punto di riferimento vero
+                   ("di fronte a...", "sopra il bar...", "a N minuti dalla
+                   stazione") e sostituire la riga qui sotto. Non inventarlo:
+                   un riferimento sbagliato fa girare a vuoto i clienti. -->
+              <p class="orientamento">
+                <span class="todo-mini">Punto di riferimento e parcheggio: da inserire</span>
+              </p>
             </span>
           </li>
 

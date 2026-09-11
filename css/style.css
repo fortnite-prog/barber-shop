@@ -853,6 +853,16 @@ body.menu-aperto { overflow: hidden; }
 .is-todo:hover { border-color: var(--bordo); color: inherit; }
 .todo-mini { font-size: .76rem; color: var(--grigio); }
 
+/* Riga di orientamento sotto l'indirizzo: e' un segnaposto, quindi si
+   presenta come tale invece di fingere un'informazione che non abbiamo. */
+.orientamento {
+  margin: 6px 0 0;
+  padding: 5px 10px;
+  border: 1px dashed var(--bordo);
+  border-radius: 8px;
+  display: inline-block;
+}
+
 /* ----------------------------- 16. FOOTER -------------------------------- */
 .site-footer {
   position: relative;
@@ -1134,10 +1144,15 @@ body.menu-aperto { overflow: hidden; }
 /* ----------------------------- 19. ANIMAZIONI ----------------------------- */
 /* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
    aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
+/* La sezione compare solo in dissolvenza, SENZA spostarsi.
+   Motivo: i link del menu portano all'inizio della sezione, e il browser
+   calcola la destinazione mentre la sezione e' ancora traslata verso il
+   basso. Quando poi risale, lo scorrimento si ferma 28px troppo in alto.
+   A spostarsi sono le card qui sotto (.reveal-item), che stanno dentro
+   la sezione e quindi non ne cambiano il bordo superiore. */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .7s var(--molla), transform .7s var(--molla);
+  transition: opacity .7s var(--molla);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 

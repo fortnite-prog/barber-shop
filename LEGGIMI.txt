@@ -39,6 +39,9 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
 -----------------------------------------
 [ ] Partita IVA          index.html e privacy.html, cerca "P.IVA"
 [ ] Link Facebook        cerca "TODO" - due punti: contatti e footer
+[ ] Punto di riferimento sotto l'indirizzo, nei Contatti: farsi dire
+                         dal titolare un riferimento vero e il
+                         parcheggio piu' comodo
 [ ] Link recensioni      cerca "TODO" nella sezione recensioni
 [ ] Recensioni vere      ora sono etichettate "di esempio": vanno
                          sostituite con quelle reali di Google
