@@ -1,0 +1,19 @@
+CARTELLA IMMAGINI
+=================
+
+salone-1.svg ... salone-6.svg  =  SEGNAPOSTO, da buttare.
+
+COME METTERE LE FOTO VERE
+-------------------------
+1. Scegli 6 foto del salone (tagli, postazioni, interno, vetrina).
+2. Ritagliale quadrate e ridimensionale a 900x900 px circa.
+3. Salvale come .jpg (qualita' 80%, devono pesare meno di 250 KB l'una)
+   con i nomi:  salone-1.jpg ... salone-6.jpg
+4. In index.html, nella sezione GALLERIA, cambia le sei estensioni
+   da .svg a .jpg  (c'e' un commento che te lo ricorda).
+5. Riscrivi gli attributi alt="" descrivendo davvero la foto:
+   serve ai non vedenti e a Google.
+
+IMPORTANTE: usa solo foto scattate nel salone o di cui hai i diritti.
+Le foto prese da Google o da altri siti sono protette da copyright.
+Se in una foto si riconosce un cliente, serve il suo consenso scritto.

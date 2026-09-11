@@ -370,6 +370,138 @@ h1, h2, h3 {
 .pill-open   { color: var(--verde); }
 .pill-closed { color: var(--rosso); }
 
+/* ----------------------------- 10. SEZIONI ------------------------------- */
+.sezione { padding: 64px 0; }
+.sezione-alt { background: var(--antracite); }   /* fasce alternate */
+
+/* Etichetta piccola sopra il titolo */
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+.sezione-titolo {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 600;
+  margin-bottom: .35em;
+}
+/* Filetto oro sotto il titolo di sezione */
+.sezione-titolo::after {
+  content: '';
+  display: block;
+  width: 54px;
+  height: 3px;
+  margin-top: 16px;
+  background: var(--oro);
+}
+.sezione-intro {
+  margin: 0 0 34px;
+  max-width: 56ch;            /* riga leggibile, non troppo lunga */
+  color: var(--grigio);
+}
+
+.nota {
+  margin: 30px 0 0;
+  font-size: .93rem;
+  color: var(--grigio);
+}
+.link-oro {
+  color: var(--oro);
+  font-weight: 600;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* ----------------------------- 11. SERVIZI ------------------------------- */
+/* Una colonna su telefono; auto-fit riempie lo spazio senza righe orfane */
+.servizi-griglia {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+.card {
+  background: var(--carbone);
+  border: 1px solid var(--bordo);
+  border-radius: var(--radius);
+}
+
+.servizio {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.servizio:hover { border-color: var(--oro); transform: translateY(-3px); }
+
+.servizio-ico {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, .12);
+}
+/* Icone disegnate a tratto: seguono il colore oro */
+.servizio-ico svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--oro);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.servizio h3 {
+  font-size: 1.24rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  margin-bottom: .3em;
+}
+.servizio p {
+  margin: 0;
+  color: var(--grigio);
+  font-size: .95rem;
+}
+/* margin-top:auto allinea il prezzo in fondo a tutte le card della riga */
+.prezzo {
+  margin-top: auto;
+  padding-top: 16px;
+  font-family: var(--titolo);
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--oro) !important;
+}
+
+/* ----------------------------- 12. GALLERIA ------------------------------ */
+.galleria {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);   /* 2 colonne su telefono */
+}
+.galleria-box {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--bordo);
+  background: var(--carbone);
+}
+.galleria-box img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;      /* riquadri quadrati anche con foto storte */
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.galleria-box:hover img { transform: scale(1.05); }
+
 /* ----------------------------- 8. DESKTOP -------------------------------- */
 @media (min-width: 860px) {
   :root { --header-h: 82px; }
@@ -398,6 +530,11 @@ h1, h2, h3 {
 
   .hero { text-align: center; padding: 90px 0 100px; }
   .hero-actions { flex-direction: row; justify-content: center; max-width: none; }
+
+  .sezione { padding: 96px 0; }
+  .servizi-griglia { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .galleria { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
 }
 
 /* ----------------------------- 9. ANIMAZIONI ----------------------------- */
