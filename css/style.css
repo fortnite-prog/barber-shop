@@ -127,6 +127,17 @@ h1, h2, h3 {
 }
 .skip-link:focus { left: 0; top: 0; }
 
+/* Emblema fisso dietro l'intera pagina: molto tenue, solo texture.
+   Per toglierlo: cancellare questa regola e il div .sfondo-emblema. */
+.sfondo-emblema {
+  position: fixed;
+  inset: 0;
+  z-index: -1;                 /* dietro a tutto, non intercetta i click */
+  pointer-events: none;
+  background: url('../img/emblema-oro.png') center 46% / min(150vw, 900px) no-repeat;
+  opacity: .05;
+}
+
 /* ----------------------------- 4. BARRA DEMO -----------------------------
    Rimuovendo il <div class="demo-bar"> dall'HTML questo blocco resta
    inerte: non serve toccare altro. Se vuoi ripulire anche il CSS,
@@ -292,51 +303,62 @@ h1, h2, h3 {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: min(76vh, 620px);
-  padding: 56px 0 64px;
+  min-height: min(78vh, 640px);
+  padding: 64px 0 72px;
   overflow: hidden;
-  /* Sfondo generato in CSS: nessuna immagine da caricare.
-     Nella versione ufficiale si può sostituire con una foto del salone. */
+  /* Alone dorato dall'alto su fondo nero: niente righe diagonali, che
+     davano un'aria vintage. Qui il taglio e' urban. */
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(201, 162, 39, .16), transparent 60%),
-    linear-gradient(180deg, #121216 0%, var(--nero) 100%);
+    radial-gradient(130% 85% at 50% -10%, rgba(201, 162, 39, .22), transparent 62%),
+    linear-gradient(180deg, #141419 0%, var(--nero) 100%);
 }
-/* Righe diagonali tenui: richiamo al "palo del barbiere" */
-.hero::after {
-  content: '';
+
+/* Emblema in filigrana dentro l'hero: grande, sfumato ai bordi.
+   Per toglierlo: cancellare questa regola e il div .hero-emblema. */
+.hero-emblema {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: min(118vw, 760px);
+  aspect-ratio: 1 / 1;
+  background: url('../img/emblema-oro.png') center / contain no-repeat;
+  opacity: .17;
   pointer-events: none;
-  opacity: .25;
-  background: repeating-linear-gradient(135deg,
-    rgba(255, 255, 255, .05) 0 2px,
-    transparent 2px 14px);
+  /* sfuma verso i bordi cosi' non si vede il quadrato dell'immagine */
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 72%);
+          mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 72%);
 }
+
 .hero-inner { position: relative; z-index: 1; text-align: center; }
 
 .hero-kicker {
   margin: 0 0 14px;
   font-size: .74rem;
+  font-weight: 600;
   letter-spacing: .26em;
   text-transform: uppercase;
   color: var(--oro);
 }
 .hero-title {
-  font-size: clamp(2.7rem, 13vw, 5.4rem);
+  font-size: clamp(3rem, 15vw, 6.4rem);   /* titoli grandi, look deciso */
   font-weight: 700;
-  margin-bottom: .25em;
+  margin-bottom: .22em;
+  text-wrap: balance;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, .8);  /* stacca dalla filigrana */
 }
 .hero-sub {
-  margin: 0 auto 30px;
+  margin: 0 auto 32px;
   max-width: 30ch;
-  font-size: 1.08rem;
-  color: var(--grigio);
+  font-size: 1.1rem;
+  color: var(--bianco);
+  opacity: .86;
 }
 .hero-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 340px;
+  max-width: 360px;
   margin-inline: auto;
 }
 .hero-status {
@@ -371,8 +393,8 @@ h1, h2, h3 {
 .pill-closed { color: var(--rosso); }
 
 /* ----------------------------- 10. SEZIONI ------------------------------- */
-.sezione { padding: 64px 0; }
-.sezione-alt { background: var(--antracite); }   /* fasce alternate */
+.sezione { position: relative; padding: 64px 0; }
+.sezione-alt { background: rgba(22, 22, 26, .92); }  /* fascia alternata, lascia passare la filigrana */
 
 /* Etichetta piccola sopra il titolo */
 .eyebrow {
@@ -481,28 +503,32 @@ h1, h2, h3 {
 }
 
 /* ----------------------------- 12. GALLERIA ------------------------------ */
+/* Griglia fitta a 3 colonne come un profilo Instagram: foto attaccate,
+   a tutta larghezza, senza margini laterali. */
 .galleria {
   display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(2, 1fr);   /* 2 colonne su telefono */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin-top: 4px;
 }
 .galleria-box {
   margin: 0;
   overflow: hidden;
-  border-radius: 10px;
-  border: 1px solid var(--bordo);
   background: var(--carbone);
 }
 .galleria-box img {
   width: 100%;
-  height: 100%;
+  height: auto;
   aspect-ratio: 1 / 1;      /* riquadri quadrati anche con foto storte */
   object-fit: cover;
-  transition: transform .35s ease;
+  transition: transform .35s ease, opacity .25s ease;
 }
-.galleria-box:hover img { transform: scale(1.05); }
+.galleria-box:hover img { transform: scale(1.06); opacity: .82; }
 
-/* ----------------------------- 8. DESKTOP -------------------------------- */
+.galleria-cta { margin-top: 26px; text-align: center; }
+.galleria-cta .btn { width: 100%; max-width: 480px; }
+
+/* ----------------------------- 13. DESKTOP -------------------------------- */
 @media (min-width: 860px) {
   :root { --header-h: 82px; }
 
@@ -528,16 +554,21 @@ h1, h2, h3 {
   .brand-name { font-size: 1.32rem; }
   .brand-name br { display: none; }   /* su desktop il nome sta su una riga */
 
-  .hero { text-align: center; padding: 90px 0 100px; }
+  .hero { padding: 110px 0 120px; }
   .hero-actions { flex-direction: row; justify-content: center; max-width: none; }
 
-  .sezione { padding: 96px 0; }
-  .servizi-griglia { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .galleria { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .sezione { padding: 100px 0; }
+  .servizi-griglia { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .galleria { gap: 6px; }
+  .galleria-cta { margin-top: 34px; }
 
 }
 
-/* ----------------------------- 9. ANIMAZIONI ----------------------------- */
+@media (min-width: 560px) and (max-width: 859px) {
+  .servizi-griglia { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ----------------------------- 14. ANIMAZIONI ----------------------------- */
 /* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
    aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
 .reveal {

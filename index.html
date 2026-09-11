@@ -8,12 +8,12 @@
        Nella versione ufficiale: rimuovere questa riga e svuotare robots.txt. -->
   <meta name="robots" content="noindex, nofollow">
 
-  <title>Parrucchiere della Città – Barbiere a Lecco | DEMO</title>
-  <meta name="description" content="Sito dimostrativo non ufficiale per Parrucchiere della Città, barbiere in Via Rivolta 1 a Lecco. Aperti tutti i giorni 9:00-21:00.">
+  <title>Parrucchiere della Città – Barber Shop a Lecco | DEMO</title>
+  <meta name="description" content="Sito dimostrativo non ufficiale per Parrucchiere della Città, barber shop in Via Rivolta 1 a Lecco. Fade, mullet, disegni rasati e barba. Aperti tutti i giorni 9:00-21:00.">
   <meta name="theme-color" content="#0d0d0f">
 
   <!-- Favicon inline (SVG): nessun file esterno, nessuna richiesta in piu'.
-       Non e' il logo dell'attivita', solo la lettera iniziale sul colore oro. -->
+       Non e' il logo dell'attivita', solo l'iniziale sul colore oro. -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230d0d0f'/%3E%3Ctext x='32' y='45' font-family='sans-serif' font-size='38' font-weight='bold' fill='%23c9a227' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 
   <!-- Precarico i due font serviti in locale: evita lo "sfarfallio" del testo -->
@@ -26,16 +26,19 @@
 
 <!-- ============================================================
      BARRA DEMO
-     Per pubblicare il sito ufficiale: cancellare questo <div>
-     e la riga `body { padding-top: ... }` non serve piu' toccarla
-     (l'altezza e' gestita in automatico via CSS custom property).
+     Per pubblicare il sito ufficiale: cancellare questo <div>.
+     Non serve toccare altro, l'altezza e' gestita via CSS.
      ============================================================ -->
 <div class="demo-bar" id="demo-bar" role="note">
-  <span aria-hidden="true">&#9888;</span> Sito dimostrativo non ufficiale
+  Sito dimostrativo non ufficiale
 </div>
 
 <!-- Link di salto per chi naviga da tastiera / screen reader -->
 <a class="skip-link" href="#main">Salta al contenuto</a>
+
+<!-- Filigrana di sfondo, fissa dietro tutta la pagina.
+     Per toglierla: cancellare questo div e la regola .sfondo-emblema. -->
+<div class="sfondo-emblema" aria-hidden="true"></div>
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
@@ -68,6 +71,9 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero">
+    <!-- L'emblema in filigrana: decorativo, quindi nascosto agli screen reader -->
+    <div class="hero-emblema" aria-hidden="true"></div>
+
     <div class="wrap hero-inner">
       <p class="hero-kicker">Via Rivolta 1 &middot; Lecco</p>
       <h1 class="hero-title">Il tuo barbiere<br><span class="gold">a Lecco</span></h1>
@@ -95,8 +101,8 @@
       <p class="eyebrow">Servizi</p>
       <h2 class="sezione-titolo">Cosa facciamo</h2>
       <p class="sezione-intro">
-        Taglio classico o sfumato, barba curata, rasatura tradizionale.
-        Su appuntamento o al volo, tutti i giorni fino alle 21.
+        Dal fade pulito al mullet, dai disegni rasati al colore.
+        Tutti i giorni fino alle 21, anche last minute.
       </p>
 
       <ul class="servizi-griglia">
@@ -107,7 +113,7 @@
             <svg viewBox="0 0 24 24"><circle cx="6.5" cy="18" r="2.6"/><circle cx="17.5" cy="18" r="2.6"/><path d="M8.4 16.1 19 3M15.6 16.1 5 3"/></svg>
           </span>
           <h3>Taglio uomo</h3>
-          <p>Taglio a forbice o macchinetta, finito con lavaggio e piega.</p>
+          <p>Taglio su misura a forbice o macchinetta, lavaggio e styling finale.</p>
           <p class="prezzo">Su richiesta</p>
         </li>
 
@@ -116,8 +122,48 @@
             <!-- macchinetta -->
             <svg viewBox="0 0 24 24"><path d="M7 8V4M10 8V4M14 8V4M17 8V4"/><rect x="5" y="8" width="14" height="4" rx="1"/><path d="M8 12v6a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-6"/></svg>
           </span>
-          <h3>Sfumature e fade</h3>
-          <p>Sfumatura alta, media o bassa, con passaggio graduale senza stacchi.</p>
+          <h3>Fade e sfumature</h3>
+          <p>Low, mid o high fade: passaggio pulito senza stacchi, rifinito a rasoio.</p>
+          <p class="prezzo">Su richiesta</p>
+        </li>
+
+        <li class="card servizio">
+          <span class="servizio-ico" aria-hidden="true">
+            <!-- profilo con capelli lunghi dietro -->
+            <svg viewBox="0 0 24 24"><path d="M6.5 9.5a4.5 4.5 0 0 1 9 0"/><circle cx="11" cy="10.5" r="4.5"/><path d="M15.3 12c1.4 2.2 2.2 5 2.2 7.5 0 1.4-1.1 2.5-2.5 2.5"/></svg>
+          </span>
+          <h3>Mullet</h3>
+          <p>Corto sopra e ai lati, lungo dietro: proporzioni studiate sul tuo viso.</p>
+          <p class="prezzo">Su richiesta</p>
+        </li>
+
+        <li class="card servizio">
+          <span class="servizio-ico" aria-hidden="true">
+            <!-- onde / ricci -->
+            <svg viewBox="0 0 24 24"><path d="M3 7c2-2.5 4 2.5 6 0s4 2.5 6 0 4 2.5 6 0"/><path d="M3 12c2-2.5 4 2.5 6 0s4 2.5 6 0 4 2.5 6 0"/><path d="M3 17c2-2.5 4 2.5 6 0s4 2.5 6 0 4 2.5 6 0"/></svg>
+          </span>
+          <h3>Permanente e ricci</h3>
+          <p>Volume e riccio definito, con prodotti scelti in base al tuo capello.</p>
+          <p class="prezzo">Su richiesta</p>
+        </li>
+
+        <li class="card servizio">
+          <span class="servizio-ico" aria-hidden="true">
+            <!-- linee a zig-zag: disegni rasati -->
+            <svg viewBox="0 0 24 24"><path d="M3 9l4.5-4.5L12 9l4.5-4.5L21 9"/><path d="M3 17l4.5-4.5L12 17l4.5-4.5L21 17"/></svg>
+          </span>
+          <h3>Disegni rasati</h3>
+          <p>Hair tattoo a mano libera: righe, geometrie o il disegno che porti tu.</p>
+          <p class="prezzo">Su richiesta</p>
+        </li>
+
+        <li class="card servizio">
+          <span class="servizio-ico" aria-hidden="true">
+            <!-- goccia di colore -->
+            <svg viewBox="0 0 24 24"><path d="M12 3s6.5 7 6.5 10.5a6.5 6.5 0 0 1-13 0C5.5 10 12 3 12 3z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></svg>
+          </span>
+          <h3>Colorazione</h3>
+          <p>Platino, ciocche o colore pieno, con decolorazione fatta in sicurezza.</p>
           <p class="prezzo">Su richiesta</p>
         </li>
 
@@ -127,7 +173,7 @@
             <svg viewBox="0 0 24 24"><path d="M6 4c0 2 .5 3 .5 5a5.5 5.5 0 0 0 11 0c0-2 .5-3 .5-5"/><path d="M9 11c1 .9 5 .9 6 0"/><path d="M10.5 15.5c.9.7 2.1.7 3 0"/></svg>
           </span>
           <h3>Regolazione barba</h3>
-          <p>Contorni definiti, lunghezza pareggiata e olio finale.</p>
+          <p>Contorni netti al rasoio, lunghezza pareggiata e olio idratante.</p>
           <p class="prezzo">Su richiesta</p>
         </li>
 
@@ -137,27 +183,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-7 7v3a7 7 0 0 0 14 0v-3a7 7 0 0 0-7-7z"/><path d="M5 9.5c2 1 4.6 1.5 7 1.5s5-.5 7-1.5"/><path d="M9 15.5c1.7 1.3 4.3 1.3 6 0"/></svg>
           </span>
           <h3>Taglio + barba</h3>
-          <p>Il servizio completo in un unico appuntamento, capelli e barba.</p>
-          <p class="prezzo">Su richiesta</p>
-        </li>
-
-        <li class="card servizio">
-          <span class="servizio-ico" aria-hidden="true">
-            <!-- vapore sul panno caldo -->
-            <svg viewBox="0 0 24 24"><path d="M8 4c0 1.5 1.4 2 1.4 3.5S8 9.5 8 11"/><path d="M12 3c0 1.5 1.4 2 1.4 3.5S12 8.5 12 10"/><path d="M16 4c0 1.5 1.4 2 1.4 3.5S16 9.5 16 11"/><rect x="4" y="14" width="16" height="6" rx="2"/></svg>
-          </span>
-          <h3>Rasatura con panno caldo</h3>
-          <p>Rasatura tradizionale a mano libera, panno caldo prima e dopo.</p>
-          <p class="prezzo">Su richiesta</p>
-        </li>
-
-        <li class="card servizio">
-          <span class="servizio-ico" aria-hidden="true">
-            <!-- bambino -->
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="9.5" r="4.5"/><path d="M12 5V3.6"/><circle cx="12" cy="2.6" r="1.1"/><path d="M4.5 21c1.4-3.5 4.2-5.2 7.5-5.2s6.1 1.7 7.5 5.2"/></svg>
-          </span>
-          <h3>Taglio bambino</h3>
-          <p>Con calma e pazienza, anche per il primo taglio della sua vita.</p>
+          <p>Il pacchetto completo in un solo appuntamento, capelli e barba insieme.</p>
           <p class="prezzo">Su richiesta</p>
         </li>
 
@@ -166,7 +192,7 @@
       <!-- I prezzi sono volutamente "Su richiesta": nella versione ufficiale
            si inseriscono i listini reali forniti dal titolare. -->
       <p class="nota">
-        Preferisci sapere prima quanto viene? Chiamaci:
+        Vuoi sapere prima quanto viene? Chiamaci:
         <a class="link-oro" href="tel:+393513022089">351 302 2089</a>
       </p>
     </div>
@@ -176,31 +202,40 @@
   <section class="sezione sezione-alt" id="galleria" data-reveal>
     <div class="wrap">
       <p class="eyebrow">Galleria</p>
-      <h2 class="sezione-titolo">Il salone</h2>
+      <h2 class="sezione-titolo">I nostri lavori</h2>
       <p class="sezione-intro">
-        Uno sguardo al negozio di Via Rivolta e a qualche lavoro finito.
+        Fade, mullet, disegni e colore. Gli ultimi tagli usciti dal negozio di Via Rivolta.
       </p>
+    </div>
 
-      <!-- ======================= DA SOSTITUIRE =======================
-           Queste 6 immagini sono SEGNAPOSTO grigi generati da noi
-           (img/salone-1.svg ... salone-6.svg).
+    <!-- ======================= DA SOSTITUIRE =======================
+         Queste 6 immagini sono SEGNAPOSTO scuri generati da noi
+         (img/lavori-1.svg ... lavori-6.svg).
 
-           Per mettere le foto vere:
-             1. salva le foto in img/ come salone-1.jpg ... salone-6.jpg
-                (quadrate, ~900x900 px, sotto i 250 KB l'una)
-             2. qui sotto cambia le sei estensioni  .svg  ->  .jpg
-             3. riscrivi ogni alt="" descrivendo la foto reale
+         Per mettere le foto vere:
+           1. salva le foto in img/ come lavori-1.jpg ... lavori-6.jpg
+              (quadrate, ~1000x1000 px, sotto i 250 KB l'una)
+           2. qui sotto cambia le sei estensioni  .svg  ->  .jpg
+           3. riscrivi ogni alt="" descrivendo la foto reale
 
-           Istruzioni complete in img/LEGGIMI.txt
-           ============================================================= -->
-      <div class="galleria">
-        <figure class="galleria-box"><img src="img/salone-1.svg" alt="Segnaposto in attesa della foto del salone" width="800" height="800" loading="lazy" decoding="async"></figure>
-        <figure class="galleria-box"><img src="img/salone-2.svg" alt="Segnaposto in attesa della foto del salone" width="800" height="800" loading="lazy" decoding="async"></figure>
-        <figure class="galleria-box"><img src="img/salone-3.svg" alt="Segnaposto in attesa della foto del salone" width="800" height="800" loading="lazy" decoding="async"></figure>
-        <figure class="galleria-box"><img src="img/salone-4.svg" alt="Segnaposto in attesa della foto del salone" width="800" height="800" loading="lazy" decoding="async"></figure>
-        <figure class="galleria-box"><img src="img/salone-5.svg" alt="Segnaposto in attesa della foto del salone" width="800" height="800" loading="lazy" decoding="async"></figure>
-        <figure class="galleria-box"><img src="img/salone-6.svg" alt="Segnaposto in attesa della foto del salone" width="800" height="800" loading="lazy" decoding="async"></figure>
-      </div>
+         Istruzioni complete in img/LEGGIMI.txt
+         ============================================================= -->
+    <div class="galleria">
+      <figure class="galleria-box"><img src="img/lavori-1.svg" alt="Segnaposto in attesa della foto di un lavoro" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure class="galleria-box"><img src="img/lavori-2.svg" alt="Segnaposto in attesa della foto di un lavoro" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure class="galleria-box"><img src="img/lavori-3.svg" alt="Segnaposto in attesa della foto di un lavoro" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure class="galleria-box"><img src="img/lavori-4.svg" alt="Segnaposto in attesa della foto di un lavoro" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure class="galleria-box"><img src="img/lavori-5.svg" alt="Segnaposto in attesa della foto di un lavoro" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure class="galleria-box"><img src="img/lavori-6.svg" alt="Segnaposto in attesa della foto di un lavoro" width="800" height="800" loading="lazy" decoding="async"></figure>
+    </div>
+
+    <div class="wrap galleria-cta">
+      <!-- Solo un link: nessun widget Instagram incorporato, cosi' non
+           vengono caricati script di Meta e non serve il banner cookie. -->
+      <a class="btn btn-gold btn-lg" href="https://www.instagram.com/parrucchiere_della_citta/" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Guarda i nostri lavori su Instagram
+      </a>
     </div>
   </section>
 

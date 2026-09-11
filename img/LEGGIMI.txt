@@ -1,19 +1,32 @@
 CARTELLA IMMAGINI
 =================
 
-salone-1.svg ... salone-6.svg  =  SEGNAPOSTO, da buttare.
+lavori-1.svg ... lavori-6.svg   SEGNAPOSTO della galleria, da buttare.
+emblema-oro.png                 emblema usato come filigrana di sfondo
+                                (bianco reso trasparente + tinta oro)
+emblema-originale.png           l'immagine di partenza, a colori
+
 
 COME METTERE LE FOTO VERE
 -------------------------
-1. Scegli 6 foto del salone (tagli, postazioni, interno, vetrina).
-2. Ritagliale quadrate e ridimensionale a 900x900 px circa.
-3. Salvale come .jpg (qualita' 80%, devono pesare meno di 250 KB l'una)
-   con i nomi:  salone-1.jpg ... salone-6.jpg
+1. Scegli 6 foto dei lavori (fade, mullet, disegni rasati, barba...).
+2. Ritagliale QUADRATE e ridimensionale a 1000x1000 px circa.
+3. Salvale come .jpg (qualita' 80%, sotto i 250 KB l'una) con i nomi:
+   lavori-1.jpg ... lavori-6.jpg
 4. In index.html, nella sezione GALLERIA, cambia le sei estensioni
-   da .svg a .jpg  (c'e' un commento che te lo ricorda).
-5. Riscrivi gli attributi alt="" descrivendo davvero la foto:
-   serve ai non vedenti e a Google.
+   da .svg a .jpg (c'e' un commento che te lo ricorda).
+5. Riscrivi ogni alt="" descrivendo davvero la foto: serve ai non
+   vedenti e a Google.
 
-IMPORTANTE: usa solo foto scattate nel salone o di cui hai i diritti.
+IMPORTANTE: usa solo foto scattate in negozio o di cui hai i diritti.
 Le foto prese da Google o da altri siti sono protette da copyright.
 Se in una foto si riconosce un cliente, serve il suo consenso scritto.
+
+
+NOTA SULL'EMBLEMA DI SFONDO  <-- DA CHIARIRE COL CLIENTE
+--------------------------------------------------------
+emblema-originale.png e' un emblema generico ("BARBERSHOP - PREMIUM CUT
+& SHAVE - ESTD 2022"), non il marchio di Parrucchiere della Citta'.
+Prima di pubblicare bisogna sapere se il titolare ne ha la licenza.
+In alternativa: sostituirlo col suo logo vero, oppure toglierlo del
+tutto (basta cancellare .sfondo-emblema e .hero-emblema dal CSS).
