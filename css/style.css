@@ -499,9 +499,14 @@ body.menu-aperto { overflow: hidden; }
 /* Una colonna su telefono; auto-fit riempie lo spazio senza righe orfane */
 .servizi-griglia {
   display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr;
+  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
 }
+
+/* I servizi sono 7: in griglia a due colonne l'ultimo resterebbe da solo
+   a meta' riga. Facendolo occupare tutta la larghezza la fila si chiude
+   e sembra una scelta, non un buco rimasto li'. */
+.servizio:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
 .card {
   background: var(--carbone);
@@ -513,7 +518,7 @@ body.menu-aperto { overflow: hidden; }
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 26px 24px;
+  padding: 18px 15px;
   overflow: hidden;
   transition: border-color .3s var(--molla), transform .3s var(--molla),
               background .3s ease, box-shadow .3s ease;
@@ -539,9 +544,9 @@ body.menu-aperto { overflow: hidden; }
 .servizio > * { position: relative; }   /* il testo resta sopra l'alone */
 
 .servizio-ico {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 18px;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
   border: 1px solid rgba(255, 111, 104, .25);
   transition: transform .35s var(--molla), background .3s ease;
   display: grid;
@@ -551,8 +556,8 @@ body.menu-aperto { overflow: hidden; }
 }
 /* Icone a tratto: si alternano rosso e blu, card dopo card */
 .servizio-ico svg {
-  width: 26px;
-  height: 26px;
+  width: 21px;
+  height: 21px;
   fill: none;
   stroke: var(--rosso-chiaro);
   stroke-width: 1.6;
@@ -573,22 +578,24 @@ body.menu-aperto { overflow: hidden; }
 .servizio:nth-child(even):hover .servizio-ico { background: rgba(123, 160, 255, .2); }
 
 .servizio h3 {
-  font-size: 1.24rem;
+  font-size: 1.04rem;
   font-weight: 600;
   letter-spacing: .02em;
-  margin-bottom: .3em;
+  line-height: 1.12;
+  margin-bottom: .35em;
 }
 .servizio p {
   margin: 0;
   color: var(--grigio);
-  font-size: .95rem;
+  font-size: .83rem;
+  line-height: 1.5;
 }
 /* margin-top:auto allinea il prezzo in fondo a tutte le card della riga */
 .servizio p.prezzo {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 12px;
   font-family: var(--titolo);
-  font-size: .95rem;
+  font-size: .8rem;
   font-weight: 600;
   letter-spacing: .09em;
   text-transform: uppercase;
@@ -1092,6 +1099,7 @@ body.menu-aperto { overflow: hidden; }
 
   .sezione { padding: 100px 0; }
   .servizi-griglia { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .servizio:last-child:nth-child(odd) { grid-column: auto; }
   .galleria { gap: 6px; }
   .galleria-cta { margin-top: 34px; }
   .recensioni-griglia { grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -1107,8 +1115,14 @@ body.menu-aperto { overflow: hidden; }
 
 }
 
-@media (min-width: 560px) and (max-width: 859px) {
-  .servizi-griglia { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 560px) {
+  .servizi-griglia { gap: 14px; }
+  .servizio { padding: 24px 22px; }
+  .servizio-ico { width: 48px; height: 48px; margin-bottom: 16px; }
+  .servizio-ico svg { width: 25px; height: 25px; }
+  .servizio h3 { font-size: 1.2rem; }
+  .servizio p { font-size: .92rem; }
+  .servizio p.prezzo { font-size: .92rem; padding-top: 16px; }
 }
 
 /* In stampa le comparse non hanno senso e lascerebbero pagine bianche */
