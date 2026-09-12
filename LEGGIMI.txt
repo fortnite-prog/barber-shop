@@ -48,7 +48,10 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
 [ ] Recensioni vere      ora sono etichettate "di esempio": vanno
                          sostituite con quelle reali di Google
                          oppure va tolta l'intera sezione
-[ ] 6 foto vere          vedi img/LEGGIMI.txt
+[ ] 6 foto vere          vedi img/LEGGIMI.txt: c'e' scritto quali
+                         foto si possono usare (anche quelle del
+                         loro Instagram) e quando serve il
+                         consenso del cliente ripreso
 [ ] Foto dell'hero       img/hero-salone.svg e' un segnaposto scuro.
                          La foto vera va orizzontale e SCURA, o il
                          titolo bianco sopra non si legge

@@ -41,5 +41,38 @@ hero-salone.svg e' un segnaposto scuro. La foto vera va ORIZZONTALE
 legge. Salvala come hero-salone.jpg e cambia l'estensione nella regola
 .hero-foto in css/style.css.
 
-IMPORTANTE: usa solo foto scattate in negozio o di cui hai i diritti.
-Se in una foto si riconosce un cliente, serve il suo consenso scritto.
+
+POSSO USARE LE FOTO DI INSTAGRAM O FACEBOOK?
+--------------------------------------------
+SI', se sono del PROPRIO profilo e il titolare da' il suo ok: le ha
+scattate lui, i diritti sono suoi.
+  -> ma non scaricarle dall'app: Instagram ricomprime tutto e vengono
+     file piccoli e sgranati. Chiedere gli ORIGINALI dal telefono.
+  -> mai puntare col codice alle immagini ospitate da Instagram:
+     quegli indirizzi scadono e la galleria si svuota da sola.
+
+NO, se sono di altri profili (altri barbieri, Pinterest, Google
+Immagini): e' violazione di copyright anche citando la fonte, anche
+senza guadagnarci. Risponde il titolare del sito.
+
+LE FACCE, il punto che salta sempre
+-----------------------------------
+Se in una foto si riconosce un cliente serve il suo consenso:
+diritto all'immagine (art. 10 codice civile) e GDPR.
+
+ATTENZIONE: il fatto che la foto sia GIA' su Instagram NON basta. Il
+cliente aveva acconsentito a quella pubblicazione, non a questo sito:
+sono due consensi distinti.
+
+Due strade:
+  - consenso scritto, anche solo un messaggio, ma scritto;
+  - inquadrare il TAGLIO e non la persona (nuca, profilo, dettaglio
+    della sfumatura). Funziona anche meglio: si guarda il lavoro.
+Per i minori il consenso lo danno i genitori, sempre.
+
+PERCHE' NON INCORPORIAMO I POST DI INSTAGRAM
+--------------------------------------------
+Si potrebbe, Meta lo permette. Ma caricherebbe gli script di Meta,
+quindi cookie di profilazione, quindi banner obbligatorio e privacy
+policy completa. Per sei foto non conviene: meglio scaricarle e
+caricarle sul sito, come stiamo facendo.
