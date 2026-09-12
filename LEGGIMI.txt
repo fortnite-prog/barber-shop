@@ -84,10 +84,17 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
     re prima di pubblicare sono veri ma fotografati il 12/09/2026.
                          Non si aggiornano da soli: rileggerli sulla
                          scheda prima di andare online
-[~] Link recensioni      FATTO: il bottone apre la scheda Google del
-                         negozio. Si puo' migliorare copiando dalla
-                         scheda Google Business il link DIRETTO alle
-                         recensioni, piu' corto e preciso
+[~] Link Google Maps     FATTO: usato il link ufficiale della scheda
+                         (maps.app.goo.gl/SrN7xNizzRmSwDs27), preso dal
+                         tasto Condividi. Vale per il bottone "Apri in
+                         Google Maps", per il riquadro della mappa e per
+                         "Leggi le recensioni su Google".
+                         DA CONTROLLARE UNA VOLTA: cliccarlo a sito
+                         online e verificare che apra la scheda giusta.
+                         Non ho potuto provarlo da qui.
+                         Se un giorno il link accorciato smettesse di
+                         funzionare, nel codice c'e' il ripiego con la
+                         ricerca per indirizzo
 [ ] Recensioni vere      ora sono etichettate "di esempio": vanno
                          sostituite con quelle reali di Google
                          oppure va tolta l'intera sezione

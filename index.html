@@ -418,12 +418,9 @@
       </ul>
 
       <div class="recensioni-cta">
-        <!-- Questo link porta alla scheda Google dell'attivita', dove le
-             recensioni sono visibili: e' una ricerca per nome e indirizzo,
-             quindi funziona senza conoscere l'identificativo del luogo.
-             MEGLIO ANCORA: dalla scheda Google Business Profile si copia il
-             link diretto alle recensioni, piu' corto e piu' preciso. -->
-        <a class="btn btn-ghost btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Parrucchiere+della+Citt%C3%A0%2C+Via+Rivolta+1%2C+Lecco" target="_blank" rel="noopener">
+        <!-- Scheda Google del negozio, dove si leggono le recensioni.
+             E' il link ufficiale del tasto Condividi di Google Maps. -->
+        <a class="btn btn-ghost btn-lg" href="https://maps.app.goo.gl/SrN7xNizzRmSwDs27" target="_blank" rel="noopener">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
           Leggi le recensioni su Google
         </a>
@@ -512,7 +509,7 @@
             <!-- Finche' la mappa vera non c'e', il riquadro non e' inerte:
                  toccarlo apre Google Maps, come si aspetta chiunque tocchi
                  una mappa. Quando l'immagine arriva, il link resta. -->
-            <a class="mappa-link" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Rivolta+1+23900+Lecco" target="_blank" rel="noopener">
+            <a class="mappa-link" href="https://maps.app.goo.gl/SrN7xNizzRmSwDs27" target="_blank" rel="noopener">
               <!-- QUANDO ARRIVA L'IMMAGINE: togliere il commento a questa
                    <img> E alla <figcaption> in fondo (l'attribuzione a
                    OpenStreetMap e' obbligatoria), poi cancellare lo
@@ -534,7 +531,12 @@
           </figure>
           <!-- Solo un link a Google Maps: la mappa incorporata (iframe)
                scriverebbe cookie di Google e obbligherebbe al banner. -->
-          <a class="btn btn-cta btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Rivolta+1+23900+Lecco" target="_blank" rel="noopener">
+          <!-- Link ufficiale della scheda, preso dal tasto Condividi di
+               Google Maps. Meglio di una ricerca per nome e indirizzo, che
+               in teoria potrebbe pescare un'altra attivita'.
+               Se un giorno smettesse di funzionare, il ripiego e':
+               https://www.google.com/maps/search/?api=1&query=Via+Rivolta+1+23900+Lecco -->
+          <a class="btn btn-cta btn-lg" href="https://maps.app.goo.gl/SrN7xNizzRmSwDs27" target="_blank" rel="noopener">
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
             Apri in Google Maps
           </a>
@@ -641,7 +643,8 @@
   }],
   "sameAs": [
     "https://www.instagram.com/parrucchiere_della_citta/"
-  ]
+  ],
+  "hasMap": "https://maps.app.goo.gl/SrN7xNizzRmSwDs27"
 }
 </script>
      ============================================================ -->
