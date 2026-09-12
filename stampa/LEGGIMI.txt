@@ -1,0 +1,55 @@
+CARTELLA STAMPA
+===============
+Materiale per il negozio. NON fa parte del sito: non serve caricarla
+su Netlify (se resta dentro non fa danni, ma e' peso inutile).
+
+FILE
+----
+genera-qr.py              lo script che crea i QR
+qr-instagram.*            QR del profilo Instagram - FUNZIONA GIA'
+qr-sito-ESEMPIO.*         QR con un indirizzo finto, solo per far
+                          vedere com'e'. Da rigenerare col dominio vero.
+oswald.ttf / inter.ttf    i font del sito, serviti allo script
+
+Di ogni QR ci sono tre file:
+  .svg            per la stampa: vettoriale, nitido a qualsiasi misura
+  .png            per lo schermo e le grafiche social
+  -cartello.png   cartellino 1080x1500 pronto, con logo e istruzione
+
+
+IL QR DEL SITO
+--------------
+Appena il dominio e' deciso:
+
+    pip install segno pillow
+    python3 stampa/genera-qr.py "https://il-dominio-vero.it" qr-sito
+
+VERIFICATO: i QR generati sono stati riletti da un decodificatore e
+restano leggibili anche ridotti a 110 px di lato, cioe' la misura di un
+biglietto da visita.
+
+
+PERCHE' SONO NERI SU BIANCO, E NON ORO SU NERO
+----------------------------------------------
+Perche' la fotocamera deve distinguere i quadratini dal fondo. Un QR
+oro su nero e' piu' bello ma molti telefoni non lo leggono, e un QR che
+non si legge e' peggio di un QR brutto. Il colore va messo attorno al
+codice, non dentro.
+
+Il livello di correzione usato e' il massimo ('H'): il codice resta
+leggibile anche se l'adesivo si sporca, si piega o viene coperto in
+parte. Su uno specchio di un barbiere serve davvero.
+
+
+DOVE METTERLO
+-------------
+- specchio della postazione: e' dove il cliente sta fermo 20 minuti
+- alla cassa, mentre paga
+- sul biglietto da visita
+- sulla vetrina, per chi passa a negozio chiuso
+
+CONSIGLIO: il QR che rende di piu' non e' quello del sito, e' quello
+che porta a LASCIARE UNA RECENSIONE su Google. Le recensioni fanno
+salire la scheda Google, e la scheda e' cio' che porta clienti nuovi.
+Il link per recensire si prende dalla scheda Google Business Profile
+(Chiedi recensioni -> copia link) e si passa allo stesso script.

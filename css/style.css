@@ -824,7 +824,10 @@ body.menu-aperto { overflow: hidden; }
   align-items: flex-start;
   gap: 14px;
 }
-.contatti-lista strong {
+/* Solo i figli DIRETTI: erano le etichette (INDIRIZZO, TELEFONO...), ma
+   il selettore largo prendeva anche i grassetti dentro le frasi, che
+   uscivano in maiuscolo e a capo in mezzo al testo. */
+.contatti-lista > li > span > strong {
   display: block;
   font-family: var(--titolo);
   font-size: .84rem;
@@ -934,6 +937,8 @@ body.menu-aperto { overflow: hidden; }
 
 /* Riga di orientamento sotto l'indirizzo: e' un segnaposto, quindi si
    presenta come tale invece di fingere un'informazione che non abbiamo. */
+.orientamento strong { color: var(--bianco); font-weight: 600; }
+
 .orientamento {
   margin: 6px 0 0;
   padding: 5px 10px;
@@ -1152,6 +1157,110 @@ body.menu-aperto { overflow: hidden; }
 @keyframes palo-gira {
   from { background-position: 0 0; }
   to   { background-position: -62px 0; }
+}
+
+/* ----------------------------- 25. MAPPA --------------------------------- */
+/* Immagine statica, non un iframe: nessuna chiamata a server esterni,
+   quindi nessun cookie e nessun banner da mostrare. */
+.mappa {
+  margin: 0 0 6px;
+  border: 1px solid var(--bordo);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--carbone);
+}
+.mappa img { width: 100%; height: auto; display: block; }
+
+/* Riquadro finche' la mappa vera non c'e' */
+.mappa-vuota {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px dashed var(--bordo);
+  /* reticolo tenue: suggerisce una mappa senza disegnarne una falsa */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+  background-size: 38px 38px, 38px 38px;
+}
+.mappa-vuota svg {
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: var(--oro);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .8;
+}
+.mappa-vuota span:nth-of-type(1) {
+  font-family: var(--titolo);
+  font-size: 1rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--bianco);
+}
+
+/* L'attribuzione a OpenStreetMap e' obbligatoria: piccola ma sempre visibile */
+.mappa-fonte {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: .72rem;
+  color: var(--grigio);
+  background: rgba(0, 0, 0, .3);
+}
+
+/* ----------------------------- 26. VOTO GOOGLE --------------------------- */
+/* Il voto e' reale: merita di stare in evidenza, prima dei testi di esempio. */
+.voto {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 26px;
+  padding: 18px 22px;
+  border: 1px solid rgba(213, 161, 23, .35);
+  border-radius: var(--radius);
+  background: rgba(213, 161, 23, .07);
+}
+.voto-numero {
+  margin: 0;
+  font-family: var(--titolo);
+  font-size: 3.1rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--oro);
+  font-variant-numeric: tabular-nums;
+}
+.voto-testo { margin: 4px 0 0; font-size: .9rem; color: var(--grigio); }
+.voto-testo strong { color: var(--bianco); font-weight: 600; }
+/* Stelle a riempimento parziale: due strati sovrapposti, quello dorato
+   ritagliato alla percentuale del voto. Mostrare 5 stelle piene con un
+   4,6 significherebbe dichiarare un voto che non e' quello vero. */
+.stelle-voto {
+  position: relative;
+  width: 120px;
+  height: 24px;
+}
+.stelle-fondo,
+.stelle-piene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;       /* fissa: e' cio' che rende possibile il ritaglio */
+  height: 24px;
+}
+.stelle-fondo { fill: #4a463e; }          /* le stelle spente */
+.stelle-piene { fill: var(--oro); }
+.stelle-clip {
+  position: absolute;
+  inset: 0;
+  width: var(--voto, 100%);
+  overflow: hidden;                        /* taglia la parte non raggiunta */
 }
 
 /* ----------------------------- 18. DESKTOP -------------------------------- */

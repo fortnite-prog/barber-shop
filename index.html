@@ -328,9 +328,37 @@
     <div class="wrap">
       <p class="eyebrow">Recensioni</p>
       <h2 class="sezione-titolo">Dicono di noi</h2>
+      <!-- Il voto e il numero di recensioni sono quelli reali della scheda
+           Google dell'attivita'. I TESTI delle card sotto restano inventati
+           ed etichettati come tali. -->
+      <!-- Il voto e il numero di recensioni sono quelli reali della scheda
+           Google dell'attivita', letti il 12/09/2026.
+           ATTENZIONE: sono una fotografia di quel giorno, non si aggiornano
+           da soli. Prima di pubblicare vanno riletti sulla scheda, e poi
+           ricontrollati ogni tanto: un voto vecchio e' un dato falso.
+           Il riempimento delle stelle si regola con --voto (4,6 su 5 = 92). -->
+      <div class="voto">
+        <p class="voto-numero">4,6</p>
+        <div>
+          <div class="stelle-voto" role="img" aria-label="Valutazione media 4,6 stelle su 5">
+            <svg class="stelle-fondo" viewBox="0 0 120 24" aria-hidden="true">
+              <defs>
+                <path id="stella" d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/>
+              </defs>
+              <use href="#stella" x="0"/><use href="#stella" x="24"/><use href="#stella" x="48"/><use href="#stella" x="72"/><use href="#stella" x="96"/>
+            </svg>
+            <span class="stelle-clip" style="--voto: 92%">
+              <svg class="stelle-piene" viewBox="0 0 120 24" aria-hidden="true"><use href="#stella" x="0"/><use href="#stella" x="24"/><use href="#stella" x="48"/><use href="#stella" x="72"/><use href="#stella" x="96"/></svg>
+            </span>
+          </div>
+          <p class="voto-testo">media su <strong>10 recensioni</strong> Google</p>
+        </div>
+      </div>
+
       <p class="sezione-intro">
-        I testi qui sotto sono segnaposto: nella versione ufficiale vanno
-        sostituiti con recensioni reali, riportate parola per parola.
+        I testi delle tre schede qui sotto sono segnaposto: servono a far
+        vedere come si presenteranno le recensioni vere, che vanno riportate
+        parola per parola.
       </p>
 
       <!-- ======================= DA SOSTITUIRE =======================
@@ -390,15 +418,16 @@
       </ul>
 
       <div class="recensioni-cta">
-        <!-- TODO: sostituire href="#" con il link vero alle recensioni Google.
-             Come trovarlo: Google Maps > scheda dell'attivita' > Recensioni >
-             Condividi, oppure il link "Scrivi una recensione" del profilo
-             Google Business. Ricordarsi di togliere aria-disabled. -->
-        <a class="btn btn-ghost btn-lg is-todo" href="#" aria-disabled="true">
+        <!-- Questo link porta alla scheda Google dell'attivita', dove le
+             recensioni sono visibili: e' una ricerca per nome e indirizzo,
+             quindi funziona senza conoscere l'identificativo del luogo.
+             MEGLIO ANCORA: dalla scheda Google Business Profile si copia il
+             link diretto alle recensioni, piu' corto e piu' preciso. -->
+        <a class="btn btn-ghost btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Parrucchiere+della+Citt%C3%A0%2C+Via+Rivolta+1%2C+Lecco" target="_blank" rel="noopener">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.8z"/></svg>
           Leggi le recensioni su Google
         </a>
-        <p class="nota nota-todo">Link da collegare prima della pubblicazione.</p>
+        <p class="nota">Si apre la scheda Google del negozio, in una nuova scheda.</p>
       </div>
     </div>
   </section>
@@ -424,12 +453,13 @@
               <strong>Indirizzo</strong>
               <!-- <address> e' l'elemento giusto per i recapiti di un'attivita' -->
               <address>Via Rivolta 1<br>23900 Lecco (LC)</address>
-              <!-- TODO: farsi dire dal titolare un punto di riferimento vero
-                   ("di fronte a...", "sopra il bar...", "a N minuti dalla
-                   stazione") e sostituire la riga qui sotto. Non inventarlo:
-                   un riferimento sbagliato fa girare a vuoto i clienti. -->
+              <!-- Riferimenti letti sulla scheda Google dell'attivita'.
+                   TODO: farli confermare al titolare e chiedergli il
+                   parcheggio piu' comodo, che dalla mappa non si ricava. -->
               <p class="orientamento">
-                <span class="todo-mini">Punto di riferimento e parcheggio: da inserire</span>
+                In zona <strong>Villa Manzoni</strong>, vicino al centro
+                commerciale <strong>Meridiana</strong>. Fermate dell'autobus
+                nelle immediate vicinanze.
               </p>
             </span>
           </li>
@@ -456,6 +486,41 @@
         </ul>
 
         <div class="contatti-azioni">
+          <!-- ======================= DA SOSTITUIRE =======================
+               SPAZIO MAPPA. Volutamente NON un iframe di Google Maps:
+               quello scrive cookie di Google e obbligherebbe al banner.
+               Qui va un'IMMAGINE statica, che non chiama nessun server.
+
+               Come ottenerla gratis in due minuti:
+                 1. apri openstreetmap.org e cerca "Via Rivolta 1, Lecco"
+                 2. inquadra la zona che vuoi mostrare
+                 3. pannello di destra -> Condividi -> Scarica immagine
+                 4. salvala come img/mappa.png (larga ~1000 px)
+                 5. qui sotto togli il commento all'<img> e cancella il
+                    riquadro .mappa-vuota
+
+               ATTENZIONE ALLE LICENZE:
+                 - OpenStreetMap si puo' usare, ma l'attribuzione
+                   "© OpenStreetMap contributors" e' OBBLIGATORIA ed e'
+                   gia' pronta qui sotto.
+                 - Una schermata di Google Maps NON si puo' ripubblicare
+                   liberamente su un sito commerciale: servirebbe la loro
+                   API a pagamento. Meglio OpenStreetMap.
+               ============================================================= -->
+          <figure class="mappa">
+            <!--
+            <img src="img/mappa.png" alt="Mappa della zona di Via Rivolta 1 a Lecco"
+                 width="1000" height="620" loading="lazy" decoding="async">
+            -->
+            <div class="mappa-vuota">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6"/></svg>
+              <span>Mappa della zona</span>
+              <span class="todo-mini">immagine da inserire</span>
+            </div>
+            <figcaption class="mappa-fonte">
+              Mappa &copy; <span>OpenStreetMap contributors</span>
+            </figcaption>
+          </figure>
           <!-- Solo un link a Google Maps: la mappa incorporata (iframe)
                scriverebbe cookie di Google e obbligherebbe al banner. -->
           <a class="btn btn-cta btn-lg" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Rivolta+1+23900+Lecco" target="_blank" rel="noopener">

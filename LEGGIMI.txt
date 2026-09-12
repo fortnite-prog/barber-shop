@@ -34,6 +34,8 @@ js/lib/           GSAP, ScrollTrigger e Lenis in locale
                   (vedi js/lib/LICENZE.txt: nota sulla licenza GSAP)
 fonts/            Oswald e Inter in locale (motivo: GDPR)
 img/              logo vero + segnaposto galleria e hero
+stampa/           QR code e cartellini per il negozio
+                  (NON va caricata su Netlify: non serve al sito)
 img/LEGGIMI.txt   come sostituire le immagini
 
 
@@ -41,10 +43,24 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
 -----------------------------------------
 [ ] Partita IVA          index.html e privacy.html, cerca "P.IVA"
 [ ] Link Facebook        cerca "TODO" - due punti: contatti e footer
-[ ] Punto di riferimento sotto l'indirizzo, nei Contatti: farsi dire
-                         dal titolare un riferimento vero e il
-                         parcheggio piu' comodo
-[ ] Link recensioni      cerca "TODO" nella sezione recensioni
+[~] Punto di riferimento MESSO (Villa Manzoni, C.C. Meridiana, fermate
+                         autobus), letto dalla scheda Google. Da far
+                         CONFERMARE al titolare, e chiedergli il
+                         parcheggio piu' comodo: dalla mappa non si vede
+[ ] Immagine della mappa nei Contatti c'e' il riquadro pronto e vuoto.
+                         Si riempie in 2 minuti da openstreetmap.org
+                         (Condividi > Scarica immagine). Istruzioni
+                         complete nel commento dentro index.html.
+                         NON usare una schermata di Google Maps: su un
+                         sito commerciale servirebbe la loro API
+[ ] Voto 4,6 da rilegge- nella sezione Recensioni il voto e il numero
+    re prima di pubblicare sono veri ma fotografati il 12/09/2026.
+                         Non si aggiornano da soli: rileggerli sulla
+                         scheda prima di andare online
+[~] Link recensioni      FATTO: il bottone apre la scheda Google del
+                         negozio. Si puo' migliorare copiando dalla
+                         scheda Google Business il link DIRETTO alle
+                         recensioni, piu' corto e preciso
 [ ] Recensioni vere      ora sono etichettate "di esempio": vanno
                          sostituite con quelle reali di Google
                          oppure va tolta l'intera sezione
@@ -91,10 +107,25 @@ In ordine di importanza reale:
 
 1. SCHEDA GOOGLE (Google Business Profile) - gratis, e' il 90% del
    lavoro. Chi cerca "barbiere Lecco" vede queste, non i siti.
-   - rivendicare la scheda dell'attivita' se esiste, o crearla
-   - foto, orari, servizi, e il sito come link ufficiale
-   - chiedere recensioni ai clienti: sono cio' che fa salire la scheda
-   Senza questa, tutto il resto conta poco.
+
+   LA SCHEDA ESISTE GIA' e sta andando bene: 4,6 stelle su 10
+   recensioni, orari corretti, foto del negozio caricate.
+
+   >>> PERO' C'E' UN PROBLEMA DA SISTEMARE SUBITO <<<
+   La categoria impostata e' "Centro estetico". Per un barber shop e'
+   sbagliata, e la categoria e' uno dei segnali piu' pesanti che Google
+   usa per decidere chi mostrare: con quella categoria la scheda rischia
+   di non comparire a chi cerca "barbiere Lecco" o "parrucchiere uomo
+   Lecco", cioe' esattamente i clienti che servono.
+   Si cambia dalla scheda: Modifica profilo > Categoria aziendale ->
+   "Barbiere" come principale, e "Parrucchiere" come secondaria.
+   E' gratis, ci vuole un minuto, e vale piu' di tutto il sito.
+
+   Poi, in ordine:
+   - mettere il sito come link ufficiale nella scheda
+   - completare l'elenco servizi anche dentro la scheda
+   - chiedere recensioni ai clienti: sono cio' che la fa salire
+     (da 10 a 30 recensioni si vede la differenza)
 
 2. LINK NELLA BIO DI INSTAGRAM - il pubblico ce l'ha gia'. Il link va
    nella bio, non nei post: nei post non e' cliccabile.
