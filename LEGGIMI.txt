@@ -3,6 +3,25 @@
   SITO DIMOSTRATIVO NON UFFICIALE
 ==========================================================
 
+>>>>>> PRIMA DI TUTTO, PRIMA ANCORA DEL SITO <<<<<<
+
+La scheda Google del negozio ha la CATEGORIA SBAGLIATA: dice
+"Centro estetico". Per un barber shop e' un errore che pesa, perche'
+la categoria e' uno dei segnali principali con cui Google decide chi
+mostrare: cosi' com'e', la scheda rischia di non uscire a chi cerca
+"barbiere Lecco".
+
+Si sistema in un minuto, gratis:
+  scheda Google -> Modifica profilo -> Categoria aziendale
+  -> "Barbiere" come principale, "Parrucchiere" come secondaria
+
+La scheda per il resto va bene: 4,6 stelle su 10 recensioni, orari
+giusti, foto caricate. E' solo catalogata male.
+
+Se gli fai sistemare questo, gli hai dato piu' valore del sito: ed e'
+anche il modo migliore per convincerlo a prenderlo.
+
+
 Demo preparata come proposta per il titolare dell'attivita'.
 Non e' il sito ufficiale e non deve essere presentato come tale.
 
@@ -47,12 +66,20 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
                          autobus), letto dalla scheda Google. Da far
                          CONFERMARE al titolare, e chiedergli il
                          parcheggio piu' comodo: dalla mappa non si vede
-[ ] Immagine della mappa nei Contatti c'e' il riquadro pronto e vuoto.
-                         Si riempie in 2 minuti da openstreetmap.org
-                         (Condividi > Scarica immagine). Istruzioni
-                         complete nel commento dentro index.html.
+[ ] Immagine della mappa il riquadro nei Contatti e' GIA' CLICCABILE
+                         (apre Google Maps), manca solo l'immagine.
+                         Come ottenerla, 30 secondi:
+                          1. apri questo link, e' gia' sul negozio:
+                             openstreetmap.org/search?query=Via%20Rivolta%201,%20Lecco
+                          2. Condividi > Scarica immagine
+                          3. salvala come img/mappa.png
+                          4. in index.html togli il commento all'<img>
+                             E alla <figcaption> dell'attribuzione,
+                             poi cancella lo span .mappa-vuota
                          NON usare una schermata di Google Maps: su un
-                         sito commerciale servirebbe la loro API
+                         sito commerciale servirebbe la loro API a
+                         pagamento. OpenStreetMap e' gratis, serve solo
+                         tenere l'attribuzione
 [ ] Voto 4,6 da rilegge- nella sezione Recensioni il voto e il numero
     re prima di pubblicare sono veri ma fotografati il 12/09/2026.
                          Non si aggiornano da soli: rileggerli sulla
