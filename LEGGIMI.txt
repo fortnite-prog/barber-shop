@@ -68,3 +68,53 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
 [ ] Togliere la demo     cancellare il div .demo-bar dalle due pagine
 [ ] Togliere il noindex  meta robots nelle due pagine + robots.txt
 [ ] Attivare il JSON-LD  in fondo a index.html, e' commentato
+[ ] Meta di anteprima    in index.html cercare IL-TUO-DOMINIO.it:
+                         og:url e og:image vogliono l'indirizzo
+                         completo, o su WhatsApp il link arriva
+                         senza riquadro di anteprima
+[ ] Scheda Google        vedi in fondo: COME FARANNO LE PERSONE
+                         A TROVARE IL SITO. E' il punto che conta
+                         piu' del sito stesso
+
+==========================================================
+  COME FARANNO LE PERSONE A TROVARE IL SITO
+==========================================================
+
+Da mettere in chiaro col titolare, perche' e' la domanda che fara':
+IL SITO DA SOLO NON PORTA CLIENTI. Nessuno cerca "barbiere Lecco" e
+finisce su un sito: finisce sulle schede di Google Maps. Il sito non
+attira le persone, CONVINCE quelle che l'attivita' ha gia' intercettato
+altrove. Promettere il contrario significa perdere il cliente dopo due
+mesi.
+
+In ordine di importanza reale:
+
+1. SCHEDA GOOGLE (Google Business Profile) - gratis, e' il 90% del
+   lavoro. Chi cerca "barbiere Lecco" vede queste, non i siti.
+   - rivendicare la scheda dell'attivita' se esiste, o crearla
+   - foto, orari, servizi, e il sito come link ufficiale
+   - chiedere recensioni ai clienti: sono cio' che fa salire la scheda
+   Senza questa, tutto il resto conta poco.
+
+2. LINK NELLA BIO DI INSTAGRAM - il pubblico ce l'ha gia'. Il link va
+   nella bio, non nei post: nei post non e' cliccabile.
+
+3. IN NEGOZIO - un QR code sullo specchio, alla cassa o sul biglietto
+   da visita. Si genera gratis quando il dominio e' deciso.
+   Serve soprattutto per raccogliere recensioni Google.
+
+4. IL LINK CHE SI CONDIVIDE - quando manda il sito su WhatsApp deve
+   comparire il riquadro con logo, nome e orari: e' quello che fa
+   aprire il link. Lo gestiscono i meta "og:" in index.html e
+   l'immagine img/anteprima-social.jpg (1200x630).
+   ATTENZIONE: og:url e og:image vanno completati con il dominio
+   vero, altrimenti l'anteprima non compare.
+
+5. RICERCA SU GOOGLE - arriva per ultima ed e' la piu' lenta. Serve
+   togliere noindex e robots.txt, attivare il JSON-LD, e mettere una
+   sitemap. Per "barbiere lecco" un sito nuovo competera' male:
+   la scheda Google resta la strada breve.
+
+DA NON FARE: pagare campagne prima di aver sistemato la scheda Google.
+Sarebbero soldi buttati per mandare traffico a una vetrina che
+Google stesso non sa presentare.
