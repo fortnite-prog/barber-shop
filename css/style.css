@@ -879,6 +879,57 @@ body.menu-aperto { overflow: hidden; }
   cursor: not-allowed;
 }
 .is-todo:hover { border-color: var(--bordo); color: inherit; }
+/* Anche sui bottoni grandi, non solo sui link social */
+.btn.is-todo { border-style: dashed; }
+.btn.is-todo:hover { transform: none; box-shadow: none; background: transparent; }
+
+/* --------------------- 24. RIPIEGO DEL NUMERO ----------------------------
+   Compare solo dove la telefonata non puo' partire: da computer, o dentro
+   una cornice (iframe) che blocca i link tel:. Su telefono non si vede
+   mai, perche' li' il tasto funziona davvero. */
+.avviso-tel {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  translate: -50% 0;
+  z-index: 200;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--oro);
+  border-radius: var(--radius);
+  background: #16161a;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .6);
+  font-size: .92rem;
+}
+.avviso-tel[hidden] { display: none; }
+.avviso-tel strong {
+  font-family: var(--titolo);
+  font-size: 1.16rem;
+  letter-spacing: .04em;
+  color: var(--oro);
+  font-weight: 600;
+}
+.avviso-tel-testo { color: var(--grigio); }
+.avviso-tel button {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--bordo);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bianco);
+  font-family: var(--titolo);
+  font-size: .82rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.avviso-tel button:hover { border-color: var(--oro); color: var(--oro); }
+
+
 .todo-mini { font-size: .76rem; color: var(--grigio); }
 
 /* Riga di orientamento sotto l'indirizzo: e' un segnaposto, quindi si

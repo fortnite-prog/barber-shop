@@ -376,4 +376,81 @@
     if (todo) e.preventDefault();
   });
 
+  /* ---------------------------------------------------------------
+     9. RIPIEGO PER "CHIAMA ORA"
+     Un link tel: funziona su un telefono, ma non parte quasi mai da
+     computer (serve un'app che gestisca le chiamate) e viene bloccato
+     dentro una cornice iframe. In quei casi il tasto sembrerebbe rotto.
+     Qui non lo impediamo: lasciamo partire la chiamata e, se dopo
+     mezzo secondo la pagina e' ancora qui, mostriamo il numero con un
+     tasto per copiarlo.
+     Su telefono questo blocco non si attiva nemmeno.
+     --------------------------------------------------------------- */
+  var NUMERO = '351 302 2089';
+  var inCornice   = window.self !== window.top;
+  var puntatoreOk = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  if (inCornice || puntatoreOk) {
+    var avviso = null;
+    var chiusura = null;
+
+    function mostraNumero() {
+      if (!avviso) {
+        avviso = document.createElement('div');
+        avviso.className = 'avviso-tel';
+        avviso.setAttribute('role', 'status');
+        avviso.innerHTML =
+          '<span class="avviso-tel-testo">Chiama il</span> <strong>' + NUMERO + '</strong>' +
+          '<button type="button">Copia</button>' +
+          '<button type="button" aria-label="Chiudi">Chiudi</button>';
+        var tasti = avviso.querySelectorAll('button');
+
+        tasti[0].addEventListener('click', function () {
+          var testo = NUMERO;
+          // clipboard.writeText non esiste su tutti i browser e puo'
+          // essere negato: in quel caso selezioniamo il numero cosi'
+          // l'utente lo copia a mano.
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(testo).then(function () {
+              tasti[0].textContent = 'Copiato';
+            }, selezionaNumero);
+          } else {
+            selezionaNumero();
+          }
+        });
+        tasti[1].addEventListener('click', nascondiNumero);
+        document.body.appendChild(avviso);
+      }
+      avviso.hidden = false;
+      clearTimeout(chiusura);
+      chiusura = setTimeout(nascondiNumero, 9000);
+    }
+
+    function selezionaNumero() {
+      var forte = avviso.querySelector('strong');
+      var sel = window.getSelection();
+      var r = document.createRange();
+      r.selectNodeContents(forte);
+      sel.removeAllRanges();
+      sel.addRange(r);
+      avviso.querySelector('button').textContent = 'Selezionato';
+    }
+
+    function nascondiNumero() {
+      if (avviso) avviso.hidden = true;
+      clearTimeout(chiusura);
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('a[href^="tel:"]')) return;
+      // Se la telefonata parte davvero, il sistema porta in primo piano
+      // il telefono e questa pagina passa in secondo piano: in quel caso
+      // non mostriamo niente.
+      var eraVisibile = document.visibilityState === 'visible';
+      setTimeout(function () {
+        if (eraVisibile && document.visibilityState === 'visible') mostraNumero();
+      }, 500);
+    });
+  }
+
 })();
