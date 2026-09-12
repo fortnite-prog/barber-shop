@@ -1164,12 +1164,12 @@ body.menu-aperto { overflow: hidden; }
    quindi nessun cookie e nessun banner da mostrare. */
 .mappa {
   margin: 0 0 6px;
-  border: 1px solid var(--bordo);
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--carbone);
 }
 .mappa img { width: 100%; height: auto; display: block; }
+.mappa-link { display: block; text-decoration: none; color: inherit; }
 
 /* Riquadro finche' la mappa vera non c'e' */
 .mappa-vuota {
@@ -1181,7 +1181,9 @@ body.menu-aperto { overflow: hidden; }
   gap: 6px;
   padding: 20px;
   text-align: center;
-  border-bottom: 1px dashed var(--bordo);
+  border: 1px dashed var(--bordo);
+  border-radius: var(--radius);
+  transition: border-color .25s ease;
   /* reticolo tenue: suggerisce una mappa senza disegnarne una falsa */
   background-image:
     linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
@@ -1198,13 +1200,20 @@ body.menu-aperto { overflow: hidden; }
   stroke-linejoin: round;
   opacity: .8;
 }
-.mappa-vuota span:nth-of-type(1) {
+.mappa-titolo {
   font-family: var(--titolo);
-  font-size: 1rem;
+  font-size: 1.02rem;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--bianco);
 }
+/* Reagisce al passaggio del mouse: e' un elemento che si tocca */
+@media (hover: hover) {
+  .mappa-link:hover .mappa-vuota { border-color: var(--oro); }
+  .mappa-link:hover .mappa-titolo { color: var(--oro); }
+  .mappa-link:hover .mappa-vuota svg { opacity: 1; transform: scale(1.08); }
+}
+.mappa-vuota svg { transition: transform .25s var(--molla), opacity .25s ease; }
 
 /* L'attribuzione a OpenStreetMap e' obbligatoria: piccola ma sempre visibile */
 .mappa-fonte {

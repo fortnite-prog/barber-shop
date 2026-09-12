@@ -492,12 +492,13 @@
                Qui va un'IMMAGINE statica, che non chiama nessun server.
 
                Come ottenerla gratis in due minuti:
-                 1. apri openstreetmap.org e cerca "Via Rivolta 1, Lecco"
-                 2. inquadra la zona che vuoi mostrare
+                 1. apri questo indirizzo, e' gia' centrato sul negozio:
+                    https://www.openstreetmap.org/search?query=Via%20Rivolta%201%2C%20Lecco
+                 2. allarga o stringi fino alla zona che vuoi mostrare
                  3. pannello di destra -> Condividi -> Scarica immagine
                  4. salvala come img/mappa.png (larga ~1000 px)
-                 5. qui sotto togli il commento all'<img> e cancella il
-                    riquadro .mappa-vuota
+                 5. qui sotto togli il commento all'<img> E alla
+                    <figcaption>, poi cancella lo span .mappa-vuota
 
                ATTENZIONE ALLE LICENZE:
                  - OpenStreetMap si puo' usare, ma l'attribuzione
@@ -508,18 +509,28 @@
                    API a pagamento. Meglio OpenStreetMap.
                ============================================================= -->
           <figure class="mappa">
-            <!--
-            <img src="img/mappa.png" alt="Mappa della zona di Via Rivolta 1 a Lecco"
-                 width="1000" height="620" loading="lazy" decoding="async">
+            <!-- Finche' la mappa vera non c'e', il riquadro non e' inerte:
+                 toccarlo apre Google Maps, come si aspetta chiunque tocchi
+                 una mappa. Quando l'immagine arriva, il link resta. -->
+            <a class="mappa-link" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Rivolta+1+23900+Lecco" target="_blank" rel="noopener">
+              <!-- QUANDO ARRIVA L'IMMAGINE: togliere il commento a questa
+                   <img> E alla <figcaption> in fondo (l'attribuzione a
+                   OpenStreetMap e' obbligatoria), poi cancellare lo
+                   <span class="mappa-vuota"> qui sotto.
+              <img src="img/mappa.png" alt="Mappa della zona di Via Rivolta 1 a Lecco"
+                   width="1000" height="620" loading="lazy" decoding="async">
+              -->
+              <span class="mappa-vuota">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6"/></svg>
+                <span class="mappa-titolo">Vedi dove siamo</span>
+                <span class="todo-mini">tocca per aprire la mappa</span>
+              </span>
+            </a>
+            <!-- L'attribuzione va mostrata SOLO quando c'e' davvero una mappa
+                 OpenStreetMap: scritta ora sarebbe una fonte dichiarata per
+                 un contenuto che non esiste.
+            <figcaption class="mappa-fonte">Mappa &copy; OpenStreetMap contributors</figcaption>
             -->
-            <div class="mappa-vuota">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.6"/></svg>
-              <span>Mappa della zona</span>
-              <span class="todo-mini">immagine da inserire</span>
-            </div>
-            <figcaption class="mappa-fonte">
-              Mappa &copy; <span>OpenStreetMap contributors</span>
-            </figcaption>
           </figure>
           <!-- Solo un link a Google Maps: la mappa incorporata (iframe)
                scriverebbe cookie di Google e obbligherebbe al banner. -->
