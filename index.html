@@ -13,8 +13,8 @@
   <meta name="theme-color" content="#0d0d0f">
 
   <!-- Favicon inline (SVG): nessun file esterno, nessuna richiesta in piu'.
-       Non e' il logo dell'attivita', solo l'iniziale in rosso. -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230d0d0f'/%3E%3Ctext x='32' y='45' font-family='sans-serif' font-size='38' font-weight='bold' fill='%23ff6f68' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+       Non e' il logo: e' solo l'iniziale, per la linguetta del browser. -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230d0d0f'/%3E%3Ctext x='32' y='45' font-family='sans-serif' font-size='38' font-weight='bold' fill='%23d5a117' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
 
   <!-- Precarico i due font serviti in locale: evita lo "sfarfallio" del testo -->
   <link rel="preload" href="fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -36,9 +36,9 @@
 <!-- Link di salto per chi naviga da tastiera / screen reader -->
 <a class="skip-link" href="#main">Salta al contenuto</a>
 
-<!-- Filigrana di sfondo, fissa dietro tutta la pagina.
-     Per toglierla: cancellare questo div e la regola .sfondo-emblema. -->
-<div class="sfondo-emblema" aria-hidden="true"></div>
+<!-- Il logo in filigrana, fisso dietro tutta la pagina.
+     Per toglierlo: cancellare questo div e la regola .sfondo-logo. -->
+<div class="sfondo-logo" aria-hidden="true"></div>
 <div class="grana" aria-hidden="true"></div>
 
 <!-- Sottile barra che mostra quanto manca alla fine della pagina -->
@@ -47,10 +47,17 @@
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
 
-    <!-- Nessun logo dell'attivita': il nome e' scritto con il font dei titoli -->
+    <!-- Logo vero dell'attivita', nella versione per fondo scuro.
+         alt vuoto: il nome e' scritto qui accanto, e farlo leggere due
+         volte di fila darebbe fastidio a chi usa uno screen reader.
+         Il logo e' un badge con il testo in cerchio: a 46px quel testo
+         sarebbe illeggibile, per questo il nome resta scritto a fianco. -->
     <a class="brand" href="#hero">
-      <span class="brand-name">Parrucchiere <br>della Città</span>
-      <span class="brand-sub">Barber Shop · Lecco</span>
+      <img class="brand-logo" src="img/logo.webp" alt="" width="720" height="680" decoding="async">
+      <span class="brand-testo">
+        <span class="brand-name">Parrucchiere <br>della Città</span>
+        <span class="brand-sub">Barber Shop · Lecco</span>
+      </span>
     </a>
 
     <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Apri il menu">
@@ -84,8 +91,8 @@
          c'e' gia' una velatura, ma una foto chiara la vince.
          ============================================================= -->
     <div class="hero-foto" aria-hidden="true"></div>
-    <!-- L'emblema in filigrana: decorativo, quindi nascosto agli screen reader -->
-    <div class="hero-emblema" aria-hidden="true"></div>
+    <!-- Il logo in filigrana: decorativo, il nome e' gia' nell'header -->
+    <div class="hero-logo" aria-hidden="true"></div>
 
     <div class="wrap hero-inner">
       <p class="hero-kicker">Via Rivolta 1 &middot; Lecco</p>
@@ -466,6 +473,7 @@
   <div class="wrap footer-inner">
 
     <div class="footer-col">
+      <img class="footer-logo" src="img/logo.webp" alt="" width="720" height="680" loading="lazy" decoding="async">
       <p class="footer-nome">Parrucchiere della Città</p>
       <address>
         Via Rivolta 1, 23900 Lecco (LC)<br>

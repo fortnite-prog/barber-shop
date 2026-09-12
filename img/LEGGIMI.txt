@@ -1,10 +1,27 @@
 CARTELLA IMMAGINI
 =================
 
-lavori-1.svg ... lavori-6.svg   SEGNAPOSTO della galleria, da buttare.
-emblema-tricolore.png                 emblema usato come filigrana di sfondo
-                                (bianco trasparente, nero -> bianco, rosso e blu tenuti)
-emblema-originale.png           l'immagine di partenza, a colori
+logo.webp            IL LOGO VERO, versione per fondo scuro
+logo-originale.webp  il logo come fornito (nero e oro su bianco)
+hero-salone.svg      SEGNAPOSTO della foto grande dell'hero
+lavori-1..6.svg      SEGNAPOSTO della galleria
+
+
+IL LOGO
+-------
+logo-originale.webp e' il file fornito dal cliente, invariato a parte il
+ritaglio della striscia scura in fondo (artefatto dello screenshot).
+
+logo.webp e' la VERSIONE IN NEGATIVO, quella usata sul sito: il logo
+originale e' nero e oro su bianco, e su fondo nero l'inchiostro nero
+sarebbe invisibile. Quindi il bianco e' stato reso trasparente e il nero
+portato a crema (#f2efe8); l'oro e' rimasto l'oro del logo (#d5a117).
+
+>>> DA CHIEDERE AL CLIENTE
+    Se ha il logo in VETTORIALE (.ai, .eps, .svg) e/o la versione
+    ufficiale per fondi scuri, usare quelli: restano nitidi a
+    qualsiasi dimensione e pesano una frazione. Il file che abbiamo
+    e' uno screenshot compresso, quindi ingrandendolo si sgrana.
 
 
 COME METTERE LE FOTO VERE
@@ -15,18 +32,14 @@ COME METTERE LE FOTO VERE
    lavori-1.jpg ... lavori-6.jpg
 4. In index.html, nella sezione GALLERIA, cambia le sei estensioni
    da .svg a .jpg (c'e' un commento che te lo ricorda).
-5. Riscrivi ogni alt="" descrivendo davvero la foto: serve ai non
-   vedenti e a Google.
+5. Riscrivi ogni alt="" descrivendo davvero la foto.
+
+FOTO GRANDE DELL'HERO
+---------------------
+hero-salone.svg e' un segnaposto scuro. La foto vera va ORIZZONTALE
+(circa 1600x1000 px) e SCURA, altrimenti il titolo bianco sopra non si
+legge. Salvala come hero-salone.jpg e cambia l'estensione nella regola
+.hero-foto in css/style.css.
 
 IMPORTANTE: usa solo foto scattate in negozio o di cui hai i diritti.
-Le foto prese da Google o da altri siti sono protette da copyright.
 Se in una foto si riconosce un cliente, serve il suo consenso scritto.
-
-
-NOTA SULL'EMBLEMA DI SFONDO  <-- DA CHIARIRE COL CLIENTE
---------------------------------------------------------
-emblema-originale.png e' un emblema generico ("BARBERSHOP - PREMIUM CUT
-& SHAVE - ESTD 2022"), non il marchio di Parrucchiere della Citta'.
-Prima di pubblicare bisogna sapere se il titolare ne ha la licenza.
-In alternativa: sostituirlo col suo logo vero, oppure toglierlo del
-tutto (basta cancellare .sfondo-emblema e .hero-emblema dal CSS).

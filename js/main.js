@@ -256,7 +256,7 @@
       yPercent: 11, ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });
-    gsap.to('.hero-emblema', {
+    gsap.to('.hero-logo', {
       yPercent: 18, ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });

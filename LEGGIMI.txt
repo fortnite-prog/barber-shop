@@ -33,7 +33,7 @@ js/main.js        menu, aperto/chiuso, animazioni, anno
 js/lib/           GSAP, ScrollTrigger e Lenis in locale
                   (vedi js/lib/LICENZE.txt: nota sulla licenza GSAP)
 fonts/            Oswald e Inter in locale (motivo: GDPR)
-img/              segnaposto galleria + emblema di sfondo
+img/              logo vero + segnaposto galleria e hero
 img/LEGGIMI.txt   come sostituire le immagini
 
 
@@ -56,8 +56,10 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
                          va confermato voce per voce col titolare
                          (la colorazione e' gia' stata tolta)
 [ ] Listino prezzi       ora c'e' scritto "Su richiesta"
-[ ] Emblema di sfondo    verificare di averne i diritti, oppure
-                         sostituirlo col logo vero (vedi img/LEGGIMI.txt)
+[ ] Logo vettoriale      il logo e' il loro (risolto), ma il file che
+                         abbiamo e' uno screenshot compresso. Chiedere
+                         .ai / .eps / .svg e la versione ufficiale per
+                         fondi scuri: resta nitido a ogni dimensione
 [ ] Privacy policy       generarla (es. iubenda) e sostituire
                          il contenuto di privacy.html
 [ ] Togliere la demo     cancellare il div .demo-bar dalle due pagine
