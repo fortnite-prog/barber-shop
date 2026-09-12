@@ -351,16 +351,39 @@ body.menu-aperto { overflow: hidden; }
   position: relative;
   display: flex;
   align-items: center;
-  min-height: min(78vh, 640px);
+  /* Tutta l'altezza VISIBILE: 100dvh meno le due barre fisse, altrimenti
+     l'hero sborderebbe sotto lo schermo proprio della loro altezza.
+     dvh (e non vh) perche' su mobile la barra del browser si ritira. */
+  min-height: calc(100dvh - var(--demo-bar-h) - var(--header-h));
   padding: 64px 0 72px;
   overflow: hidden;
   /* Alone dorato dall'alto su fondo nero: niente righe diagonali, che
      davano un'aria vintage. Qui il taglio e' urban. */
-  background:
-    radial-gradient(120% 80% at 50% -12%, rgba(212, 38, 31, .3), transparent 60%),
-    radial-gradient(95% 70% at 88% 105%, rgba(30, 70, 189, .3), transparent 62%),
-    linear-gradient(180deg, #141419 0%, var(--nero) 100%);
+  background: var(--nero);   /* sotto la foto, per i millisecondi di caricamento */
 }
+
+/* Foto di sfondo dell'hero. Per la foto vera basta cambiare .svg in .jpg.
+   Sopra c'e' una doppia velatura: senza, su una foto chiara il titolo
+   bianco sparirebbe. */
+.hero-foto {
+  position: absolute;
+  inset: 0;
+  background: url('../img/hero-salone.svg') center / cover no-repeat;
+  /* will-change: la foto viene mossa da GSAP in parallasse */
+  will-change: transform;
+}
+.hero-foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,13,15,.78) 0%, rgba(13,13,15,.62) 42%, rgba(13,13,15,.95) 100%),
+    radial-gradient(115% 75% at 50% -10%, rgba(212, 38, 31, .34), transparent 62%),
+    radial-gradient(90% 65% at 88% 108%, rgba(30, 70, 189, .32), transparent 62%);
+}
+/* La parallasse sposta la foto: la faccio piu' alta del contenitore
+   cosi' muovendosi non scopre mai i bordi. */
+.hero-foto { top: -8%; bottom: -8%; }
 
 /* Emblema in filigrana dentro l'hero: grande, sfumato ai bordi.
    Per toglierlo: cancellare questa regola e il div .hero-emblema. */
@@ -374,8 +397,9 @@ body.menu-aperto { overflow: hidden; }
   width: min(112vw, 700px);
   aspect-ratio: 7 / 8;   /* proporzioni del file emblema-tricolore.png */
   background: url('../img/emblema-tricolore.png') center / contain no-repeat;
-  opacity: .26;
-  filter: blur(5px);      /* niente scritte leggibili dietro al titolo */
+  opacity: .07;
+  filter: blur(10px);      /* con la foto sotto basta un velo: due texture
+                             a piena forza si disturbano a vicenda */
   pointer-events: none;
   /* sfuma verso i bordi cosi' non si vede il quadrato dell'immagine */
   -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 72%);
@@ -393,7 +417,9 @@ body.menu-aperto { overflow: hidden; }
   color: var(--rosso-chiaro);
 }
 .hero-title {
-  font-size: clamp(3rem, 15vw, 6.4rem);   /* titoli grandi, look deciso */
+  /* Fluido: non scende sotto 3rem, cresce col 14% della larghezza
+     schermo, si ferma a 8.5rem per non esplodere sui monitor grandi. */
+  font-size: clamp(3rem, 14vw, 8.5rem);
   font-weight: 700;
   margin-bottom: .22em;
   text-wrap: balance;
@@ -471,12 +497,7 @@ body.menu-aperto { overflow: hidden; }
   margin-top: 16px;
   background: var(--rosso-chiaro);
   transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform .7s var(--molla) .15s;
 }
-/* Il filetto si disegna da sinistra quando la sezione entra in vista */
-.is-visible .sezione-titolo::after,
-.sezione:not([data-reveal]) .sezione-titolo::after { transform: scaleX(1); }
 .sezione-intro {
   margin: 0 0 34px;
   max-width: 56ch;            /* riga leggibile, non troppo lunga */
@@ -534,10 +555,16 @@ body.menu-aperto { overflow: hidden; }
   background: radial-gradient(90% 70% at 0% 0%, rgba(255, 111, 104, .16), transparent 70%);
   transition: opacity .35s ease;
 }
-.servizio:hover {
-  border-color: rgba(255, 111, 104, .55);
-  transform: translateY(-4px);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+/* Al passaggio del mouse: scala leggera + bordo acceso.
+   Solo dove esiste un vero puntatore: su telefono l'hover resta
+   "appiccicato" dopo il tocco e la card sembrerebbe bloccata. */
+@media (hover: hover) {
+  .servizio:hover {
+    border-color: rgba(255, 111, 104, .6);
+    transform: translateY(-4px) scale(1.025);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, .5);
+  }
+  .recensione:hover { transform: translateY(-3px) scale(1.015); }
 }
 .servizio:hover::before { opacity: 1; }
 .servizio:hover .servizio-ico { transform: scale(1.09) rotate(-4deg); background: rgba(255, 111, 104, .2); }
@@ -571,7 +598,9 @@ body.menu-aperto { overflow: hidden; }
   border-color: rgba(123, 160, 255, .25);
 }
 .servizio:nth-child(even) .servizio-ico svg { stroke: var(--blu-chiaro); }
-.servizio:nth-child(even):hover { border-color: rgba(123, 160, 255, .55); }
+@media (hover: hover) {
+  .servizio:nth-child(even):hover { border-color: rgba(123, 160, 255, .6); }
+}
 .servizio:nth-child(even)::before {
   background: radial-gradient(90% 70% at 0% 0%, rgba(123, 160, 255, .16), transparent 70%);
 }
@@ -727,7 +756,7 @@ body.menu-aperto { overflow: hidden; }
   overflow: hidden;
   transition: border-color .3s var(--molla), transform .3s var(--molla);
 }
-.recensione:hover { border-color: rgba(255, 111, 104, .4); transform: translateY(-3px); }
+.recensione:hover { border-color: rgba(255, 111, 104, .45); }
 /* Virgolette in filigrana nell'angolo: segnale visivo che e' una citazione */
 .recensione::after {
   content: '\201D';
@@ -1037,23 +1066,19 @@ body.menu-aperto { overflow: hidden; }
   to   { transform: translateX(-50%); }   /* meta' pista = un gruppo intero */
 }
 
-/* ----------------------------- 22. ENTRATA HERO -------------------------- */
-/* Il titolo entra a cascata al caricamento: kicker, titolo, testo, bottoni. */
-@keyframes sali {
-  from { opacity: 0; transform: translateY(26px); }
-  to   { opacity: 1; transform: none; }
+/* ----------------------------- 22. PAROLE DEL TITOLO --------------------- */
+/* GSAP spezza il titolo dell'hero in parole: ognuna finisce in due span.
+   Quello esterno taglia, quello interno sale da sotto. Senza JavaScript
+   gli span non vengono creati e il titolo resta un titolo normale. */
+.parola {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* accenti e code delle lettere non devono essere tranciati dal taglio */
+  padding-bottom: .1em;
+  margin-bottom: -.1em;
 }
-.hero-kicker,
-.hero-title,
-.hero-sub,
-.hero-actions,
-.hero-status {
-  animation: sali .85s var(--molla) backwards;
-}
-.hero-title   { animation-delay: .08s; }
-.hero-sub     { animation-delay: .18s; }
-.hero-actions { animation-delay: .26s; }
-.hero-status  { animation-delay: .36s; }
+.parola-int { display: inline-block; will-change: transform; }
 
 /* ----------------------------- 23. PALO DEL BARBIERE --------------------- */
 /* Le righe del palo, usate come divisorio sottile. E' l'unico punto in cui
@@ -1137,45 +1162,38 @@ body.menu-aperto { overflow: hidden; }
 
 /* In stampa le comparse non hanno senso e lascerebbero pagine bianche */
 @media print {
-  .reveal, .reveal-item { opacity: 1 !important; transform: none !important; }
   .demo-bar, .site-header, .scroll-progress, .grana, .palo { display: none; }
 }
 
-/* ----------------------------- 19. ANIMAZIONI ----------------------------- */
-/* Le sezioni compaiono con una risalita leggera. La classe .reveal viene
-   aggiunta da JS solo se l'utente non ha chiesto meno animazioni. */
-/* La sezione compare solo in dissolvenza, SENZA spostarsi.
-   Motivo: i link del menu portano all'inizio della sezione, e il browser
-   calcola la destinazione mentre la sezione e' ancora traslata verso il
-   basso. Quando poi risale, lo scorrimento si ferma 28px troppo in alto.
-   A spostarsi sono le card qui sotto (.reveal-item), che stanno dentro
-   la sezione e quindi non ne cambiano il bordo superiore. */
-.reveal {
-  opacity: 0;
-  transition: opacity .7s var(--molla);
-}
-.reveal.is-visible { opacity: 1; transform: none; }
+/* ----------------------------- 19. MOVIMENTO ----------------------------- */
+/* Qui non si nasconde niente: gli stati di partenza delle animazioni li
+   imposta GSAP a runtime. Se le librerie non caricano, la pagina resta
+   completamente leggibile. */
 
-/* Gli elementi ripetuti (card, foto) entrano uno dopo l'altro invece che
-   tutti insieme: il ritardo lo calcola JS e lo scrive in --ritardo. */
-.reveal-item {
-  opacity: 0;
-  transform: translateY(22px) scale(.985);
-  transition: opacity .6s var(--molla), transform .6s var(--molla);
-  transition-delay: var(--ritardo, 0ms);
-}
-.reveal-item.is-visible { opacity: 1; transform: none; }
+/* Lenis ha bisogno che lo scorrimento nativo sia spento, altrimenti i due
+   sistemi si sovrappongono e lo scorrimento diventa a scatti. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
 
-/* Rispetto della preferenza di sistema: niente movimento */
+/* Filetto sotto i titoli: la larghezza la guida GSAP con --filetto (0 -> 1).
+   Il valore di partenza e' 1, cosi' senza JavaScript il filetto c'e'. */
+.sezione-titolo::after { transform: scaleX(var(--filetto, 1)); }
+
+/* Rispetto della preferenza di sistema: niente movimento.
+   Con questa attiva il JavaScript non avvia ne' GSAP ne' Lenis. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-  .reveal, .reveal-item { opacity: 1; transform: none; }
-  .sezione-titolo::after { transform: scaleX(1); transition: none; }
-  .nastro-pista { animation: none; }
-  .palo { animation: none; }
-  .hero-kicker, .hero-title, .hero-sub, .hero-actions, .hero-status { animation: none; }
+  .nastro-pista, .palo { animation: none; }
+}
+
+@media print {
+  .demo-bar, .site-header, .scroll-progress, .grana, .palo, .nastro { display: none; }
+  .hero-foto, .hero-emblema, .sfondo-emblema { display: none; }
 }

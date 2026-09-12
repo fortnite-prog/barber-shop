@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Segnaposto: foto del salone">
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#26262e"/><stop offset=".55" stop-color="#17171c"/><stop offset="1" stop-color="#0e0e12"/>
+    </linearGradient>
+    <radialGradient id="luce" cx="46%" cy="24%" r="58%">
+      <stop offset="0" stop-color="#494956" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#494956" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="luce2" cx="82%" cy="76%" r="42%">
+      <stop offset="0" stop-color="#2f3340" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#2f3340" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#fondo)"/>
+  <rect width="1600" height="1000" fill="url(#luce)"/>
+  <rect width="1600" height="1000" fill="url(#luce2)"/>
+
+  <!-- accenni di specchi e postazioni: solo volumi, nessun dettaglio -->
+  <g fill="none" stroke="#33333d" stroke-width="3" opacity=".85">
+    <rect x="150" y="180" width="230" height="330" rx="115"/>
+    <rect x="560" y="150" width="250" height="360" rx="125"/>
+    <rect x="990" y="180" width="230" height="330" rx="115"/>
+    <rect x="1370" y="210" width="200" height="300" rx="100"/>
+    <path d="M60 640h1480M60 700h1480"/>
+  </g>
+  <g fill="#1f1f27">
+    <rect x="120" y="640" width="300" height="240" rx="14"/>
+    <rect x="540" y="640" width="300" height="240" rx="14"/>
+    <rect x="960" y="640" width="300" height="240" rx="14"/>
+    <rect x="1360" y="640" width="220" height="240" rx="14"/>
+  </g>
+
+  <!-- etichetta discreta, in basso al centro: sopravvive al ritaglio -->
+  <g opacity=".55">
+    <rect x="620" y="908" width="360" height="46" rx="23" fill="#000" opacity=".45"/>
+    <text x="800" y="938" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#9a9aa6" letter-spacing="3" text-anchor="middle">FOTO DEL SALONE &#8212; SEGNAPOSTO</text>
+  </g>
+</svg>

@@ -30,6 +30,8 @@ privacy.html      informativa segnaposto
 robots.txt        blocca i motori di ricerca
 css/style.css     tutto lo stile, diviso in sezioni numerate
 js/main.js        menu, aperto/chiuso, animazioni, anno
+js/lib/           GSAP, ScrollTrigger e Lenis in locale
+                  (vedi js/lib/LICENZE.txt: nota sulla licenza GSAP)
 fonts/            Oswald e Inter in locale (motivo: GDPR)
 img/              segnaposto galleria + emblema di sfondo
 img/LEGGIMI.txt   come sostituire le immagini
@@ -47,6 +49,9 @@ DA COMPLETARE PRIMA DI PUBBLICARE DAVVERO
                          sostituite con quelle reali di Google
                          oppure va tolta l'intera sezione
 [ ] 6 foto vere          vedi img/LEGGIMI.txt
+[ ] Foto dell'hero       img/hero-salone.svg e' un segnaposto scuro.
+                         La foto vera va orizzontale e SCURA, o il
+                         titolo bianco sopra non si legge
 [ ] Elenco servizi       l'ho ipotizzato io guardando il negozio:
                          va confermato voce per voce col titolare
                          (la colorazione e' gia' stata tolta)

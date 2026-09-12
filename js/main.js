@@ -140,108 +140,210 @@
   setInterval(aggiornaStato, 60000);
 
   /* ---------------------------------------------------------------
-     4. COMPARSA DELLE SEZIONI
-     Le sezioni salgono di poco entrando in vista; card e foto entrano
-     una dopo l'altra con un ritardo crescente, non tutte insieme.
-     Se l'utente ha attivato "riduci animazioni" non tocchiamo nulla:
-     il CSS le lascia gia' visibili.
+     4. MOTORE DELLE ANIMAZIONI (GSAP + ScrollTrigger + Lenis)
+     Le librerie sono servite dal sito stesso, non da CDN: vedi il
+     commento in fondo a index.html e js/lib/LICENZE.txt.
+
+     Regola di fondo: NESSUN contenuto e' nascosto dal CSS. Le opacita'
+     di partenza le imposta GSAP a runtime con .from(). Cosi' se una
+     libreria non carica, o l'utente ha JavaScript spento, la pagina si
+     vede tutta lo stesso: niente sezioni bianche.
      --------------------------------------------------------------- */
   var pocoMoto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var puoOsservare = !pocoMoto && 'IntersectionObserver' in window;
+  var haGsap   = typeof window.gsap === 'function' || typeof window.gsap === 'object';
+  var haScroll = haGsap && typeof window.ScrollTrigger !== 'undefined';
+  var haLenis  = typeof window.Lenis !== 'undefined';
+  var animato  = haGsap && haScroll && !pocoMoto;
 
-  if (puoOsservare) {
-    var mostra = new IntersectionObserver(function (voci) {
-      voci.forEach(function (v) {
-        if (!v.isIntersecting) return;
-        v.target.classList.add('is-visible');
-        mostra.unobserve(v.target);      // una volta comparso, basta
+  var lenis = null;
+
+  if (animato) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* --- Lenis: scorrimento con inerzia -------------------------- */
+    if (haLenis) {
+      lenis = new Lenis({
+        duration: 1.05,        // quanto "scivola" dopo la rotella
+        smoothWheel: true,
+        touchMultiplier: 1.6   // sul touch il sistema e' gia' fluido: tocco leggero
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      // Lenis e ScrollTrigger devono battere lo stesso tempo, altrimenti
+      // le animazioni arrivano in ritardo di un fotogramma sullo scroll.
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (tempo) { lenis.raf(tempo * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
 
-    document.querySelectorAll('[data-reveal]').forEach(function (sezione) {
-      sezione.classList.add('reveal');
-      mostra.observe(sezione);
+    /* --- Titolo dell'hero, una parola alla volta ------------------
+       Ogni parola finisce dentro due span: quello esterno taglia
+       (overflow), quello interno e' cio' che sale. Serve l'effetto
+       "la parola emerge da sotto la riga". --------------------------- */
+    function spezzaInParole(radice) {
+      var testi = [], parole = [];
+      (function raccogli(n) {
+        for (var i = 0; i < n.childNodes.length; i++) {
+          var c = n.childNodes[i];
+          if (c.nodeType === 3 && c.textContent.trim()) testi.push(c);
+          else if (c.nodeType === 1) raccogli(c);
+        }
+      })(radice);
 
-      // Cascata sugli elementi ripetuti della sezione
-      var figli = sezione.querySelectorAll('.card, .galleria-box');
-      figli.forEach(function (el, i) {
-        el.classList.add('reveal-item');
-        // il ritardo si ferma a 320ms: oltre, l'ultima card arriva tardi
-        el.style.setProperty('--ritardo', Math.min(i * 55, 320) + 'ms');
-        mostra.observe(el);
+      testi.forEach(function (nodo) {
+        var pezzo = document.createDocumentFragment();
+        nodo.textContent.split(/(\s+)/).forEach(function (p) {
+          if (!p.trim()) { pezzo.appendChild(document.createTextNode(p)); return; }
+          var fuori = document.createElement('span');
+          fuori.className = 'parola';
+          var dentro = document.createElement('span');
+          dentro.className = 'parola-int';
+          dentro.textContent = p;
+          fuori.appendChild(dentro);
+          pezzo.appendChild(fuori);
+          parole.push(dentro);
+        });
+        nodo.parentNode.replaceChild(pezzo, nodo);
+      });
+      return parole;
+    }
+
+    var titolo = document.getElementById('hero-title');
+    var parole = titolo ? spezzaInParole(titolo) : [];
+
+    var entrata = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    if (parole.length) {
+      entrata.from(parole, { yPercent: 118, duration: .95, stagger: .075 }, .1);
+    }
+    entrata
+      .from('.hero-kicker',  { autoAlpha: 0, y: 16, duration: .7 }, 0)
+      .from('.hero-sub',     { autoAlpha: 0, y: 18, duration: .7 }, .45)
+      .from('.hero-actions', { autoAlpha: 0, y: 20, duration: .7 }, .58)
+      .from('.hero-status',  { autoAlpha: 0, duration: .6 }, .72);
+
+    /* --- Comparsa delle sezioni ----------------------------------
+       La sezione compare SOLO in dissolvenza, senza spostarsi: se si
+       spostasse, i link del menu si fermerebbero nel punto sbagliato
+       (il browser calcola la destinazione mentre e' ancora traslata).
+       A muoversi sono le card, che stando dentro non spostano il
+       bordo superiore della sezione. --------------------------------- */
+    gsap.utils.toArray('[data-reveal]').forEach(function (sez) {
+      gsap.from(sez, {
+        autoAlpha: 0, duration: .8, ease: 'power2.out',
+        scrollTrigger: { trigger: sez, start: 'top 85%' }
+      });
+
+      var figli = sez.querySelectorAll('.card, .galleria-box');
+      if (figli.length) {
+        gsap.from(figli, {
+          autoAlpha: 0, y: 26, duration: .6, ease: 'power2.out', stagger: .06,
+          scrollTrigger: { trigger: sez, start: 'top 78%' }
+        });
+      }
+    });
+
+    /* --- Filetto sotto i titoli, disegnato da sinistra ------------ */
+    gsap.utils.toArray('.sezione-titolo').forEach(function (t) {
+      gsap.fromTo(t, { '--filetto': 0 }, {
+        '--filetto': 1, duration: .8, ease: 'power2.out',
+        scrollTrigger: { trigger: t, start: 'top 88%' }
       });
     });
-  } else {
-    // Nessun osservatore disponibile: le sezioni restano visibili,
-    // cosi' il filetto sotto i titoli viene comunque disegnato.
-    document.querySelectorAll('[data-reveal]').forEach(function (s) {
-      s.classList.add('is-visible');
+
+    /* --- Parallasse ----------------------------------------------
+       scrub: true = l'animazione e' legata alla posizione dello
+       scorrimento, non parte e finisce da sola. Spostamenti piccoli:
+       oltre il 10% si nota il trucco e da' fastidio. ----------------- */
+    gsap.to('.hero-foto', {
+      yPercent: 11, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('.hero-emblema', {
+      yPercent: 18, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+
+    // Le foto della galleria scorrono piu' piano del riquadro che le
+    // contiene. Restano ingrandite del 12% per tutta la corsa, altrimenti
+    // muovendosi scoprirebbero i bordi del riquadro.
+    gsap.utils.toArray('.galleria-box img').forEach(function (img) {
+      gsap.fromTo(img,
+        { yPercent: -5, scale: 1.12 },
+        { yPercent: 5,  scale: 1.12, ease: 'none',
+          scrollTrigger: { trigger: img.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+
+    // I font arrivano dopo il primo calcolo: senza questo, i punti di
+    // partenza delle animazioni restano tarati sul testo di ripiego.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     5. SCORRIMENTO AI LINK INTERNI
+     Con Lenis attivo lo scorrimento lo gestisce lui, altrimenti resta
+     quello nativo del browser (scroll-behavior nel CSS). In entrambi i
+     casi ci si ferma sotto le due barre fisse.
+     --------------------------------------------------------------- */
+  function altezzaBarreFisse() {
+    var barra = document.querySelector('.demo-bar');
+    var testa = document.getElementById('site-header');
+    return (barra ? barra.offsetHeight : 0) + (testa ? testa.offsetHeight : 0) + 8;
+  }
+
+  if (lenis) {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = a.getAttribute('href');
+      if (id === '#' || a.getAttribute('aria-disabled') === 'true') return;
+      var meta = document.querySelector(id);
+      if (!meta) return;
+      e.preventDefault();
+      lenis.scrollTo(meta, { offset: -altezzaBarreFisse() });
     });
   }
 
   /* ---------------------------------------------------------------
-     5. EFFETTI LEGATI ALLO SCORRIMENTO
-     Barra di avanzamento, voce di menu attiva e parallasse dell'emblema.
-     Tutto dentro un solo listener con requestAnimationFrame: il calcolo
-     viene fatto una volta per fotogramma, non a ogni evento di scroll
-     (altrimenti su telefono si vedrebbero gli scatti).
+     6. EFFETTI LEGATI ALLO SCORRIMENTO
+     Barra di avanzamento, ombra dell'header e voce di menu attiva.
+     Un solo listener con requestAnimationFrame: il calcolo viene fatto
+     una volta per fotogramma, non a ogni evento di scorrimento.
      --------------------------------------------------------------- */
-  var barra    = document.getElementById('scroll-barra');
-  var emblema  = document.querySelector('.hero-emblema');
-  var inCoda   = false;
+  var barra  = document.getElementById('scroll-barra');
+  var inCoda = false;
 
   function suScroll() {
     var y = window.scrollY;
-
-    // ombra sull'header
     if (header) header.classList.toggle('is-scrolled', y > 12);
-
-    // avanzamento della lettura, da 0 a 100%
     if (barra) {
       var totale = document.documentElement.scrollHeight - window.innerHeight;
       barra.style.width = (totale > 0 ? Math.min(y / totale, 1) * 100 : 0) + '%';
     }
-
-    // l'emblema dell'hero scorre piu' lentamente della pagina
-    if (emblema && !pocoMoto) {
-      emblema.style.setProperty('--py', (y * 0.18) + 'px');
-    }
-
     inCoda = false;
   }
-
   function programmaScroll() {
     if (inCoda) return;
     inCoda = true;
     window.requestAnimationFrame(suScroll);
   }
-
   suScroll();
   window.addEventListener('scroll', programmaScroll, { passive: true });
   window.addEventListener('resize', programmaScroll, { passive: true });
 
-  /* ---------------------------------------------------------------
-     6. VOCE DI MENU DELLA SEZIONE CORRENTE
-     Un secondo osservatore, con una fascia stretta a un terzo dall'alto:
-     e' attiva la sezione che sta attraversando quella fascia.
-     --------------------------------------------------------------- */
+  // Voce di menu della sezione che si sta guardando
   if ('IntersectionObserver' in window) {
     var voci = {};
     document.querySelectorAll('.nav-list a[href^="#"]').forEach(function (a) {
       voci[a.getAttribute('href').slice(1)] = a;
     });
-
     var spia = new IntersectionObserver(function (entrate) {
       entrate.forEach(function (e) {
         var voce = voci[e.target.id];
-        if (!voce) return;
-        if (e.isIntersecting) {
-          for (var k in voci) voci[k].classList.remove('is-attivo');
-          voce.classList.add('is-attivo');
-        }
+        if (!voce || !e.isIntersecting) return;
+        for (var k in voci) voci[k].classList.remove('is-attivo');
+        voce.classList.add('is-attivo');
       });
     }, { rootMargin: '-33% 0px -60% 0px' });
-
     Object.keys(voci).forEach(function (id) {
       var sez = document.getElementById(id);
       if (sez) spia.observe(sez);

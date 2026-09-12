@@ -75,12 +75,21 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero">
+    <!-- ======================= DA SOSTITUIRE =======================
+         Sfondo dell'hero: ora e' un segnaposto scuro (img/hero-salone.svg).
+         Con la foto vera: salvarla come img/hero-salone.jpg (orizzontale,
+         circa 1600x1000 px, sotto i 400 KB) e cambiare l'estensione nella
+         regola .hero-foto dentro css/style.css.
+         La foto deve essere SCURA o il titolo bianco non si legge: sopra
+         c'e' gia' una velatura, ma una foto chiara la vince.
+         ============================================================= -->
+    <div class="hero-foto" aria-hidden="true"></div>
     <!-- L'emblema in filigrana: decorativo, quindi nascosto agli screen reader -->
     <div class="hero-emblema" aria-hidden="true"></div>
 
     <div class="wrap hero-inner">
       <p class="hero-kicker">Via Rivolta 1 &middot; Lecco</p>
-      <h1 class="hero-title">Il tuo barbiere<br><span class="accento">a Lecco</span></h1>
+      <h1 class="hero-title" id="hero-title">Il tuo barbiere<br><span class="accento">a Lecco</span></h1>
       <p class="hero-sub">Aperti tutti i giorni dalle 9 alle 21</p>
 
       <div class="hero-actions">
@@ -530,6 +539,25 @@
 </script>
      ============================================================ -->
 
+<!-- ============================================================
+     LIBRERIE DI ANIMAZIONE
+     Sono scaricate e servite da questo sito (cartella js/lib/), non da
+     una rete CDN: caricarle da cdnjs manderebbe l'IP di ogni visitatore
+     a Cloudflare e renderebbe falsa la frase di privacy.html che dice
+     che il sito non contatta server esterni.
+
+     Se in futuro si preferisce il CDN, bastano queste tre righe al posto
+     dei tre <script> qui sotto, MA va aggiornata anche privacy.html:
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+
+     Nota licenza GSAP: gratuito per un sito vetrina come questo.
+     Dettagli in js/lib/LICENZE.txt
+     ============================================================ -->
+<script src="js/lib/gsap.min.js"></script>
+<script src="js/lib/ScrollTrigger.min.js"></script>
+<script src="js/lib/lenis.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

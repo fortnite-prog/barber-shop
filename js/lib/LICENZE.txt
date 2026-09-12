@@ -1,0 +1,24 @@
+LIBRERIE INCLUSE
+================
+
+gsap.min.js          GSAP 3.12.5   - GreenSock, licenza standard "no charge"
+ScrollTrigger.min.js GSAP 3.12.5   - stesso pacchetto
+lenis.min.js         Lenis 1.1.18  - licenza MIT (Studio Freight / darkroom)
+
+ATTENZIONE ALLA LICENZA GSAP
+----------------------------
+GSAP e' gratuito per i siti che NON vendono l'accesso al sito stesso.
+Un sito vetrina di un barbiere rientra senza problemi nell'uso gratuito.
+Serve invece una licenza a pagamento (GreenSock "Business Green") se il
+sito diventa a pagamento o se GSAP finisce dentro un prodotto venduto.
+Testo completo: https://gsap.com/licensing/
+
+PERCHE' IN LOCALE E NON DA CDN
+------------------------------
+Caricarle da cdnjs o jsdelivr manderebbe l'indirizzo IP di ogni
+visitatore ai server di quelle reti: e' esattamente il motivo per cui i
+font non vengono da Google Fonts. privacy.html dichiara che il sito non
+contatta server esterni, e questa scelta tiene quella frase vera.
+
+Per passare comunque al CDN: in fondo a index.html ci sono le tre righe
+gia' pronte, commentate.
