@@ -1,0 +1,583 @@
+/* ==========================================================================
+   Parrucchiere della Città — vetrina one-page con hero animata allo scroll
+   Ordine del file: font, variabili, base, caricamento, testata, hero,
+   sezioni, modulo, footer, media query.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. FONT — self-hosted: niente chiamate a Google, un problema GDPR in meno
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 200 700;          /* font variabile: un file copre tutti i pesi */
+  font-display: swap;
+  src: url('fonts/oswald-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url('fonts/oswald-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+2020, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+2020, U+20A0-20AB, U+2C60-2C7F;
+}
+
+/* --------------------------------------------------------------------------
+   2. VARIABILI — palette calda da barbieria: nero pece, ottone, panna
+   -------------------------------------------------------------------------- */
+:root {
+  --nero:        #0a0807;
+  --nero-carta:  #131010;
+  --nero-riga:   #262020;
+  --panna:       #f2ece4;
+  --panna-tenue: #a89f95;
+  --ottone:      #d5a117;
+  --ottone-caldo:#eab84a;
+
+  --titolo: 'Oswald', 'Helvetica Neue', Arial, sans-serif;
+  --testo:  'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --max: 1180px;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+}
+
+/* --------------------------------------------------------------------------
+   3. BASE
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--nero);
+  color: var(--panna);
+  font-family: var(--testo);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;         /* nessuno scroll orizzontale, mai */
+}
+
+/* Finché i fotogrammi caricano la pagina non si muove */
+body.in-caricamento { overflow: hidden; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--ottone-caldo); }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--ottone);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-family: var(--titolo);
+  font-weight: 600;
+  /* 1.12: in italiano i titoli maiuscoli hanno accenti (È, À, Ù) che con
+     un'interlinea più stretta verrebbero tagliati in cima */
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.contenitore {
+  width: min(100% - var(--gutter) * 2, var(--max));
+  margin-inline: auto;
+}
+
+.contenitore--due {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+/* Link di servizio: visibile solo da tastiera */
+.salta-al-contenuto {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 1200;
+  padding: 0.7rem 1.1rem;
+  background: var(--ottone);
+  color: #1a1206;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: top 0.2s;
+}
+.salta-al-contenuto:focus { top: 1rem; }
+
+/* Etichetta accessibile ma fuori dallo schermo (honeypot) */
+.onesto {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   4. BOTTONI
+   -------------------------------------------------------------------------- */
+.bottone {
+  display: inline-block;
+  padding: 0.95rem 1.8rem;
+  background: var(--ottone);
+  color: #1a1206;
+  font-family: var(--titolo);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--ottone);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.bottone:hover { background: var(--ottone-caldo); transform: translateY(-2px); }
+
+.bottone--vuoto { background: transparent; color: var(--ottone-caldo); }
+.bottone--vuoto:hover { background: rgba(213,161,23,0.12); color: var(--ottone-caldo); }
+
+.bottone--piccolo { padding: 0.6rem 1.1rem; font-size: 0.8rem; }
+
+/* --------------------------------------------------------------------------
+   5. BARRA DI CARICAMENTO
+   -------------------------------------------------------------------------- */
+.caricamento {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--nero);
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+.caricamento.finito {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.caricamento__logo { width: 84px; height: auto; opacity: 0.9; }
+
+.caricamento__testo {
+  margin: 0;
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-family: var(--titolo);
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--panna-tenue);
+}
+.caricamento__valore { color: var(--ottone); font-variant-numeric: tabular-nums; }
+
+.caricamento__barra {
+  width: min(78vw, 320px);
+  height: 2px;
+  background: var(--nero-riga);
+  overflow: hidden;
+}
+.caricamento__avanzamento {
+  width: 0%;
+  height: 100%;
+  background: var(--ottone);
+  transition: width 0.25s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   6. TESTATA
+   -------------------------------------------------------------------------- */
+.testata {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.9rem var(--gutter);
+  background: linear-gradient(to bottom, rgba(10,8,7,0.85), rgba(10,8,7,0));
+  transition: background 0.3s, backdrop-filter 0.3s;
+}
+/* Quando si esce dalla hero la barra diventa solida e leggibile */
+.testata.compatta {
+  background: rgba(10,8,7,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--nero-riga);
+}
+
+.testata__marchio {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-right: auto;
+  font-family: var(--titolo);
+  font-size: 0.78rem;
+  line-height: 1.15;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--panna);
+  text-decoration: none;
+}
+.testata__marchio img { width: 40px; height: 40px; }
+
+.testata__nav { display: flex; gap: 1.6rem; }
+.testata__nav a {
+  font-family: var(--titolo);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--panna);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+.testata__nav a:hover { border-bottom-color: var(--ottone); }
+
+/* --------------------------------------------------------------------------
+   7. HERO — 400vh di corsa, contenuto incollato a schermo
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  height: 400vh;              /* la lunghezza dello scroll che guida i frame */
+  background: var(--nero);
+}
+
+.hero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;             /* su mobile evita il salto delle barre browser */
+  overflow: hidden;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Velo: scurisce in basso e ai lati così il testo resta leggibile */
+.hero__velo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(10,8,7,0.85) 0%, rgba(10,8,7,0.15) 45%, rgba(10,8,7,0.45) 100%);
+  pointer-events: none;
+}
+
+.hero__testi {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 var(--gutter);
+}
+
+/* I tre blocchi stanno uno sopra l'altro: l'opacità decide chi si vede */
+.blocco {
+  grid-area: 1 / 1;
+  max-width: 34rem;
+  text-align: center;
+  opacity: 0;                 /* il valore lo scrive main.js in base allo scroll */
+  will-change: opacity, transform;
+}
+
+.blocco__occhiello {
+  margin: 0 0 1rem;
+  font-family: var(--titolo);
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ottone);
+}
+
+.blocco__titolo {
+  font-family: var(--titolo);
+  font-size: clamp(2.6rem, 9vw, 5.6rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.55);
+}
+.blocco__titolo--medio { font-size: clamp(2.1rem, 7vw, 4.2rem); }
+
+.blocco__testo {
+  margin: 1.4rem auto 0;
+  max-width: 30rem;
+  color: var(--panna);
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  text-shadow: 0 1px 24px rgba(0,0,0,0.6);
+}
+
+/* Invito a scorrere */
+.hero__scorri {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--titolo);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--panna-tenue);
+  transition: opacity 0.4s;
+}
+.hero__scorri i {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(to bottom, var(--ottone), transparent);
+}
+.hero__scorri.via { opacity: 0; }
+
+/* --------------------------------------------------------------------------
+   8. SEZIONI
+   -------------------------------------------------------------------------- */
+.sezione {
+  position: relative;
+  scroll-margin-top: 5rem;      /* l'ancora non finisce sotto la testata fissa */
+  z-index: 2;                 /* sopra la hero sticky */
+  background: var(--nero);
+  padding: clamp(4.5rem, 11vw, 9rem) 0;
+  border-top: 1px solid var(--nero-riga);
+}
+.sezione--scura { background: var(--nero-carta); }
+
+.sezione__occhiello {
+  margin: 0 0 0.9rem;
+  font-family: var(--titolo);
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ottone);
+}
+
+.sezione__titolo {
+  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+  max-width: 20ch;
+}
+
+.sezione__intro,
+.sezione__testo {
+  margin: 1.4rem 0 0;
+  max-width: 58ch;
+  color: var(--panna-tenue);
+}
+
+/* Listino */
+.listino { list-style: none; margin: 3rem 0 0; padding: 0; }
+
+.listino__voce {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--nero-riga);
+}
+.listino__voce h3 {
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+}
+.listino__voce p {
+  margin: 0.45rem 0 0;
+  color: var(--panna-tenue);
+  font-size: 0.94rem;
+  max-width: 46ch;
+}
+.listino__prezzo {
+  flex: none;
+  font-family: var(--titolo);
+  font-size: 1.5rem;
+  color: var(--ottone);
+  font-variant-numeric: tabular-nums;
+}
+.listino__nota {
+  margin-top: 1.6rem;
+  font-size: 0.86rem;
+  color: var(--panna-tenue);
+}
+
+/* Blocco dati indirizzo/orari */
+.dati { margin: 2.5rem 0 0; display: grid; gap: 1.1rem; }
+.dati div { display: grid; gap: 0.2rem; }
+.dati dt {
+  font-family: var(--titolo);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ottone);
+}
+.dati dd { margin: 0; }
+
+.vetrina { margin: 0; }
+.vetrina img {
+  border-radius: 3px;
+  border: 1px solid var(--nero-riga);   /* stacca l'immagine dal fondo scuro */
+}
+.vetrina figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.82rem;
+  color: var(--panna-tenue);
+}
+
+.azioni { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.2rem; }
+
+/* --------------------------------------------------------------------------
+   9. MODULO
+   -------------------------------------------------------------------------- */
+.modulo {
+  display: grid;
+  gap: 1.3rem;
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+  background: var(--nero-carta);
+  border: 1px solid var(--nero-riga);
+  border-radius: 3px;
+}
+
+.campo { display: grid; gap: 0.45rem; }
+.campo > span {
+  font-family: var(--titolo);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--panna-tenue);
+}
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--nero);
+  color: var(--panna);
+  font-family: var(--testo);
+  font-size: 1rem;
+  border: 1px solid var(--nero-riga);
+  border-radius: 2px;
+  resize: vertical;
+}
+.campo input:focus,
+.campo textarea:focus { border-color: var(--ottone); }
+
+.consenso {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.87rem;
+  color: var(--panna-tenue);
+}
+.consenso input { margin-top: 0.25rem; flex: none; width: 1.05rem; height: 1.05rem; accent-color: var(--ottone); }
+
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
+.pie {
+  position: relative;
+  z-index: 2;
+  background: var(--nero-carta);
+  border-top: 1px solid var(--nero-riga);
+  padding: clamp(3rem, 7vw, 5rem) 0 2.5rem;
+  font-size: 0.92rem;
+  color: var(--panna-tenue);
+}
+.pie__griglia { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+.pie__titolo {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: var(--ottone);
+  margin-bottom: 0.7rem;
+}
+.pie__ragione { margin: 1rem 0 0; }
+.pie__ragione strong { color: var(--panna); }
+.pie__griglia p { margin: 0; }
+.pie__nota {
+  width: min(100% - var(--gutter) * 2, var(--max));
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--nero-riga);
+  font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   11. MEDIA QUERY
+   -------------------------------------------------------------------------- */
+@media (min-width: 760px) {
+  .contenitore--due { grid-template-columns: 1fr 1fr; }
+  .pie__griglia { grid-template-columns: 2fr 1fr 1fr; }
+}
+
+@media (max-width: 759px) {
+  /* Su schermi stretti la nav centrale sparisce: restano marchio e "Chiama" */
+  .testata__nav { display: none; }
+  .listino__voce { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .listino__prezzo { font-size: 1.3rem; }
+}
+
+/* --------------------------------------------------------------------------
+   12. MOVIMENTO RIDOTTO
+   Niente scroll-animazione: hero alta una schermata, fotogramma finale fisso
+   e i tre testi impaginati uno sotto l'altro, tutti leggibili.
+   -------------------------------------------------------------------------- */
+html.movimento-ridotto .hero { height: auto; }
+html.movimento-ridotto .hero__sticky {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+  display: grid;
+}
+html.movimento-ridotto .hero__testi {
+  position: relative;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 7vw, 4rem);
+  place-items: center;
+  padding: clamp(6rem, 14vw, 9rem) var(--gutter) clamp(3rem, 8vw, 5rem);
+}
+html.movimento-ridotto .blocco {
+  grid-area: auto;
+  opacity: 1;
+}
+html.movimento-ridotto .hero__scorri { display: none; }
+html.movimento-ridotto .hero__canvas { position: absolute; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

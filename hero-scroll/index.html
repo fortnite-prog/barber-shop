@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Parrucchiere della Città — Barber shop a Lecco</title>
+<meta name="description" content="Barber shop in Via Rivolta 1 a Lecco. Taglio, fade, barba e rasatura tradizionale. Aperti tutti i giorni 9:00–21:00, anche senza appuntamento.">
+
+<!-- Demo non ufficiale: fuori dagli indici finché il cliente non approva -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Anteprima quando il link viene condiviso su WhatsApp, Facebook, ecc. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Parrucchiere della Città — Barber shop a Lecco">
+<meta property="og:description" content="Taglio, fade, barba e rasatura tradizionale in Via Rivolta 1 a Lecco. Aperti tutti i giorni 9:00–21:00.">
+<meta property="og:image" content="assets/frames/frame_0150.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/logo.webp" type="image/webp">
+<link rel="stylesheet" href="style.css">
+
+<!-- Il primo fotogramma parte subito: è quello che l'utente vede all'apertura -->
+<link rel="preload" as="image" href="assets/frames/frame_0001.webp" fetchpriority="high">
+
+<!-- Dati strutturati: aiutano Google a capire che è un'attività locale -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "name": "Parrucchiere della Città",
+  "image": "assets/logo.webp",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Rivolta 1",
+    "postalCode": "23900",
+    "addressLocality": "Lecco",
+    "addressRegion": "LC",
+    "addressCountry": "IT"
+  },
+  "telephone": "+393513022089",
+  "priceRange": "€€",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "09:00",
+    "closes": "21:00"
+  }]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ============================================================
+     BARRA DI CARICAMENTO
+     Resta a schermo finché i fotogrammi della hero non sono pronti.
+     Senza, l'utente vedrebbe un canvas nero mentre scorre.
+     ============================================================ -->
+<div class="caricamento" id="caricamento" role="status" aria-live="polite">
+  <img class="caricamento__logo" src="assets/logo.webp" alt="" width="96" height="96">
+  <p class="caricamento__testo">Preparo l'esperienza<span class="caricamento__valore" id="caricamento-valore">0%</span></p>
+  <div class="caricamento__barra">
+    <div class="caricamento__avanzamento" id="caricamento-avanzamento"></div>
+  </div>
+</div>
+
+<a class="salta-al-contenuto" href="#contenuti">Salta l'introduzione</a>
+
+<!-- ============================================================
+     NAVIGAZIONE
+     ============================================================ -->
+<header class="testata" id="testata">
+  <a class="testata__marchio" href="#top">
+    <img src="assets/logo.webp" alt="Parrucchiere della Città" width="44" height="44">
+    <span>Parrucchiere<br>della Città</span>
+  </a>
+  <nav class="testata__nav" aria-label="Navigazione principale">
+    <a href="#servizi">Servizi</a>
+    <a href="#negozio">Il negozio</a>
+    <a href="#contatti">Contatti</a>
+  </nav>
+  <a class="bottone bottone--piccolo" href="tel:+393513022089">Chiama</a>
+</header>
+
+<!-- ============================================================
+     HERO — 400vh di scroll, canvas sticky a schermo intero
+     ============================================================ -->
+<section class="hero" id="top" aria-label="Introduzione">
+
+  <div class="hero__sticky">
+    <!-- I fotogrammi vengono disegnati qui, in modalità "cover" -->
+    <canvas class="hero__canvas" id="hero-canvas" role="img"
+            aria-label="Sequenza di luci calde che attraversano il salone"></canvas>
+
+    <!-- Velo scuro: tiene il testo leggibile su qualsiasi fotogramma -->
+    <div class="hero__velo" aria-hidden="true"></div>
+
+    <!-- I tre blocchi di testo, in dissolvenza in momenti diversi -->
+    <div class="hero__testi">
+
+      <div class="blocco" data-blocco="1">
+        <p class="blocco__occhiello">Barber shop · Lecco</p>
+        <h1 class="blocco__titolo">Il taglio<br>è un mestiere</h1>
+        <p class="blocco__testo">Via Rivolta 1, a due passi dalla stazione.</p>
+      </div>
+
+      <div class="blocco" data-blocco="2">
+        <p class="blocco__occhiello">Come lavoriamo</p>
+        <p class="blocco__titolo blocco__titolo--medio">Forbice, rasoio<br>e tempo giusto</p>
+        <p class="blocco__testo">Nessuna fretta. Ogni testa ha la sua forma:
+          la sfumatura si costruisce addosso alla persona, non sul catalogo.</p>
+      </div>
+
+      <div class="blocco" data-blocco="3">
+        <p class="blocco__occhiello">Quando vuoi</p>
+        <p class="blocco__titolo blocco__titolo--medio">Aperti tutti<br>i giorni, 9–21</p>
+        <p class="blocco__testo">Su appuntamento o al volo, se c'è posto.</p>
+      </div>
+
+    </div>
+
+    <!-- Invito a scorrere: sparisce appena l'animazione parte -->
+    <div class="hero__scorri" id="hero-scorri" aria-hidden="true">
+      <span>Scorri</span>
+      <i></i>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTENUTI
+     ============================================================ -->
+<main id="contenuti">
+
+  <!-- ---------- Servizi / listino ---------- -->
+  <section class="sezione" id="servizi">
+    <div class="contenitore">
+      <p class="sezione__occhiello">Servizi</p>
+      <h2 class="sezione__titolo">Quello che facciamo, e quanto costa</h2>
+      <p class="sezione__intro">
+        Prezzi chiari, esposti anche in negozio. Il lavaggio è sempre compreso,
+        la sistemata al collo fra un taglio e l'altro non si paga.
+      </p>
+
+      <ul class="listino">
+        <li class="listino__voce">
+          <div>
+            <h3>Taglio uomo</h3>
+            <p>Consulenza, lavaggio, taglio e piega. Circa 40 minuti.</p>
+          </div>
+          <span class="listino__prezzo">18 €</span>
+        </li>
+        <li class="listino__voce">
+          <div>
+            <h3>Fade e sfumature</h3>
+            <p>Skin fade, mid e low fade, disegni a mano libera.</p>
+          </div>
+          <span class="listino__prezzo">22 €</span>
+        </li>
+        <li class="listino__voce">
+          <div>
+            <h3>Barba</h3>
+            <p>Rifinitura con rasoio, panno caldo e olio da barba.</p>
+          </div>
+          <span class="listino__prezzo">12 €</span>
+        </li>
+        <li class="listino__voce">
+          <div>
+            <h3>Taglio + barba</h3>
+            <p>Il pacchetto completo, con qualche minuto in più per le rifiniture.</p>
+          </div>
+          <span class="listino__prezzo">28 €</span>
+        </li>
+        <li class="listino__voce">
+          <div>
+            <h3>Taglio bambino</h3>
+            <p>Fino a 12 anni, con la pazienza che serve.</p>
+          </div>
+          <span class="listino__prezzo">14 €</span>
+        </li>
+      </ul>
+      <p class="listino__nota">
+        [DA INSERIRE: confermare i prezzi con il titolare prima della pubblicazione.]
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- Il negozio ---------- -->
+  <section class="sezione sezione--scura" id="negozio">
+    <div class="contenitore contenitore--due">
+      <div>
+        <p class="sezione__occhiello">Il negozio</p>
+        <h2 class="sezione__titolo">Una poltrona, in centro a Lecco</h2>
+        <p class="sezione__testo">
+          Siamo in Via Rivolta 1, sulla strada che porta al lungolago.
+          Si entra, ci si siede, si parla del taglio prima di partire con le forbici.
+          Chi passa di fretta trova quasi sempre posto: siamo aperti anche la domenica.
+        </p>
+        <p class="sezione__testo">
+          In negozio si paga in contanti e con bancomat. Il parcheggio più vicino
+          è quello di Piazza Lega Lombarda, cinque minuti a piedi.
+        </p>
+        <dl class="dati">
+          <div><dt>Indirizzo</dt><dd>Via Rivolta 1, 23900 Lecco (LC)</dd></div>
+          <div><dt>Orari</dt><dd>Tutti i giorni, 9:00 – 21:00</dd></div>
+          <div><dt>Telefono</dt><dd><a href="tel:+393513022089">+39 351 302 2089</a></dd></div>
+        </dl>
+      </div>
+
+      <figure class="vetrina">
+        <!-- Fotogramma finale della sequenza: rende coerente la pagina anche qui -->
+        <img src="assets/frames/frame_0150.webp"
+             alt="Luce calda sulla postazione del barbiere"
+             width="1920" height="1080" loading="lazy" decoding="async">
+        <figcaption>[DA INSERIRE: foto reali del negozio e dei lavori.]</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ---------- Contatti ---------- -->
+  <section class="sezione" id="contatti">
+    <div class="contenitore contenitore--due">
+      <div>
+        <p class="sezione__occhiello">Contatti</p>
+        <h2 class="sezione__titolo">Prenota o chiedi un'informazione</h2>
+        <p class="sezione__testo">
+          Per fissare un appuntamento il modo più veloce resta il telefono.
+          Se preferisci scrivere, compila il modulo: rispondiamo in giornata
+          negli orari di apertura.
+        </p>
+        <div class="azioni">
+          <a class="bottone" href="tel:+393513022089">Chiama il negozio</a>
+          <a class="bottone bottone--vuoto" href="https://wa.me/393513022089"
+             target="_blank" rel="noopener">Scrivi su WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- Modulo pronto per Netlify Forms: funziona una volta pubblicato lì.
+           Su un hosting diverso va collegato al servizio equivalente (Formspree, ecc.). -->
+      <form class="modulo" name="contatti" method="POST"
+            data-netlify="true" netlify-honeypot="sito-web">
+        <input type="hidden" name="form-name" value="contatti">
+
+        <!-- Anti-spam: campo invisibile. I bot lo riempiono, le persone no. -->
+        <p class="onesto">
+          <label>Non compilare questo campo
+            <input name="sito-web" tabindex="-1" autocomplete="off">
+          </label>
+        </p>
+
+        <label class="campo">
+          <span>Nome e cognome</span>
+          <input type="text" name="nome" required autocomplete="name">
+        </label>
+
+        <label class="campo">
+          <span>Telefono</span>
+          <input type="tel" name="telefono" required autocomplete="tel"
+                 inputmode="tel" placeholder="+39 ...">
+        </label>
+
+        <label class="campo">
+          <span>Messaggio</span>
+          <textarea name="messaggio" rows="4" required
+                    placeholder="Che taglio ti serve e quando vorresti passare"></textarea>
+        </label>
+
+        <label class="consenso">
+          <input type="checkbox" name="privacy" required>
+          <span>Ho letto l'<a href="privacy.html">informativa privacy</a> e acconsento
+            al trattamento dei dati per essere ricontattato.</span>
+        </label>
+
+        <button class="bottone" type="submit">Invia la richiesta</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="pie">
+  <div class="contenitore pie__griglia">
+    <div>
+      <img src="assets/logo.webp" alt="" width="56" height="56" loading="lazy">
+      <p class="pie__ragione">
+        <strong>Parrucchiere della Città</strong><br>
+        Via Rivolta 1, 23900 Lecco (LC)<br>
+        P.IVA [DA INSERIRE]
+      </p>
+    </div>
+    <div>
+      <h2 class="pie__titolo">Orari</h2>
+      <p>Lunedì – Domenica<br>9:00 – 21:00</p>
+    </div>
+    <div>
+      <h2 class="pie__titolo">Contatti</h2>
+      <p>
+        <a href="tel:+393513022089">+39 351 302 2089</a><br>
+        <a href="https://wa.me/393513022089" target="_blank" rel="noopener">WhatsApp</a><br>
+        <a href="privacy.html">Privacy e cookie</a>
+      </p>
+    </div>
+  </div>
+  <p class="pie__nota">
+    Sito dimostrativo non ufficiale, preparato come proposta per il titolare dell'attività.
+  </p>
+</footer>
+
+<!-- GSAP + ScrollTrigger da CDN. defer: non bloccano il rendering. -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script defer src="main.js"></script>
+
+</body>
+</html>

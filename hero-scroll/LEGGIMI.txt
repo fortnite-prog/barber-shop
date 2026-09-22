@@ -1,0 +1,141 @@
+==========================================================
+  VETRINA ONE-PAGE CON HERO ANIMATA ALLO SCROLL
+  Parrucchiere della Città — Lecco
+==========================================================
+
+Sito dimostrativo non ufficiale, in "noindex".
+HTML + CSS + JavaScript scritti a mano. Nessun framework,
+nessuna compilazione. Unica dipendenza esterna: GSAP +
+ScrollTrigger da CDN.
+
+
+FILE
+----
+  index.html          la pagina
+  style.css           tutto lo stile
+  main.js             l'animazione della hero
+  privacy.html        informativa privacy e cookie
+  genera-frame.sh     rigenera i fotogrammi dal video
+  assets/hero.mp4     video sorgente della hero
+  assets/frames/      150 WebP a 1920px  (desktop)
+  assets/frames-mobile/ 75 WebP a 960px  (mobile)
+  fonts/              Inter e Oswald, self-hosted
+
+
+>>>>>> DA FARE PRIMA DI MOSTRARLO AL CLIENTE <<<<<<
+
+1. IL VIDEO DELLA HERO È UN SEGNAPOSTO.
+   assets/hero.mp4 non è una ripresa vera: è una clip
+   generata con ffmpeg (luci calde in movimento) creata
+   solo per far funzionare e collaudare l'animazione.
+   Va sostituita con una ripresa reale del negozio:
+   6 secondi, movimento lento e continuo (una carrellata
+   o uno zoom), 1920x1080 o più, girata in orizzontale.
+
+   Poi si rigenerano i fotogrammi:
+
+       ./genera-frame.sh
+
+   Lo script stampa quanti file ha prodotto. Se il numero
+   è diverso da 150 / 75, aggiorna in main.js i valori
+   CONFIG.desktop.totale e CONFIG.mobile.totale.
+
+2. CONTENUTI DA CONFERMARE, cercali come [DA INSERIRE]:
+   - prezzi del listino
+   - partita IVA
+   - indirizzo email per la privacy
+   - data di pubblicazione dell'informativa
+   - foto reali del negozio e dei lavori
+
+
+COME FUNZIONA L'ANIMAZIONE
+--------------------------
+La hero è alta 400vh: dentro c'è un blocco "sticky" alto
+una schermata, con un <canvas> a tutto schermo.
+
+ScrollTrigger (scrub: true) traduce la posizione di scroll
+in un numero da 0 a 1. Quel numero decide due cose:
+quale fotogramma disegnare e quanto è opaco ciascuno dei
+tre blocchi di testo.
+
+Il disegno è separato dallo scroll: lo scroll aggiorna solo
+un indice, un ciclo requestAnimationFrame ridipinge il
+canvas al massimo una volta per fotogramma video, e solo se
+l'indice è davvero cambiato.
+
+Il canvas non viene mai creato più grande dei fotogrammi
+sorgente: su uno schermo Retina ingrandire non aggiungerebbe
+dettaglio, costerebbe solo pixel da disegnare.
+
+MOBILE
+  Sotto i 900px di larghezza si usa assets/frames-mobile/:
+  metà dei fotogrammi, larghi la metà. 304 KB invece di
+  3,3 MB.
+
+MOVIMENTO RIDOTTO
+  Con "riduci movimento" attivo nel sistema operativo la
+  hero non si anima: si scarica il solo fotogramma finale,
+  la sezione diventa alta una schermata e i tre testi
+  vengono impaginati uno sotto l'altro, tutti leggibili.
+
+SE IL CDN NON RISPONDE
+  Senza GSAP l'animazione gira lo stesso, con un listener
+  di scroll passivo. Nessuna schermata rotta.
+
+
+PRESTAZIONI MISURATE (Chromium headless, in container)
+------------------------------------------------------
+  1920x1080, DPR 1     60 fps  (mediana 16,7 ms)
+  iPhone 13 emulato    60 fps  (mediana 16,7 ms)
+  1440x900, DPR 2      ~44 fps (mediana 22,7 ms)
+
+Il terzo numero non dipende dal canvas: nascondendolo la
+misura non cambia, e il singolo drawImage costa 0,00 ms.
+È il rasterizzatore software dell'ambiente headless che
+ridisegna una viewport da 2880x1800. Su una macchina vera,
+con GPU, quel livello viene composto e il costo sparisce.
+
+Peso della prima schermata: circa 3,3 MB su desktop e
+304 KB su mobile, tutti fotogrammi. La barra di
+caricamento resta finché non sono pronti.
+
+
+COME METTERLO ONLINE (Netlify, gratis)
+--------------------------------------
+1. Vai su https://app.netlify.com/drop
+2. Trascina QUESTA cartella (hero-scroll) nel riquadro.
+3. In una ventina di secondi ti dà un indirizzo tipo
+   https://nome-a-caso-123.netlify.app
+
+Il modulo di contatto usa Netlify Forms: funziona da solo
+una volta pubblicato lì, e le richieste arrivano nel
+pannello Netlify sotto "Forms". Su un hosting diverso
+(Vercel, GitHub Pages) il modulo va collegato a un servizio
+equivalente, per esempio Formspree, cambiando l'attributo
+action del <form>.
+
+Protezione anti-spam: campo honeypot invisibile
+("sito-web"), dichiarato a Netlify con netlify-honeypot.
+Nessun captcha, nessun cookie.
+
+DOMINIO DEL CLIENTE
+  Netlify → Site settings → Domain management →
+  Add custom domain. Poi, dal pannello di chi gestisce il
+  dominio, punta il record A a 75.2.60.5 oppure, meglio, un
+  CNAME di "www" a <nome-sito>.netlify.app. Il certificato
+  HTTPS lo fa Netlify da solo.
+
+PRIMA DI ANDARE ONLINE DAVVERO
+  Togli il noindex da index.html e privacy.html: finché c'è,
+  Google non indicizza il sito.
+
+
+COOKIE E GDPR
+-------------
+Il sito non usa cookie, non ha statistiche di terze parti e
+i font sono caricati dal sito stesso: per questo non c'è
+nessun banner. L'unica risorsa esterna è GSAP da CDN, che
+non imposta cookie.
+
+Se in futuro aggiungi Google Analytics o il pixel di Meta,
+il banner di consenso preventivo diventa obbligatorio.
